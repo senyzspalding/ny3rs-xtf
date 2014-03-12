@@ -37,7 +37,7 @@
 		<xsl:call-template name="archdesc-admininfo"/>
 		<xsl:apply-templates select="descendant::dsc"/>
 
-		<!--<xsl:choose>
+		<xsl:choose>
 			<xsl:when test="$chunk.id = 'headerlink'">
 				<xsl:apply-templates select="eadheader"/>
 				<xsl:apply-templates select="archdesc/did"/>
@@ -59,7 +59,7 @@
 				<xsl:apply-templates select="eadheader"/>
 				<xsl:apply-templates select="archdesc/did"/>
 			</xsl:otherwise>
-		</xsl:choose>-->
+		</xsl:choose>
 	</xsl:template>
 
 
