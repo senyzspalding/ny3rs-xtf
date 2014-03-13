@@ -624,7 +624,7 @@ Item number <xsl:value-of select="$num"/>:
                   <xsl:if test="$sort = 'creator'">
                      <a name="{$anchor}"/>
                   </xsl:if>
-                  <b>Author:&#160;&#160;</b>
+                  <b>Creator:&#160;&#160;</b>
                </td>
                <td class="col3">
                   <xsl:choose>
