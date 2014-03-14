@@ -32,33 +32,35 @@
 
 	<!-- Creates the body of the finding aid.-->
 	<xsl:template name="body">
+		<!-- HA 3/14/2014 Need to call missing templates, including bioghist, scopecontent, etc here -->	
 		<xsl:call-template name="archdesc-restrict"/>
 		<xsl:call-template name="archdesc-relatedmaterial"/>
 		<xsl:call-template name="archdesc-admininfo"/>
 		<xsl:apply-templates select="descendant::dsc"/>
+		
 
-		<!-- <xsl:choose>-->
-		<!--	<xsl:when test="$chunk.id = 'headerlink'"> -->
+		<!-- <xsl:choose>
+				<xsl:when test="$chunk.id = 'headerlink'">
 				<xsl:apply-templates select="eadheader"/>
 				<xsl:apply-templates select="archdesc/did"/>
-		<!--	</xsl:when>
-			<xsl:when test="$chunk.id = 'restrictlink'">-->
+			</xsl:when>
+			<xsl:when test="$chunk.id = 'restrictlink'">
 				<xsl:call-template name="archdesc-restrict"/>
-		<!--	</xsl:when>
-			<xsl:when test="$chunk.id = 'relatedmatlink'"> -->
+			</xsl:when>
+			<xsl:when test="$chunk.id = 'relatedmatlink'">
 				<xsl:call-template name="archdesc-relatedmaterial"/>
-		<!--	</xsl:when>
-			<xsl:when test="$chunk.id = 'adminlink'">-->
+			</xsl:when>
+			<xsl:when test="$chunk.id = 'adminlink'">
 				<xsl:call-template name="archdesc-admininfo"/>
-		<!--	</xsl:when>
-			<xsl:when test="$chunk.id != 0"> -->
+			</xsl:when>
+			<xsl:when test="$chunk.id != 0">
 				<xsl:apply-templates select="key('chunk-id', $chunk.id)"/>
-		<!--	</xsl:when>-->
-		<!--	<xsl:otherwise> -->
+			</xsl:when>
+			<xsl:otherwise>
 				
 				<xsl:apply-templates select="eadheader"/>
 				<xsl:apply-templates select="archdesc/did"/>
-		<!--	</xsl:otherwise>
+			</xsl:otherwise>
 		</xsl:choose> -->
 	</xsl:template>
 
