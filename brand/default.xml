@@ -16,7 +16,7 @@
    
    <header>
       <div class="header">
-         <img src="icons/default/nyeadpilot.gif " width=”215” height=”77” alt="eXtensible Text Framework" class="xtf-logo"/>
+         <img src="icons/default/nyeadpilot.gif" width=”215” height=”77” alt="eXtensible Text Framework" class="xtf-logo"/>
          <img src="icons/default/ny3rslogo2.gif" width="100" height="60" alt="graphic" class="your-logo" />
          <br class="clear" />
       </div>
@@ -24,7 +24,7 @@
    
    <dynaxml.header>
       <div class="header">
-         <img src="icons/default/nyeadpilot.gif " width=”215” height=”77” alt="eXtensible Text Framework" class="xtf-logo"/>
+         <img src="icons/default/nyeadpilot.gif" width=”215” height=”77” alt="eXtensible Text Framework" class="xtf-logo"/>
          <img src="icons/default/ny3rslogo2.gif" width="100" height="60" alt="graphic" class="your-logo" />
          <br class="clear" />
       </div>
