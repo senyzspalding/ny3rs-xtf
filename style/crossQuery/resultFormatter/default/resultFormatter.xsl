@@ -49,6 +49,7 @@
    <!-- ====================================================================== -->
    
    <xsl:import href="../common/resultFormatterCommon.xsl"/>
+   <xsl:import href="rss.xsl"/>
    <xsl:include href="searchForms.xsl"/>
    
    <!-- ====================================================================== -->
@@ -94,28 +95,62 @@
          <xsl:when test="$smode='getAddress'">
             <xsl:call-template name="getAddress"/>
          </xsl:when>
+         <xsl:when test="$smode='getLang'">
+            <xsl:call-template name="getLang"/>
+         </xsl:when>
+         <xsl:when test="$smode='setLang'">
+            <xsl:call-template name="setLang"/>
+         </xsl:when>
+         <!-- rss feed -->
+         <xsl:when test="$rmode='rss'">
+            <xsl:apply-templates select="crossQueryResult" mode="rss"/>
+         </xsl:when>
          <xsl:when test="$smode='emailFolder'">
-            <xsl:apply-templates select="crossQueryResult" mode="emailFolder"/>
+            <xsl:call-template name="translate">
+               <xsl:with-param name="resultTree">
+                  <xsl:apply-templates select="crossQueryResult" mode="emailFolder"/>
+               </xsl:with-param>
+            </xsl:call-template>
          </xsl:when>
          <!-- similar item -->
          <xsl:when test="$smode = 'moreLike'">
-            <xsl:apply-templates select="crossQueryResult" mode="moreLike"/>
+            <xsl:call-template name="translate">
+               <xsl:with-param name="resultTree">
+                  <xsl:apply-templates select="crossQueryResult" mode="moreLike"/>
+               </xsl:with-param>
+            </xsl:call-template>
          </xsl:when>
          <!-- modify search -->
          <xsl:when test="contains($smode, '-modify')">
-            <xsl:apply-templates select="crossQueryResult" mode="form"/>
+            <xsl:call-template name="translate">
+               <xsl:with-param name="resultTree">
+                  <xsl:apply-templates select="crossQueryResult" mode="form"/>
+               </xsl:with-param>
+            </xsl:call-template>
          </xsl:when>
          <!-- browse pages -->
          <xsl:when test="$browse-title or $browse-creator">
-            <xsl:apply-templates select="crossQueryResult" mode="browse"/>
+            <xsl:call-template name="translate">
+               <xsl:with-param name="resultTree">
+                  <xsl:apply-templates select="crossQueryResult" mode="browse"/>
+               </xsl:with-param>
+            </xsl:call-template>
          </xsl:when>
          <!-- show results -->
          <xsl:when test="crossQueryResult/query/*/*">
-            <xsl:apply-templates select="crossQueryResult" mode="results"/>
+            <xsl:call-template name="translate">
+               <xsl:with-param name="resultTree">
+                  <xsl:apply-templates select="crossQueryResult" mode="results"/>
+               </xsl:with-param>
+            </xsl:call-template>
          </xsl:when>
          <!-- show form -->
          <xsl:otherwise>
-            <xsl:apply-templates select="crossQueryResult" mode="form"/>
+            <xsl:call-template name="translate">
+               <xsl:with-param name="resultTree">
+                  <xsl:apply-templates select="crossQueryResult" mode="form"/>
+               </xsl:with-param>
+            </xsl:call-template>
          </xsl:otherwise>
       </xsl:choose>
    </xsl:template>
@@ -558,7 +593,7 @@ Item number <xsl:value-of select="$num"/>:
                   <xsl:if test="$sort = 'creator'">
                      <a name="{$anchor}"/>
                   </xsl:if>
-                  <b>Author:&#160;&#160;</b>
+                  <b>Creator:&#160;&#160;</b>
                </td>
                <td class="col3 col-md-10">
                   <xsl:choose>
@@ -679,7 +714,7 @@ Item number <xsl:value-of select="$num"/>:
                <td class="col3">
                   <xsl:choose>
                      <xsl:when test="meta/year">
-                        <xsl:value-of select="replace(meta/year,'^.+ ','')"/>
+                        <xsl:value-of select="replace(meta/year[1],'^.+ ','')"/>
                      </xsl:when>
                      <xsl:otherwise>
                         <xsl:apply-templates select="meta/date"/>
