@@ -44,7 +44,6 @@
    <!-- Import Stylesheets                                                     -->
    <!-- ====================================================================== -->
    
-   <xsl:import href="../../../xtfCommon/xtfCommon.xsl"/>
    <xsl:import href="format-query.xsl"/>
    <xsl:import href="spelling.xsl"/>
    
@@ -226,7 +225,7 @@
    <xsl:param name="maxPages" as="xs:integer">
       <xsl:choose>
          <xsl:when test="$docsPerPage > 0">
-            <xsl:value-of select="ceiling($maxHits div $docsPerPage)"/>
+            <xsl:value-of select="$maxHits div $docsPerPage"/>
          </xsl:when>
          <xsl:otherwise>
             <xsl:value-of select="0"/>
@@ -252,20 +251,9 @@
    
    <!-- Query String -->
    <!-- grab url -->
-   <xsl:param name="servlet.URL"/>
-   
+   <xsl:param name="http.URL"/>
    <!-- extract query string and clean it up -->
-   <xsl:param name="queryString">
-      <xsl:variable name="pieces">
-         <xsl:value-of select="replace($servlet.URL, '.+search(\?|$)|.+oai(\?|$)', '')"/>
-         <xsl:for-each select="//param">
-            <xsl:if test="string-length(@value) &gt; 0 and @name != 'startDoc'">
-               <xsl:value-of select="concat(@name, '=', editURL:protectValue(@value), ';')"/>
-            </xsl:if>
-         </xsl:for-each>
-      </xsl:variable>
-      <xsl:value-of select="editURL:clean(string-join($pieces, ''))"/>
-   </xsl:param>
+   <xsl:param name="queryString" select="editURL:remove(replace($http.URL, '.+search\?|.+oai\?', ''),'startDoc')"/> 
    
    <!-- Hidden Query String -->
    <xsl:template name="hidden.query">
@@ -288,6 +276,83 @@
    <xsl:param name="robots" select="'Googlebot|Slurp|msnbot|Teoma|Wget'"></xsl:param>
    
    <!-- ====================================================================== -->
+   <!-- Utility functions for handy editing of URLs                           -->
+   <!-- ====================================================================== -->
+   
+   <!-- Function to set the value of a URL parameter, replacing the old value 
+        of that parameter if any.
+   -->
+   <xsl:function name="editURL:set">
+      <xsl:param name="url"/>
+      <xsl:param name="param"/>
+      <xsl:param name="value"/>
+      
+      <xsl:variable name="regex" select="concat('(^|;)', $param, '[^;]*(;|$)')"/>
+      <xsl:choose>
+         <xsl:when test="matches($url, $regex)">
+            <xsl:value-of select="editURL:clean(replace($url, $regex, concat(';', $param, '=', $value, ';')))"/>
+         </xsl:when>
+         <xsl:otherwise>
+            <xsl:value-of select="editURL:clean(concat($url, ';', $param, '=', $value))"/>
+         </xsl:otherwise>
+      </xsl:choose>
+   </xsl:function>
+   
+   <!-- Function to remove a URL parameter, if it exists in the URL -->
+   <xsl:function name="editURL:remove">
+      <xsl:param name="url"/>
+      <xsl:param name="param"/>
+      
+      <xsl:variable name="regex" select="concat('(^|;)', $param, '[^;]*(;|$)')"/>
+      <xsl:value-of select="editURL:clean(replace($url, $regex, ';'))"/>
+   </xsl:function>
+   
+   <!-- Function to replace an empty URL with a value. If the URL isn't empty
+        it is returned unchanged. By the way, certain parameters such as
+        "expand" are still counted as empty.
+   -->
+   <xsl:function name="editURL:replaceEmpty">
+      <xsl:param name="url"/>
+      <xsl:param name="replacement"/>
+      <xsl:choose>
+         <xsl:when test="matches(editURL:clean($url), '^(expand=[^;]*)*$')">
+            <xsl:value-of select="$replacement"/>
+         </xsl:when>
+         <xsl:otherwise>
+            <xsl:value-of select="$url"/>
+         </xsl:otherwise>
+      </xsl:choose>
+   </xsl:function>
+   
+   <!-- Function to clean up a URL, removing leading and trailing ';' chars, etc. -->
+   <xsl:function name="editURL:clean">
+      <xsl:param name="v0"/>
+      <!-- Change old ampersands to new easy-to-read semicolons -->
+      <xsl:variable name="v1" select="replace($v0, '&amp;', ';')"/>
+      <!-- Get rid of empty parameters -->
+      <xsl:variable name="v2" select="replace($v1, '[^;=]+=(;|$)', '')"/>
+      <!-- Replace ";;" with ";" -->
+      <xsl:variable name="v3" select="replace($v2, ';;+', ';')"/>
+      <!-- Get rid of leading and trailing ';' -->
+      <xsl:variable name="v4" select="replace($v3, '^;|;$', '')"/>
+      <!-- All done. -->
+      <xsl:value-of select="$v4"/>
+   </xsl:function>
+   
+   <!-- Function to calculate an unused name for the next facet parameter -->
+   <xsl:function name="editURL:nextFacetParam">
+      <xsl:param name="queryString"/>
+      <xsl:param name="field"/>
+      <xsl:variable name="nums">
+         <num n="0"/>
+         <xsl:analyze-string select="$queryString" regex="(^|;)f([0-9]+)-">
+            <xsl:matching-substring><num n="{number(regex-group(2))}"/></xsl:matching-substring>
+         </xsl:analyze-string>
+      </xsl:variable>
+      <xsl:value-of select="concat('f', 1+max(($nums/*/@n)), '-', $field)"/>
+   </xsl:function>
+
+   <!-- ====================================================================== -->
    <!-- Result Paging                                                          -->
    <!-- ====================================================================== -->
    
@@ -302,7 +367,7 @@
                <xsl:value-of select="'20'"/>
             </xsl:when>
             <xsl:otherwise>
-               <xsl:value-of select="/crossQueryResult/@totalDocs"/>
+               <xsl:value-of select="@totalDocs"/>
             </xsl:otherwise>
          </xsl:choose>
       </xsl:variable>
@@ -335,7 +400,7 @@
    <xsl:template name="pages">
       
       <xsl:variable name="total" as="xs:integer">
-          <xsl:value-of select="/crossQueryResult/@totalDocs"/>
+         <xsl:value-of select="@totalDocs"/>
       </xsl:variable>
       
       <xsl:variable name="start" as="xs:integer">
@@ -453,7 +518,7 @@
    <!-- ====================================================================== -->
    
    <xsl:template match="subject">
-      <a href="{$xtfURL}{$crossqueryPath}?subject={editURL:protectValue(.)};subject-join=exact;smode={$smode};rmode={$rmode};style={$style};brand={$brand}">
+      <a href="{$xtfURL}{$crossqueryPath}?subject={.};subject-join=exact;smode={$smode};rmode={$rmode};style={$style};brand={$brand}">
          <xsl:apply-templates/>
       </a>
       <xsl:if test="not(position() = last())">
@@ -510,7 +575,7 @@
    <!-- ====================================================================== -->
    
    <xsl:template name="sort.options">
-      <select size="1" name="sort">
+      <select class="form-control" size="1" name="sort">
          <xsl:choose>
             <xsl:when test="$smode='showBag'">
                <xsl:choose>
@@ -618,9 +683,8 @@
             </xsl:otherwise>
          </xsl:choose>
       </xsl:variable>
-
-      <!-- Must protect value of $docId in the URL, in case it contains special chars. -->
-      <xsl:value-of select="concat($dynaxmlPath, '?docId=', editURL:protectValue($docId), ';query=', replace($query, ';', '%26'))"/>
+      
+      <xsl:value-of select="concat($dynaxmlPath, '?docId=', $docId, ';query=', replace($query, ';', '%26'))"/>
       <!-- -join & -prox are mutually exclusive -->
       <xsl:choose>
          <xsl:when test="$text-prox">
@@ -804,13 +868,13 @@
       </xsl:variable>
       
       <xsl:choose>
-          <xsl:when test="/crossQueryResult/facet[@field=concat('browse-',$browse-name)]/group[@value=$browse-link and count(descendant::group[docHit]) > 1]">
+         <xsl:when test="facet[@field=concat('browse-',$browse-name)]/group[@value=$browse-link and count(descendant::group[docHit]) > 1]">
             <span style="color: red"><xsl:value-of select="upper-case($alpha)"/></span>
          </xsl:when>
-          <xsl:when test="/crossQueryResult/facet[@field=concat('browse-',$browse-name)]/group[@value=$browse-link and count(docHit) > 0]">
+         <xsl:when test="facet[@field=concat('browse-',$browse-name)]/group[@value=$browse-link and count(docHit) > 0]">
             <span style="color: red"><xsl:value-of select="upper-case($alpha)"/></span>
          </xsl:when>
-          <xsl:when test="/crossQueryResult/facet[@field=concat('browse-',$browse-name)]/group[@value=$browse-link]">
+         <xsl:when test="facet[@field=concat('browse-',$browse-name)]/group[@value=$browse-link]">
             <a href="{$xtfURL}{$crossqueryPath}?browse-{$browse-name}={$browse-link};sort={$browse-name}"><xsl:value-of select="$alpha"/></a>
          </xsl:when>
          <xsl:otherwise>
@@ -836,7 +900,7 @@
       <!-- Page Maximum: this will handle up to 1 million objects -->
       <xsl:param name="PM" select="11112"/>
       <!-- Total Documents -->
-       <xsl:param name="TD" select="/crossQueryResult/@totalDocs"/>
+      <xsl:param name="TD" select="@totalDocs"/>
       <!-- Page Number -->
       <xsl:param name="PN" select="($startDoc - 1) div 90"/>
       <!-- Start Document -->
@@ -884,7 +948,7 @@
    
    <xsl:template match="docHit" mode="robot">
       
-       <xsl:variable name="path" select="/crossQueryResult/@path"/>
+      <xsl:variable name="path" select="@path"/>
       
       <li>
          <a>
@@ -912,20 +976,20 @@
    <!-- ====================================================================== -->
    
    <!-- Facet -->
-    <xsl:template match="/crossQueryResult/facet[matches(@field,'^facet-')]" exclude-result-prefixes="#all">
+   <xsl:template match="facet[matches(@field,'^facet-')]" exclude-result-prefixes="#all">
       <xsl:variable name="field" select="replace(@field, 'facet-(.*)', '$1')"/>
       <xsl:variable name="needExpand" select="@totalGroups > count(group)"/>
       <div class="facet">
-         <div class="facetName">
+         <h4 class="facetName">
             <xsl:apply-templates select="." mode="facetName"/>
-         </div>
+         </h4>
          <xsl:if test="$expand=$field">
             <div class="facetLess">
                <i><a href="{$xtfURL}{$crossqueryPath}?{editURL:remove($queryString,'expand')}">less</a></i>
             </div>
          </xsl:if>
          <div class="facetGroup">
-            <table>
+            <table class="table">
                <xsl:apply-templates/>
             </table>
          </div>
@@ -951,15 +1015,12 @@
       
       <xsl:variable name="clearLink" select="
          concat(xtfURL, $crossqueryPath, '?',
-                editURL:replaceEmpty(
-                   editURL:remove($queryString, 
-                                  concat('f[0-9]+-',$field,'=',
-                                         editURL:escapeRegex(editURL:protectValue($value)))),
-                   'browse-all=yes'))">
+                editURL:replaceEmpty(editURL:remove($queryString, concat('f[0-9]+-',$field,'=',$value)),
+                                     'browse-all=yes'))">
       </xsl:variable>
       
       <tr>
-         <td class="col1">&#8226;</td> <!-- bullet char -->
+         <td class="col1"></td>
          <!-- Display the group name, with '[X]' box if it is selected. -->
          <xsl:choose>
             <xsl:when test="//param[matches(@name,concat('f[0-9]+-',$field))]/@value=$value">
@@ -1055,7 +1116,7 @@
          <xsl:choose>
             <!-- selected terminal node: click [X] to collapse -->
             <xsl:when test="count(group) = 0 and //param[matches(@name,concat('f[0-9]+-',$field))]/@value=$fullValue">
-               <td class="col1">&#8226;</td> <!-- bullet char -->
+               <td class="col1"></td>
                <td class="col2">
                   <xsl:apply-templates select="." mode="beforeGroupValue"/>
                   <i>
@@ -1068,7 +1129,7 @@
             
             <!-- non-selected terminal node: click to select -->
             <xsl:when test="count(group) = 0 and @totalSubGroups = 0">
-               <td class="col1">&#8226;</td> <!-- bullet char -->
+               <td class="col1"></td>
                <td class="col2">
                   <xsl:apply-templates select="." mode="beforeGroupValue"/>
                   <a href="{$selectLink}">
@@ -1164,5 +1225,5 @@
    <!-- Default template to add data after the name of a facet group. Override to specialize. -->
    <xsl:template match="group" mode="afterGroupValue" priority="-1">
    </xsl:template>
-   
+
 </xsl:stylesheet>

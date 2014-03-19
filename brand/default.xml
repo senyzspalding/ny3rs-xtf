@@ -3,19 +3,22 @@
 <brand xmlns="http://www.w3.org/1999/xhtml">
    
    <links>
-      <link rel="stylesheet" href="css/default/results.css" type="text/css"/>
-	  <link rel="shortcut icon" href="icons/default/favicon.ico" />
+      <meta name="viewport" content="width=device-width, initial-scale=1"/>
+      <!--<link rel="stylesheet" href="css/default/results.css" type="text/css"/>-->
+      <link rel="shortcut icon" href="icons/default/favicon.ico"/>
+      <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"/>
+      <!-- bootstrap -->
+      <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
+      <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"/>
    </links>
    
    <dynaxml.links>
       <link rel="stylesheet" href="css/default/content.css" type="text/css"/>
       <link rel="shortcut icon" href="icons/default/favicon.ico" />
-
-
    </dynaxml.links>
    
    <header>
-      <div class="header">
+      <div class="header col-xs-12">
          <img src="icons/default/nyeadpilot.gif" width="215" height="77" alt="New York 3Rs Association" class="xtf-logo"/>
          <img src="icons/default/ny3rslogo2.gif" width="100" height="60" alt="graphic" class="your-logo" />
          <br class="clear" />
@@ -31,8 +34,12 @@
    </dynaxml.header>
    
    <footer>
-      <div class="footer">
-         <a href="mailto:you@yourserver.com">Comments? Questions?</a> | <a href="javascript://" onclick="javascript:window.open('/xtf/search?smode=getLang','popup','width=500,height=200,resizable=no,scrollbars=no')">Choose Language</a>
+      <div class="row">
+         <div class="footer col-md-12">
+            <a href="mailto:you@yourserver.com">Comments? Questions?</a> | <a href="javascript://"
+               onclick="javascript:window.open('/xtf/search?smode=getLang','popup','width=500,height=200,resizable=no,scrollbars=no')"
+               >Choose Language</a>
+         </div>
       </div>
    </footer>
    
