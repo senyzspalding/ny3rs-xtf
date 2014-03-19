@@ -953,14 +953,14 @@
    
    <xsl:template name="archdesc-admininfo">
       <xsl:if test="string(archdesc/admininfo/custodhist/*)
-         or string(archdesc/altformavailable/*)
+         or string(archdesc/altformavail/*)
          or string(archdesc/prefercite/*)
          or string(archdesc/acqinfo/*)
          or string(archdesc/processinfo/*)
          or string(archdesc/appraisal/*)
          or string(archdesc/accruals/*)
          or string(archdesc/*/custodhist/*)
-         or string(archdesc/*/altformavailable/*)
+         or string(archdesc/*/altformavail/*)
          or string(archdesc/*/prefercite/*)
          or string(archdesc/*/acqinfo/*)
          or string(archdesc/*/processinfo/*)
@@ -973,8 +973,8 @@
          </h3>
          <xsl:apply-templates select="archdesc/custodhist
             | archdesc/*/custodhist"/>
-         <xsl:apply-templates select="archdesc/altformavailable
-            | archdesc/*/altformavailable"/>
+         <xsl:apply-templates select="archdesc/altformavail
+            | archdesc/*/altformavail"/>
          <xsl:apply-templates select="archdesc/prefercite
             | archdesc/*/prefercite"/>
          <xsl:apply-templates select="archdesc/acqinfo
@@ -993,14 +993,14 @@
    <!--This template rule formats the head element of top-level elements of
       administrative information.-->
    <xsl:template match="custodhist/head
-      | archdesc/altformavailable/head
+      | archdesc/altformavail/head
       | archdesc/prefercite/head
       | archdesc/acqinfo/head
       | archdesc/processinfo/head
       | archdesc/appraisal/head
       | archdesc/accruals/head
       | archdesc/*/custodhist/head
-      | archdesc/*/altformavailable/head
+      | archdesc/*/altformavail/head
       | archdesc/*/prefercite/head
       | archdesc/*/acqinfo/head
       | archdesc/*/processinfo/head
@@ -1014,28 +1014,28 @@
    </xsl:template>
    
    <xsl:template match="custodhist/p
-      | archdesc/altformavailable/p
+      | archdesc/altformavail/p
       | archdesc/prefercite/p
       | archdesc/acqinfo/p
       | archdesc/processinfo/p
       | archdesc/appraisal/p
       | archdesc/accruals/p
       | archdesc/*/custodhist/p
-      | archdesc/*/altformavailable/p
+      | archdesc/*/altformavail/p
       | archdesc/*/prefercite/p
       | archdesc/*/acqinfo/p
       | archdesc/*/processinfo/p
       | archdesc/*/appraisal/p
       | archdesc/*/accruals/p
       | archdesc/custodhist/note/p
-      | archdesc/altformavailable/note/p
+      | archdesc/altformavail/note/p
       | archdesc/prefercite/note/p
       | archdesc/acqinfo/note/p
       | archdesc/processinfo/note/p
       | archdesc/appraisal/note/p
       | archdesc/accruals/note/p
       | archdesc/*/custodhist/note/p
-      | archdesc/*/altformavailable/note/p
+      | archdesc/*/altformavail/note/p
       | archdesc/*/prefercite/note/p
       | archdesc/*/acqinfo/note/p
       | archdesc/*/processinfo/note/p
