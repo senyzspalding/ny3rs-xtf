@@ -373,13 +373,36 @@
 			<!--The next two variables define the set of container types that
             may appear in the first column of a two column container list.
             Add or subtract container types to fix institutional practice.-->
-			<xsl:variable name="first" select="container[@type='Box' or @type='Oversize' or @type='Volume' or @type='Carton']"/>
-			<xsl:variable name="preceding" select="preceding::did[1]/container[@type='Box' or @type='Oversize' or @type='Volume' or @type='Carton' or @type='Reel']"/>
+		<xsl:variable name="first" select="container[@type='Box' or @type='box' or @type='Oversize' 
+		or @type='oversize' or @type='Volume' or @type='volume' or @type='Carton' or @type='carton' 
+		or @type='Reel' or @type='reel' or @type='Item' or @type='item' or @type='Box-folder' 
+		or @type='box-folder' or @type='CD' or @type='cd' or @type='CD-ROM' or @type='DVD' 
+		or @type='dvd' or @type='Image' or @type='image' or @type='Frame' or @type='frame' 
+		or @type='Page' or @type='page' or @type='Folder' or @type='folder' or @type='Folio' 
+		or @type='folio' or @type='Dropbox' or @type='dropbox' or @type='Oversize-folder' 
+		or @type='oversize-folder' or @type='Oversize-box' or @type='oversize-box']"/>
 
-			<!--This variable defines the set of container types that
+         <xsl:variable name="preceding" select="preceding::did[1]/container[@type='Box' or @type='box' 
+         or @type='Oversize' or @type='oversize' or @type='Volume' or @type='volume' or @type='Carton' 
+         or @type='carton'  or @type='Reel' or @type='reel' or @type='Item' or @type='item' 
+         or @type='Box-folder' or @type='box-folder' or @type='CD' or @type='cd' or @type='CD-ROM' 
+         or @type='DVD' or @type='dvd' or @type='Image' or @type='image' or @type='Frame' or @type='frame' 
+         or @type='Page' or @type='page' or @type='Folder' or @type='folder' or @type='Folio' 
+         or @type='folio' or @type='Dropbox' or @type='dropbox' or @type='Oversize-folder' 
+         or @type='oversize-folder' or @type='Oversize-box' or @type='oversize-box']"/>
+         
+         <!--This variable defines the set of container types that
             may appear in the second column of a two column container list.
             Add or subtract container types to fix institutional practice.-->
-			<xsl:variable name="second" select="container[@type='Folder' or @type='Frame' or @type='Page'  or @type='Reel']"/>
+
+         <xsl:variable name="second" select="container[@type='Box' or @type='box' or @type='Oversize' 
+         or @type='oversize' or @type='Volume' or @type='volume' or @type='Carton' or @type='carton'  
+         or @type='Reel' or @type='reel' or @type='Item' or @type='item' or @type='Box-folder' 
+         or @type='box-folder' or @type='CD' or @type='cd' or @type='CD-ROM' or @type='DVD' or @type='dvd' 
+         or @type='Image' or @type='image' or @type='Frame' or @type='frame' or @type='Page' or @type='page' 
+         or @type='Folder' or @type='folder' or @type='Folio' or @type='folio' or @type='Dropbox' 
+         or @type='dropbox' or @type='Oversize-folder' or @type='oversize-folder' or @type='Oversize-box' 
+         or @type='oversize-box']"/>
 
 			<xsl:choose>
 				<!--When the container value or the container type of the first
