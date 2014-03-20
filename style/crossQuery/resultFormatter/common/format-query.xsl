@@ -56,12 +56,12 @@
       
       <xsl:choose>
          <xsl:when test="$browse-all">
-            <div class="subQuery">&#160;All</div>
+            <span class="subQuery">&#160;All</span>
          </xsl:when>
          <xsl:otherwise>
-            <div class="subQuery">
+            <span class="subQuery">
                <xsl:apply-templates select="query" mode="query"/>
-            </div>
+            </span>
          </xsl:otherwise>
       </xsl:choose>
       

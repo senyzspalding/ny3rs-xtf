@@ -185,7 +185,7 @@
                <div class="resultsHeader col-md-12">
                   <xsl:if test="$smode != 'showBag'">
                      <xsl:variable name="bag" select="session:getData('bag')"/>
-                     <div>
+                     <div class="pull-right">
                         <a href="{$xtfURL}{$crossqueryPath}?smode=showBag">Bookbag</a>(<span
                            id="bagCount"><xsl:value-of select="count($bag/bag/savedDoc)"/></span>)
                      </div>
@@ -210,7 +210,7 @@
                         </div>
                      </xsl:otherwise>
                   </xsl:choose>
-                  <div>
+                  <div class="pull-right">
                      <xsl:if test="$smode != 'showBag'">
                         <a href="{$xtfURL}{$crossqueryPath}?{$modifyString}">
                            <xsl:text>Modify Search</xsl:text>
@@ -255,7 +255,7 @@
                      <xsl:call-template name="browseLinks"/>
                   </div>
                   <xsl:if test="docHit">
-                     <form method="get" action="{$xtfURL}{$crossqueryPath}">
+                     <form method="get" action="{$xtfURL}{$crossqueryPath}" class="pull-right">
                         <div class="form-group form-inline">
                            <label>Sorted by:&#160;</label>
                            <xsl:call-template name="sort.options"/>
@@ -759,7 +759,8 @@ Item number <xsl:value-of select="$num"/>:
             </xsl:if>
             
             <!-- "more like this" -->
-            <tr>
+            <!-- HA 3/20/2014 disabling similiar items -->
+            <!--<tr>
                <td class="col1">
                   <xsl:text>&#160;</xsl:text>
                </td>
@@ -782,7 +783,7 @@ Item number <xsl:value-of select="$num"/>:
                      <a href="javascript:getMoreLike_{@rank}()">Find</a>
                   </span>
                </td>
-            </tr>
+            </tr>-->
             
          </table>
       </div>
