@@ -984,5 +984,5 @@
 	</xsl:template>
 
 	<!--Insert the address for the dsc stylesheet of your choice here.-->
-	<xsl:include href="dsc4.xsl"/>
+	<xsl:include href="dsc6.xsl"/>
 </xsl:stylesheet>
