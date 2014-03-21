@@ -311,12 +311,17 @@
 							</xsl:call-template>
 						</xsl:if>
 						<xsl:if
-							test="archdesc/acqinfo/*   or archdesc/processinfo/*   or archdesc/prefercite/*   or archdesc/custodialhist/*   or archdesc/processinfo/*   or archdesc/appraisal/*   or archdesc/accruals/*   or archdesc/*/acqinfo/*   or archdesc/*/processinfo/*   or archdesc/*/prefercite/*   or archdesc/*/custodialhist/*   or archdesc/*/procinfo/*   or archdesc/*/appraisal/*   or archdesc/*/accruals/*">
+							test="archdesc/acqinfo/*   or archdesc/processinfo/* 
+							or archdesc/prefercite/*   or archdesc/custodialhist/*   
+							or archdesc/processinfo/*   or archdesc/altformavail/* 
+							or archdesc/appraisal/*   or archdesc/accruals/*   
+							or archdesc/*/acqinfo/*   or archdesc/*/processinfo/*  
+							or archdesc/*/altformavail/* or archdesc/*/prefercite/*   or archdesc/*/custodialhist/*   or archdesc/*/procinfo/*   or archdesc/*/appraisal/*   or archdesc/*/accruals/*">
 							<xsl:call-template name="make-toc-link">
 								<xsl:with-param name="name" select="'Administrative Information'"/>
 								<xsl:with-param name="id" select="'adminlink'"/>
 								<xsl:with-param name="nodes"
-									select="archdesc/acqinfo|archdesc/prefercite|archdesc/custodialhist|archdesc/custodialhist|archdesc/processinfo|archdesc/appraisal|archdesc/accruals|archdesc/*/acqinfo|archdesc/*/processinfo|archdesc/*/prefercite|archdesc/*/custodialhist|archdesc/*/procinfo|archdesc/*/appraisal|archdesc/*/accruals/*"
+									select="archdesc/acqinfo|archdesc/prefercite|archdesc/custodialhist|archdesc/custodialhist|archdesc/processinfo|archdesc/altformavail|archdesc/appraisal|archdesc/accruals|archdesc/*/acqinfo|archdesc/*/processinfo|archdesc/*/altformavail|archdesc/*/prefercite|archdesc/*/custodialhist|archdesc/*/procinfo|archdesc/*/appraisal|archdesc/*/accruals/*"
 								/>
 							</xsl:call-template>
 						</xsl:if>
