@@ -441,9 +441,9 @@
                <xsl:value-of select="($dtdVersion)/ead/archdesc/did/unitdate"/>
             </date>
          </xsl:when>
-         <xsl:when test="($dtdVersion)/ead/archdesc/did/*/unitdate">
+         <xsl:when test="($dtdVersion)/ead/archdesc/did/unittitle/unitdate">
             <date xtf:meta="true">
-               <xsl:value-of select="($dtdVersion)/ead/archdesc/did/*/unitdate"/>
+               <xsl:value-of select="($dtdVersion)/ead/archdesc/did/unittitle/unitdate"/>
             </date>
          </xsl:when>
          <xsl:otherwise>
