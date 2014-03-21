@@ -273,13 +273,13 @@
 							determine which elements will be included in the table
 							of contents.  Each if statement tests to see if there is
 							a matching element with content in the finding aid.-->
-						<xsl:if test="archdesc/did">
+						<!--<xsl:if test="archdesc/did">
 							<xsl:call-template name="make-toc-link">
 								<xsl:with-param name="name" select="'Descriptive Summary'"/>
 								<xsl:with-param name="id" select="'headerlink'"/>
 								<xsl:with-param name="nodes" select="archdesc/did"/>
 							</xsl:call-template>
-						</xsl:if>
+						</xsl:if>-->
 						<xsl:if test="archdesc/did/head">
 							<xsl:apply-templates select="archdesc/did/head" mode="tocLink"/>
 						</xsl:if>

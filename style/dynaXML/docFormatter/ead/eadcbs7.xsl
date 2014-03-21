@@ -33,7 +33,11 @@
 	<!-- Creates the body of the finding aid.-->
 	<xsl:template name="body">
 		<!-- HA 3/14/2014 Need to call missing templates, including bioghist, scopecontent, etc here -->	
+		<xsl:apply-templates select="archdesc/bioghist"/>
+		<xsl:apply-templates select="archdesc/scopecontent"/>
+		<xsl:apply-templates select="archdesc/arrangement"/>
 		<xsl:call-template name="archdesc-restrict"/>
+		<xsl:apply-templates select="archdesc/controlaccess"/>
 		<xsl:call-template name="archdesc-relatedmaterial"/>
 		<xsl:call-template name="archdesc-admininfo"/>
 		<xsl:apply-templates select="descendant::dsc"/>
