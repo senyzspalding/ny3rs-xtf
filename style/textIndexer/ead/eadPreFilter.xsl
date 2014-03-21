@@ -436,9 +436,14 @@
    <!-- date --> 
    <xsl:template name="get-ead-date">
       <xsl:choose>
-         <xsl:when test="($dtdVersion)/ead/eadheader/filedesc/publicationstmt/date">
+         <xsl:when test="($dtdVersion)/ead/archdesc/did/unitdate">
             <date xtf:meta="true">
-               <xsl:value-of select="string(($dtdVersion)/ead/eadheader/filedesc/publicationstmt/date[1])"/>
+               <xsl:value-of select="($dtdVersion)/ead/archdesc/did/unitdate"/>
+            </date>
+         </xsl:when>
+         <xsl:when test="($dtdVersion)/ead/archdesc/did/*/unitdate">
+            <date xtf:meta="true">
+               <xsl:value-of select="($dtdVersion)/ead/archdesc/did/*/unitdate"/>
             </date>
          </xsl:when>
          <xsl:otherwise>

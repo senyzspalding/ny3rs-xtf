@@ -709,17 +709,10 @@ Item number <xsl:value-of select="$num"/>:
                   <xsl:text>&#160;</xsl:text>
                </td>
                <td class="col2">
-                  <b>Published:&#160;&#160;</b>
+                  <b>Dates:&#160;&#160;</b>
                </td>
                <td class="col3">
-                  <xsl:choose>
-                     <xsl:when test="meta/year">
-                        <xsl:value-of select="replace(meta/year[1],'^.+ ','')"/>
-                     </xsl:when>
-                     <xsl:otherwise>
-                        <xsl:apply-templates select="meta/date"/>
-                     </xsl:otherwise>
-                  </xsl:choose>
+                  <xsl:apply-templates select="meta/date"/>
                </td>
                <td class="col4">
                   <xsl:text>&#160;</xsl:text>
