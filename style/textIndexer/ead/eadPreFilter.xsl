@@ -339,11 +339,18 @@
                <xsl:value-of select="string(($dtdVersion)/ead/archdesc/did/origination[@label, 'Creator'][1])"/>
             </creator>
          </xsl:when>
-         <xsl:when test="($dtdVersion)/ead/eadheader/filedesc/titlestmt/author">
+         <!--HA 3/21/2014 adding selection of creator by role attribute -->
+         <xsl:when test="($dtdVersion)/ead/archdesc/did/origination[starts-with(@role, 'creator')]">
+            <creator xtf:meta="true">
+               <xsl:value-of select="string(($dtdVersion)/ead/archdesc/did/origination[@role, 'creator'][1])"/>
+            </creator>
+         </xsl:when>   
+         <!-- HA 3/21/2014 disabling indexing of author in titlestmt -->
+         <!--<xsl:when test="($dtdVersion)/ead/eadheader/filedesc/titlestmt/author">
             <creator xtf:meta="true">
                <xsl:value-of select="string(($dtdVersion)/ead/eadheader/filedesc/titlestmt/author[1])"/>
             </creator>
-         </xsl:when>
+         </xsl:when>-->
          <xsl:otherwise>
             <creator xtf:meta="true">
                <xsl:value-of select="'unknown'"/>
