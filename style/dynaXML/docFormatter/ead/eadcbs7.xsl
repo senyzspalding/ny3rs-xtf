@@ -521,7 +521,7 @@
 					<xsl:value-of select="@label"/>
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:text>Dates</xsl:text>
+					<xsl:text>Dates:</xsl:text>
 				</xsl:otherwise>
 			</xsl:choose>
 		</dt>
@@ -560,6 +560,7 @@
       archdesc/phystech |
       archdesc/odd   |
       archdesc/arrangement">
+		<a name="{@id}"></a>
 		<xsl:if test="string(child::*)">
 			<xsl:apply-templates/>
 			<hr/>
@@ -702,6 +703,7 @@
       access element with content. It then invokes one of two templates
       for the children of controlaccess.  -->
 	<xsl:template match="archdesc/controlaccess">
+		<a name="{@id}"></a>
 		<xsl:if test="string(child::*)">
 			<xsl:apply-templates select="head"/>
 			<p style="text-indent:25pt">
