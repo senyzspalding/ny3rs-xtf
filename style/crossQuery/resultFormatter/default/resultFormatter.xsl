@@ -590,18 +590,39 @@ Item number <xsl:value-of select="$num"/>:
                   </xsl:choose>
                </td>
                <td class="col2 col-md-1">
-                  <xsl:if test="$sort = 'creator'">
+                  <xsl:if test="$sort = 'title'">
                      <a name="{$anchor}"/>
                   </xsl:if>
-                  <b>Creator:&#160;&#160;</b>
+                  <b>Title:&#160;&#160;</b>
                </td>
                <td class="col3 col-md-10">
-                  <xsl:choose>
-                     <xsl:when test="meta/creator">
-                        <xsl:apply-templates select="meta/creator[1]"/>
-                     </xsl:when>
-                     <xsl:otherwise>none</xsl:otherwise>
-                  </xsl:choose>
+                  <a>
+                     <xsl:attribute name="href">
+                        <xsl:choose>
+                           <xsl:when test="matches(meta/display, 'dynaxml')">
+                              <xsl:call-template name="dynaxml.url">
+                                 <xsl:with-param name="path" select="$path"/>
+                              </xsl:call-template>
+                           </xsl:when>
+                           <xsl:otherwise>
+                              <xsl:call-template name="rawDisplay.url">
+                                 <xsl:with-param name="path" select="$path"/>
+                              </xsl:call-template>
+                           </xsl:otherwise>
+                        </xsl:choose>
+                     </xsl:attribute>
+                     <xsl:choose>
+                        <xsl:when test="meta/title">
+                           <xsl:apply-templates select="meta/title[1]"/>
+                        </xsl:when>
+                        <xsl:otherwise>none</xsl:otherwise>
+                     </xsl:choose>
+                  </a>
+                  <xsl:text>&#160;</xsl:text>
+                  <xsl:variable name="type" select="meta/type"/>
+                  <span class="typeIcon">
+                     <img src="{$icon.path}i_{$type}.gif" class="typeIcon"/>
+                  </span>
                </td>
                <td class="col4 pull-right">
                   <!-- Add/remove logic for the session bag (only if session tracking enabled) -->
@@ -666,39 +687,19 @@ Item number <xsl:value-of select="$num"/>:
                   <xsl:text>&#160;</xsl:text>
                </td>
                <td class="col2">
-                  <xsl:if test="$sort = 'title'">
+                  <xsl:if test="$sort = 'creator'">
                      <a name="{$anchor}"/>
                   </xsl:if>
-                  <b>Title:&#160;&#160;</b>
+                  <b>Creator:&#160;&#160;</b>
+                  
                </td>
                <td class="col3">
-                  <a>
-                     <xsl:attribute name="href">
-                        <xsl:choose>
-                           <xsl:when test="matches(meta/display, 'dynaxml')">
-                              <xsl:call-template name="dynaxml.url">
-                                 <xsl:with-param name="path" select="$path"/>
-                              </xsl:call-template>
-                           </xsl:when>
-                           <xsl:otherwise>
-                              <xsl:call-template name="rawDisplay.url">
-                                 <xsl:with-param name="path" select="$path"/>
-                              </xsl:call-template>
-                           </xsl:otherwise>
-                        </xsl:choose>
-                     </xsl:attribute>
-                     <xsl:choose>
-                        <xsl:when test="meta/title">
-                           <xsl:apply-templates select="meta/title[1]"/>
-                        </xsl:when>
-                        <xsl:otherwise>none</xsl:otherwise>
-                     </xsl:choose>
-                  </a>
-                  <xsl:text>&#160;</xsl:text>
-                  <xsl:variable name="type" select="meta/type"/>
-                  <span class="typeIcon">
-                     <img src="{$icon.path}i_{$type}.gif" class="typeIcon"/>
-                  </span>
+                  <xsl:choose>
+                     <xsl:when test="meta/creator">
+                        <xsl:apply-templates select="meta/creator[1]"/>
+                     </xsl:when>
+                     <xsl:otherwise>none</xsl:otherwise>
+                  </xsl:choose>
                </td>
                <td class="col4">
                   <xsl:text>&#160;</xsl:text>
