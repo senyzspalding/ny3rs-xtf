@@ -64,8 +64,9 @@
                      <ul class="nav nav-tabs nav-justified">
                         <li class="{if(matches($smode,'simple')) then 'active' else ''}"><a href="search?smode=simple">Keyword</a></li>
                         <li class="{if(matches($smode,'advanced')) then 'active' else ''}"><a href="search?smode=advanced">Advanced</a></li>
-                        <li class="{if(matches($smode,'freeform')) then 'active' else ''}"><a href="search?smode=freeform">Freeform</a></li>
-                        <li class="{if(matches($smode,'browse')) then 'active' else ''}"><a href="search?smode=browse">Browse</a></li>
+                        <!-- HA 3/21/2014 goodbye free form query -->
+                        <!--<li class="{if(matches($smode,'freeform')) then 'active' else ''}"><a href="search?smode=freeform">Freeform</a></li>-->
+                        <li class="{if(matches($smode,'browse')) then 'active' else ''}"><a href="search?browse-all=yes">Browse</a></li>
                      </ul>
                   <div class="form">
                      <xsl:choose>
@@ -78,13 +79,13 @@
                         <xsl:when test="matches($smode,'freeform')">
                            <xsl:call-template name="freeformForm"/>
                         </xsl:when>
-                        <xsl:when test="matches($smode,'browse')">
+                        <!--<xsl:when test="matches($smode,'browse')">
                            <h3>Browse all documents by the available facets, or alphanumerically by
                               author or title:</h3>
                            <div>
                               <xsl:call-template name="browseLinks"/>
                            </div>
-                        </xsl:when>
+                        </xsl:when>-->
                      </xsl:choose>
                   </div>
                </div>
