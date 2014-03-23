@@ -21,8 +21,8 @@
 any introductory paragraphs.-->
 
 	<xsl:template match="archdesc/dsc">
-		<a name="{@id}"></a>
-			<xsl:apply-templates/>
+		<a name="{@id}"/>
+		<xsl:apply-templates/>
 	</xsl:template>
 	
 	<!--Formats dsc/head and makes it a link target.-->
@@ -196,12 +196,8 @@ for each level.-->
 			<tr>
 				<td colspan="12">
 					<b>
-						<a name="{../@id}">
-							<!--<xsl:attribute name="name">
-								<xsl:text>series</xsl:text><xsl:number from="dsc" count="c01 "/>
-							</xsl:attribute>-->
-							<xsl:call-template name="component-did"/>
-						</a>
+						<a name="{../@id}"></a>
+						<xsl:call-template name="component-did"/>
 					</b>
 				</td>
 			</tr>
@@ -357,6 +353,7 @@ for each level.-->
 				<td valign="top"></td>
 				<td valign="top" colspan="11">
 					<b>
+						<a name="{../@id}"></a>
 						<xsl:call-template name="component-did"/>
 					</b>
 
