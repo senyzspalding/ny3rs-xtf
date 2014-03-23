@@ -250,10 +250,6 @@
                         <xsl:text> Items</xsl:text>
                      </xsl:otherwise>
                   </xsl:choose>
-                  <div>
-                     <xsl:text>Browse by </xsl:text>
-                     <xsl:call-template name="browseLinks"/>
-                  </div>
                   <xsl:if test="docHit">
                      <form method="get" action="{$xtfURL}{$crossqueryPath}" class="pull-right">
                         <div class="form-group form-inline">
@@ -682,6 +678,7 @@ Item number <xsl:value-of select="$num"/>:
                   </xsl:if>
                </td>
             </tr>
+            <xsl:if test="meta/creator != ''">
             <tr>
                <td class="col1">
                   <xsl:text>&#160;</xsl:text>
@@ -705,6 +702,8 @@ Item number <xsl:value-of select="$num"/>:
                   <xsl:text>&#160;</xsl:text>
                </td>
             </tr>
+            </xsl:if>
+            <xsl:if test="meta/date != ''">
             <tr>
                <td class="col1">
                   <xsl:text>&#160;</xsl:text>
@@ -719,6 +718,7 @@ Item number <xsl:value-of select="$num"/>:
                   <xsl:text>&#160;</xsl:text>
                </td>
             </tr>
+            </xsl:if>
             <xsl:if test="meta/subject">
                <tr>
                   <td class="col1">
