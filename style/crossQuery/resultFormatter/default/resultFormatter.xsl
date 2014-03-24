@@ -277,7 +277,7 @@
                         <xsl:if test="not($smode='showBag')">
                            <div class="facet col-md-3">
                               <xsl:apply-templates select="facet[@field='facet-subject']"/>
-                              <xsl:apply-templates select="facet[@field='facet-date']"/>
+                              <xsl:apply-templates select="facet[@field='facet-publisher']"/>
                            </div>
                         </xsl:if>
                         <div class="docHit col-md-9">

@@ -122,7 +122,8 @@
          <xsl:apply-templates select="$meta/*:date[1]" mode="sort"/>
          
          <!-- Create facets -->
-         <xsl:apply-templates select="$meta/*:date" mode="facet"/>
+         <!-- HA 3/23/2014 Removing date facet for now -->
+         <!--<xsl:apply-templates select="$meta/*:date" mode="facet"/>-->
          <xsl:apply-templates select="$meta/*:subject" mode="facet"/>
          <xsl:apply-templates select="$meta/*:publisher" mode="facet"/>﻿﻿  <!--senylrc added this-->
 
