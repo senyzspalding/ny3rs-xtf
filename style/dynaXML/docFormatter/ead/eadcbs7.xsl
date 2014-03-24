@@ -390,6 +390,12 @@
 		<h3 style="text-align:center">
 			<xsl:value-of select="filedesc/titlestmt/subtitle"/>
 		</h3>
+	<h4 style="text-align:center">
+<xsl:value-of select="filedesc/titlestmt/author"/>
+</h4>
+<h4 style="text-align:center">
+<xsl:value-of select="filedesc/titlestmt/sponsor"/>
+</h4>
 	</xsl:template>
 
 	<!--This template creates a table for the did, inserts the head and then
