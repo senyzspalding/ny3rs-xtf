@@ -83,6 +83,7 @@ that is used generically throughout the stylesheet.-->
 				<xsl:text>&#x20;</xsl:text>
 				<xsl:for-each select="unitdate">
 					<xsl:apply-templates/>
+					<xsl:if test="following-sibling::unitdate"><xsl:text>,</xsl:text></xsl:if>
 					<xsl:text>&#x20;</xsl:text>
 				</xsl:for-each>
 			</xsl:otherwise>
