@@ -796,7 +796,7 @@
 			<xsl:apply-templates select="archdesc/custodhist
             | archdesc/*/custodhist"/>
 			<xsl:apply-templates select="archdesc/altformavail
-            | archdesc/*/altformavailable"/>
+            | archdesc/*/altformavail"/>
 			<xsl:apply-templates select="archdesc/prefercite
             | archdesc/*/prefercite"/>
 			<xsl:apply-templates select="archdesc/acqinfo
