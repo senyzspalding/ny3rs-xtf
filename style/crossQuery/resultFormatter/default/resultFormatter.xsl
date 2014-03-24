@@ -251,6 +251,9 @@
                      </xsl:otherwise>
                   </xsl:choose>
                   <xsl:if test="docHit">
+                     <div>
+                        <xsl:call-template name="pages"/>
+                     </div>
                      <form method="get" action="{$xtfURL}{$crossqueryPath}" class="pull-right">
                         <div class="form-group form-inline">
                            <label>Sorted by:&#160;</label>
@@ -263,9 +266,6 @@
                            <input class="btn btn-primary" type="submit" value="Go!"/>
                         </div>
                      </form>
-                     <div>
-                        <xsl:call-template name="pages"/>
-                     </div>
                   </xsl:if>
                </div>
                </div>
@@ -572,10 +572,9 @@ Item number <xsl:value-of select="$num"/>:
          </xsl:choose>
       </xsl:variable>
       
-      <div id="main_{@rank}" class="docHit">    
-         <table class="table">          
-            <tr>
-               <td class="col1 col-md-1">
+      <div id="main_{@rank}" class="docHit col-md-12">
+            <div class="row">
+               <div class="col-md-1">
                   <xsl:choose>
                      <xsl:when test="$sort = ''">
                         <b><xsl:value-of select="@rank"/></b>
@@ -584,14 +583,14 @@ Item number <xsl:value-of select="$num"/>:
                         <xsl:text>&#160;</xsl:text>
                      </xsl:otherwise>
                   </xsl:choose>
-               </td>
-               <td class="col2 col-md-1">
+               </div>
+               <div class="col-md-1">
                   <xsl:if test="$sort = 'title'">
                      <a name="{$anchor}"/>
                   </xsl:if>
                   <b>Title:&#160;&#160;</b>
-               </td>
-               <td class="col3 col-md-10">
+               </div>
+               <div class="col-md-9">
                   <a>
                      <xsl:attribute name="href">
                         <xsl:choose>
@@ -614,13 +613,14 @@ Item number <xsl:value-of select="$num"/>:
                         <xsl:otherwise>none</xsl:otherwise>
                      </xsl:choose>
                   </a>
-                  <xsl:text>&#160;</xsl:text>
+                  <!-- HA 3/24/2014 commenting out type icon, since they will all be the same -->
+                  <!--<xsl:text>&#160;</xsl:text>
                   <xsl:variable name="type" select="meta/type"/>
                   <span class="typeIcon">
                      <img src="{$icon.path}i_{$type}.gif" class="typeIcon"/>
-                  </span>
-               </td>
-               <td class="col4 pull-right">
+                  </span>-->
+               </div>
+               <div class="col4 pull-right">
                   <!-- Add/remove logic for the session bag (only if session tracking enabled) -->
                   <xsl:if test="session:isEnabled()">
                      <xsl:choose>
@@ -676,80 +676,58 @@ Item number <xsl:value-of select="$num"/>:
                         </xsl:otherwise>
                      </xsl:choose>
                   </xsl:if>
-               </td>
-            </tr>
+               </div>
+            </div>
             <xsl:if test="meta/creator != ''">
-            <tr>
-               <td class="col1">
-                  <xsl:text>&#160;</xsl:text>
-               </td>
-               <td class="col2">
+            <div class="row">
+               <div class="col-md-1 col-md-offset-1">
                   <xsl:if test="$sort = 'creator'">
                      <a name="{$anchor}"/>
                   </xsl:if>
                   <b>Creator:&#160;&#160;</b>
-                  
-               </td>
-               <td class="col3">
+               </div>
+               <div class="col-md-10">
                   <xsl:choose>
                      <xsl:when test="meta/creator">
                         <xsl:apply-templates select="meta/creator[1]"/>
                      </xsl:when>
                      <xsl:otherwise>none</xsl:otherwise>
                   </xsl:choose>
-               </td>
-               <td class="col4">
-                  <xsl:text>&#160;</xsl:text>
-               </td>
-            </tr>
+               </div>
+            </div>
             </xsl:if>
             <xsl:if test="meta/date != ''">
-            <tr>
-               <td class="col1">
-                  <xsl:text>&#160;</xsl:text>
-               </td>
-               <td class="col2">
+            <div class="row">
+               <div class="col-md-1 col-md-offset-1">
                   <b>Dates:&#160;&#160;</b>
-               </td>
-               <td class="col3">
+               </div>
+               <div class="col-md-10">
                   <xsl:apply-templates select="meta/date"/>
-               </td>
-               <td class="col4">
-                  <xsl:text>&#160;</xsl:text>
-               </td>
-            </tr>
+               </div>
+            </div>
             </xsl:if>
             <xsl:if test="meta/subject">
-               <tr>
-                  <td class="col1">
-                     <xsl:text>&#160;</xsl:text>
-                  </td>
-                  <td class="col2">
+               <div class="row">
+                  <div class="col-md-1 col-md-offset-1">
                      <b>Subjects:&#160;&#160;</b>
-                  </td>
-                  <td class="col3">
+                  </div>
+                  <div class="col-md-10">
                      <xsl:apply-templates select="meta/subject"/>
-                  </td>
-                  <td class="col4">
-                     <xsl:text>&#160;</xsl:text>
-                  </td>
-               </tr>
+                  </div>
+               </div>
             </xsl:if>
             <xsl:if test="snippet">
-               <tr>
-                  <td class="col1">
-                     <xsl:text>&#160;</xsl:text>
-                  </td>
-                  <td class="col2">
+               <div class="row">
+                  <div class="col-md-1 col-md-offset-1">
                      <b>Matches:&#160;&#160;</b>
                      <br/>
                      <xsl:value-of select="@totalHits"/> 
                      <xsl:value-of select="if (@totalHits = 1) then ' hit' else ' hits'"/>&#160;&#160;&#160;&#160;
-                  </td>
-                  <td class="col3" colspan="2">
+                  </div>
+                  <div class="col-md-10">
                      <xsl:apply-templates select="snippet" mode="text"/>
-                  </td>
-               </tr>
+                  </div>
+               </div>
             </xsl:if>
             
             <!-- "more like this" -->
@@ -778,8 +756,9 @@ Item number <xsl:value-of select="$num"/>:
                   </span>
                </td>
             </tr>-->
-            
-         </table>
+         <!-- HA Adding extra row for padding, should be removed eventually -->
+         <div class="row">&#160;</div>
+         
       </div>
       
    </xsl:template>
@@ -813,10 +792,10 @@ Item number <xsl:value-of select="$num"/>:
       <xsl:choose>
          <xsl:when test="ancestor::query"/>
          <xsl:when test="not(ancestor::snippet) or not(matches($display, 'dynaxml'))">
-            <span class="hit"><xsl:apply-templates/></span>
+            <span class="bg-info hit"><xsl:apply-templates/></span>
          </xsl:when>
          <xsl:otherwise>
-            <a href="{$snippet.link}" class="hit"><xsl:apply-templates/></a>
+            <a href="{$snippet.link}" class="bg-info hit"><xsl:apply-templates/></a>
          </xsl:otherwise>
       </xsl:choose> 
       
@@ -830,7 +809,7 @@ Item number <xsl:value-of select="$num"/>:
       <xsl:choose>
          <xsl:when test="ancestor::query"/>
          <xsl:otherwise>
-            <span class="hit"><xsl:apply-templates/></span>
+            <span class="bg-info hit"><xsl:apply-templates/></span>
          </xsl:otherwise>
       </xsl:choose> 
       
