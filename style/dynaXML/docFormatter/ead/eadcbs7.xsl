@@ -663,46 +663,222 @@
 		</div>
 	</xsl:template>
 
-	<!--This template rule formats the top-level related material
+   <!--This template rule formats the top-level related material
       elements by combining any related or separated materials
       elements. It begins by testing to see if there related or separated
       materials elements with content.-->
-	<xsl:template name="archdesc-relatedmaterial">
-		<xsl:if test="string(archdesc/relatedmaterial) or
+   <xsl:template name="archdesc-relatedmaterial">
+      <xsl:if test="string(archdesc/relatedmaterial) or
          string(archdesc/*/relatedmaterial) or
+string(archdesc/*/relatedmaterial/relatedmaterial)
+or 
          string(archdesc/separatedmaterial) or
-         string(archdesc/*/separatedmaterial)">
-			<h3>
-				<a name="relatedmatlink"/>
-				<xsl:text>Related Material</xsl:text>
-			</h3>
-			<xsl:apply-templates
-				select="archdesc/relatedmaterial/p
-            | archdesc/*/relatedmaterial/p
-            | archdesc/relatedmaterial/note/p
-            | archdesc/*/relatedmaterial/note/p"/>
-			<xsl:apply-templates
-				select="archdesc/separatedmaterial/p
-            | archdesc/*/separatedmaterial/p
-            | archdesc/separatedmaterial/note/p
-            | archdesc/*/separatedmaterial/note/p"/>
-			<hr/>
-		</xsl:if>
-	</xsl:template>
+         string(archdesc/*/separatedmaterial)
+or string(archdesc/*/separatedmaterial/separatedmaterial)">
+         <h3>
+            <a name="relatedmatlink">
+               <b>
+                  <xsl:text>Related Material</xsl:text>
+               </b>
+            </a>
+         </h3>
 
-	<xsl:template
-		match="archdesc/relatedmaterial/p
+<p>
+         <xsl:apply-templates select="archdesc/relatedmaterial/p
+            | archdesc/*/relatedmaterial/p
+| archdesc/*/relatedmaterial/relatedmaterial/p
+
+            | archdesc/relatedmaterial/note/p
+            | archdesc/*/relatedmaterial/note/p
+| archdesc/*/relatedmaterial/relatedmaterial/note/p
+
+|archdesc/relatedmaterial/list/*
+            | archdesc/*/relatedmaterial/list/*
+| archdesc/*/relatedmaterial/relatedmaterial/list/*"/>
+         </p>
+
+<xsl:apply-templates select="archdesc/separatedmaterial/p
+            | archdesc/*/separatedmaterial/p
+| archdesc/*/separatedmaterial/separatedmaterial/p
+
+            | archdesc/separatedmaterial/note/p
+            | archdesc/*/separatedmaterial/note/p
+| archdesc/*/separatedmaterial/separatedmaterial/note/p
+
+| archdesc/separatedmaterial/list/*
+            | archdesc/*/separatedmaterial/list/*
+| archdesc/*/separatedmaterial/separatedmaterial/list/*"/>
+
+
+
+         <hr></hr>
+      </xsl:if>
+   </xsl:template>
+   
+   <xsl:template match="archdesc/relatedmaterial/p
       | archdesc/*/relatedmaterial/p
+| archdesc/*/relatedmaterial/relatedmaterial/p
+
       | archdesc/separatedmaterial/p
       | archdesc/*/separatedmaterial/p
+| archdesc/*/separatedmaterial/separatedmaterial/p
+
       | archdesc/relatedmaterial/note/p
       | archdesc/*/relatedmaterial/note/p
+| archdesc/*/relatedmaterial/relatedmaterial/note/p
+
       | archdesc/separatedmaterial/note/p
-      | archdesc/*/separatedmaterial/note/p">
-		<p style="margin-left: 25pt">
-			<xsl:apply-templates/>
-		</p>
-	</xsl:template>
+      | archdesc/*/separatedmaterial/note/p
+| archdesc/*/separatedmaterial/separatedmaterial/note/p">
+
+      <p style="margin-left: 25pt">
+         <xsl:apply-templates/>
+      </p>
+   </xsl:template>
+   
+<!-- LISTS -->
+   <!--This template rule formats a list element anywhere
+      except in arrangement.-->
+   <xsl:template match="list[parent::*[not(self::arrangement)]]/head">
+      <div class="list_head">
+
+         <xsl:attribute name="id">
+            <!-- originally <xsl:text>series</xsl:text><xsl:number from="dsc" count="c01 "/> -->
+            <xsl:value-of select="@id"/>
+         </xsl:attribute>
+         <b>
+            <xsl:apply-templates/>
+         </b>
+      </div>
+   </xsl:template>
+
+   <xsl:template match="list[parent::*[not(self::arrangement)]]/defitem">
+      <div class="deflist_top">
+         <p>
+            <xsl:apply-templates/>
+         </p>
+      </div>
+   </xsl:template>
+
+   <xsl:template match="list[parent::*[not(self::arrangement)]]/defitem/label">
+      <div class="deflist_label">
+         <xsl:apply-templates/>
+         <br/>
+      </div>
+   </xsl:template>
+
+   <xsl:template match="list[parent::*[not(self::arrangement)]]/defitem/item">
+      <div class="deflist_item">
+         <xsl:apply-templates/>
+         <br/>
+      </div>
+   </xsl:template>
+
+   <xsl:template match="list[parent::*[not(self::arrangement)]]/item">
+      <div class="list_item">
+         <xsl:apply-templates/>
+         <br/>
+      </div>
+   </xsl:template>
+
+   <xsl:template match="list[@type='marked']/item">
+      <div class="marked_item">
+         <xsl:text>&#8226;&#x20;&#x20;&#x20;</xsl:text>
+         <xsl:apply-templates/>
+         <br/>
+      </div>
+   </xsl:template>
+
+   <!-- added from eadshared.xsl in NoteTabPro styles folder -->
+   <xsl:template match="list[@type=&quot;ordered&quot;]">
+
+      <span class="numberedindex">
+         <xsl:element name="table">
+            <xsl:call-template name="tableattrs"/>
+            <xsl:if test="ancestor::list">
+               <xsl:attribute name="style">margin-left:12px</xsl:attribute>
+            </xsl:if>
+            <xsl:apply-templates select="head"/>
+            <xsl:for-each select="item">
+               <!-- node is item -->
+               <xsl:element name="tr">
+                  <xsl:element name="td">
+
+                     <xsl:attribute name="valign">
+                        <xsl:text>top</xsl:text>
+                     </xsl:attribute>
+                     <xsl:choose>
+                        <xsl:when test="parent::list/@numeration">
+                           <xsl:choose>
+                              <xsl:when test="parent::list/@numeration=&quot;arabic&quot;">
+                                 <xsl:number level="single" format="1."/>
+                              </xsl:when>
+                              <xsl:when test="parent::list/@numeration=&quot;upperalpha&quot;">
+                                 <xsl:number level="single" format="A."/>
+                              </xsl:when>
+                              <xsl:when test="parent::list/@numeration=&quot;loweralpha&quot;">
+                                 <xsl:number level="single" format="a."/>
+                              </xsl:when>
+                              <xsl:when test="parent::list/@numeration=&quot;upperroman&quot;">
+                                 <xsl:number level="single" format="I."/>
+                              </xsl:when>
+                              <xsl:when test="parent::list/@numeration=&quot;lowerroman&quot;">
+                                 <xsl:number level="single" format="i."/>
+                              </xsl:when>
+                              <xsl:otherwise> </xsl:otherwise>
+                           </xsl:choose>
+                        </xsl:when>
+                        <xsl:otherwise>
+                           <xsl:choose>
+                              <!-- inner choose -->
+
+                              <xsl:when
+                                 test="parent::list/parent::item/parent::list/parent::item/parent::list[not(parent::item)]">
+                                 <xsl:number level="single" format="1."/>
+                              </xsl:when>
+                              <xsl:when
+                                 test="parent::list/parent::item/parent::list[not(parent::item)]">
+                                 <xsl:number level="single" format="A."/>
+                              </xsl:when>
+
+                              <xsl:when test="parent::list[not(parent::item)]">
+                                 <xsl:number level="single" format="I."/>
+                              </xsl:when>
+                              <xsl:otherwise>
+                                 <xsl:message>
+                                    <xsl:text>List nesting exceeds level tested for in</xsl:text>
+                                    <xsl:text>stylesheet!!!</xsl:text>
+                                 </xsl:message>
+                              </xsl:otherwise>
+                           </xsl:choose>
+                           <!-- close inner choose -->
+                        </xsl:otherwise>
+                     </xsl:choose>
+                     <xsl:text>&#160;</xsl:text>
+                  </xsl:element>
+                  <xsl:element name="td">
+                     <xsl:attribute name="valign">
+                        <xsl:text>top</xsl:text>
+                     </xsl:attribute>
+                     <xsl:apply-templates/>
+                  </xsl:element>
+               </xsl:element>
+            </xsl:for-each>
+
+         </xsl:element>
+      </span>
+   </xsl:template>
+
+<!-- Table outline template -->
+   <xsl:template name="tableattrs">
+      <xsl:attribute name="border">
+         <xsl:value-of select="$borderon"/>
+      </xsl:attribute>
+      <xsl:attribute name="cellspacing">1</xsl:attribute>
+      <xsl:attribute name="cellpadding">1</xsl:attribute>
+   </xsl:template>
+ <!-- Variable to store the value of the border of declared tables-->
+   <xsl:variable name="borderon">0</xsl:variable>
 
 	<!--This template formats the top-level controlaccess element.
       It begins by testing to see if there is any controlled
