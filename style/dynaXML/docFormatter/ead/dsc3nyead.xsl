@@ -1,4 +1,4 @@
-Enter file contents here<!--Revision date 26 December 2003-->
+
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xtf="http://cdlib.org/xtf"
 	xmlns="http://www.w3.org/1999/xhtml" version="1.0">
 
