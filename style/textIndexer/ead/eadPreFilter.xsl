@@ -366,14 +366,14 @@
          <xsl:when test="($dtdVersion)/ead/archdesc//controlaccess/subject">
             <xsl:for-each-group select="($dtdVersion)/ead/archdesc//controlaccess/subject" group-by="string()">
                <subject xtf:meta="true">
-                  <xsl:value-of select="."/>
+                  <xsl:value-of select="normalize-space(.)"/>
                </subject>
             </xsl:for-each-group>
          </xsl:when>
          <xsl:when test="($dtdVersion)/ead/eadheader/filedesc/notestmt/subject">
             <xsl:for-each-group select="($dtdVersion)/ead/eadheader/filedesc/notestmt/subject" group-by="string()">
                <subject xtf:meta="true">
-                  <xsl:value-of select="."/>
+                  <xsl:value-of select="normalize-space(.)"/>
                </subject>
             </xsl:for-each-group>
          </xsl:when>
@@ -399,14 +399,41 @@
    <!-- publisher -->
    <xsl:template name="get-ead-publisher">
       <xsl:choose>
-         <xsl:when test="($dtdVersion)/ead/archdesc/did/repository">
-            <publisher xtf:meta="true">
-               <xsl:value-of select="string(($dtdVersion)/ead/archdesc/did/repository[1])"/>
-            </publisher>
+         <xsl:when test="($dtdVersion)/ead/eadheader/eadid/@mainagencycode">
+            <xsl:if test="'nalsu'">
+               <publisher xtf:meta="true">
+                  <xsl:text>M. E. Grenander Department of Special Collections and Archives</xsl:text>
+               </publisher>
+            </xsl:if>
+            <xsl:if test="'ncga'"><publisher xtf:meta="true"><xsl:text>Adelphi University</xsl:text></publisher></xsl:if>
+            <xsl:if test="'nnan'"><publisher xtf:meta="true"><xsl:text>American Numismatic Society Archives</xsl:text></publisher></xsl:if>
+            <xsl:if test="'US-NyBlHS'"><publisher xtf:meta="true"><xsl:text>Brooklyn Historical Society</xsl:text></publisher></xsl:if>
+            <xsl:if test="'NyNyCJH'"><publisher xtf:meta="true"><xsl:text>Center for Jewish History</xsl:text></publisher></xsl:if>
+            <xsl:if test="'nnc-a'"><publisher xtf:meta="true"><xsl:text>Avery Architecture and Fine Arts Library. Department of Drawings and Archives.</xsl:text></publisher></xsl:if>
+            <xsl:if test="'nnc-rb'"><publisher xtf:meta="true"><xsl:text>Rare Book and Manuscript Library. Columbia University Libraries</xsl:text></publisher></xsl:if>
+            <xsl:if test="'nic'"><publisher xtf:meta="true"><xsl:text>Cornell University</xsl:text></publisher></xsl:if>
+            <xsl:if test="'nhyf'"><publisher xtf:meta="true"><xsl:text>Franklin D. Roosevelt Presidential Library and Museum</xsl:text></publisher></xsl:if>
+            <xsl:if test="'NNMoMA'"><publisher xtf:meta="true"><xsl:text>The Museum of Modern Art Archives</xsl:text></publisher></xsl:if>
+            <xsl:if test="'US-NNNS'"><publisher xtf:meta="true"><xsl:text>Kellen Design Archives</xsl:text></publisher></xsl:if>
+            <xsl:if test="'US-NN'"><publisher xtf:meta="true"><xsl:text>The New York Public Library</xsl:text></publisher></xsl:if>
+            <xsl:if test="'NSy'"><publisher xtf:meta="true"><xsl:text>Onondaga County Public Library</xsl:text></publisher></xsl:if>
+            <xsl:if test="'US-NNttR'"><publisher xtf:meta="true"><xsl:text>Rockefeller Archive Center</xsl:text></publisher></xsl:if>
+            <xsl:if test="'NBuU-AR'"><publisher xtf:meta="true"><xsl:text>State University of New York at Buffalo. University Archives</xsl:text></publisher></xsl:if>
+            <xsl:if test="'NSyOHi'"><publisher xtf:meta="true"><xsl:text>The Onondaga Historical Association</xsl:text></publisher></xsl:if>
+            <xsl:if test="'NBuU-L'"><publisher xtf:meta="true"><xsl:text>State University of New York at Buffalo. Charles B. Sears Law Library</xsl:text></publisher></xsl:if>
+            <xsl:if test="'NBuU-Mu'"><publisher xtf:meta="true"><xsl:text>State University of New York at Buffalo. Music Library</xsl:text></publisher></xsl:if>
+            <xsl:if test="'NBuU-PO'"><publisher xtf:meta="true"><xsl:text>State University of New York at Buffalo. Poetry Collection</xsl:text></publisher></xsl:if>
+            <xsl:if test="'NSyU'"><publisher xtf:meta="true"><xsl:text>Syracuse University</xsl:text></publisher></xsl:if>
+            <xsl:if test="'VXW'"><publisher xtf:meta="true"><xsl:text>Archives and Special Collections Library, Vassar College Libraries</xsl:text></publisher></xsl:if>
          </xsl:when>
          <xsl:when test="($dtdVersion)/ead/eadheader/filedesc/publicationstmt/publisher">
             <publisher xtf:meta="true">
-               <xsl:value-of select="string(($dtdVersion)/ead/eadheader/filedesc/publicationstmt/publisher[1])"/>
+               <xsl:value-of select="normalize-space(($dtdVersion)/ead/eadheader/filedesc/publicationstmt/publisher[1])"/>
+            </publisher>
+         </xsl:when>
+         <xsl:when test="($dtdVersion)/ead/archdesc/did/repository">
+            <publisher xtf:meta="true">
+               <xsl:value-of select="normalize-space(($dtdVersion)/ead/archdesc/did/repository[1])"/>
             </publisher>
          </xsl:when>
          <xsl:otherwise>
