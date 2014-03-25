@@ -954,10 +954,8 @@ or string(archdesc/*/separatedmaterial/separatedmaterial)">
       children of archdesc, admininfo, or descgrp.
       It begins by testing to see if there are any elements of this type
       with content.-->
-
 	<xsl:template name="archdesc-admininfo">
-		<xsl:if
-			test="string(archdesc/admininfo/custodhist/*)
+		<xsl:if test="string(archdesc/admininfo/custodhist/*)
          or string(archdesc/altformavail/*)
          or string(archdesc/prefercite/*)
          or string(archdesc/acqinfo/*)
@@ -996,8 +994,8 @@ or string(archdesc/*/separatedmaterial/separatedmaterial)">
 
 	<!--This template rule formats the head element of top-level elements of
       administrative information.-->
-	<xsl:template
-		match="custodhist/head
+
+   <xsl:template match="custodhist/head
       | archdesc/altformavail/head
       | archdesc/prefercite/head
       | archdesc/acqinfo/head
@@ -1018,8 +1016,7 @@ or string(archdesc/*/separatedmaterial/separatedmaterial)">
 		</h4>
 	</xsl:template>
 
-	<xsl:template
-		match="custodhist/p
+	<xsl:template match="custodhist/p
       | archdesc/altformavail/p
       | archdesc/prefercite/p
       | archdesc/acqinfo/p
@@ -1141,7 +1138,6 @@ or string(archdesc/*/separatedmaterial/separatedmaterial)">
 					</td>
 					<!--Supplies whitespace and punctuation if there is a pointer
                   group with multiple entries.-->
-
 					<xsl:choose>
 						<xsl:when test="ptrgrp">
 							<td>
@@ -1172,5 +1168,5 @@ or string(archdesc/*/separatedmaterial/separatedmaterial)">
 	</xsl:template>
 
 	<!--Insert the address for the dsc stylesheet of your choice here.-->
-	<xsl:include href="dsc6.xsl"/>
+   <xsl:include href="dsc6.xsl"/>
 </xsl:stylesheet>

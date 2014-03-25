@@ -367,45 +367,26 @@
 
 	<!--This template processes c02 elements that have associated containers, for
       example when c02 is a file.-->
-	<xsl:template name="c02-level-container">
-		<xsl:for-each select="did">
 
-			<!--The next two variables define the set of container types that
-            may appear in the first column of a two column container list.
-            Add or subtract container types to fix institutional practice.-->
-		<xsl:variable name="first" select="container[@type='Box' or @type='box' or @type='Oversize' 
-		or @type='oversize' or @type='Volume' or @type='volume' or @type='Carton' or @type='carton' 
-		or @type='Reel' or @type='reel' or @type='Item' or @type='item' or @type='Box-folder' 
-		or @type='box-folder' or @type='CD' or @type='cd' or @type='CD-ROM' or @type='DVD' 
-		or @type='dvd' or @type='Image' or @type='image' or @type='Frame' or @type='frame' 
-		or @type='Page' or @type='page' or @type='Folder' or @type='folder' or @type='Folio' 
-		or @type='folio' or @type='Dropbox' or @type='dropbox' or @type='Oversize-folder' 
-		or @type='oversize-folder' or @type='Oversize-box' or @type='oversize-box']"/>
-
-         <xsl:variable name="preceding" select="preceding::did[1]/container[@type='Box' or @type='box' 
-         or @type='Oversize' or @type='oversize' or @type='Volume' or @type='volume' or @type='Carton' 
-         or @type='carton'  or @type='Reel' or @type='reel' or @type='Item' or @type='item' 
-         or @type='Box-folder' or @type='box-folder' or @type='CD' or @type='cd' or @type='CD-ROM' 
-         or @type='DVD' or @type='dvd' or @type='Image' or @type='image' or @type='Frame' or @type='frame' 
-         or @type='Page' or @type='page' or @type='Folder' or @type='folder' or @type='Folio' 
-         or @type='folio' or @type='Dropbox' or @type='dropbox' or @type='Oversize-folder' 
-         or @type='oversize-folder' or @type='Oversize-box' or @type='oversize-box']"/>
+   <xsl:template name="c02-level-container">
+      <xsl:for-each select="did">
          
-         <!--This variable defines the set of container types that
-            may appear in the second column of a two column container list.
-            Add or subtract container types to fix institutional practice.-->
+         <xsl:variable name="first" select="container[@type='Box' or @type='box' or @type='Oversize' 
+         or @type='oversize' or @type='Volume' or @type='volume' or @type='Carton' or @type='carton' 
+         or @type='Folder' or @type='folder' or @type='Item' or @type='item' or @type='Reel' or @type='reel' 
+         or @type='box-folder' or @type='Box-folder' or @type='oversize-box' or @type='oversize-folder' 
+         or @type='CD' or @type='CD-ROM' or @type='DVD' or @type='image' or @type='image-file']"/>
+         
 
-         <xsl:variable name="second" select="container[@type='Box' or @type='box' or @type='Oversize' 
-         or @type='oversize' or @type='Volume' or @type='volume' or @type='Carton' or @type='carton'  
-         or @type='Reel' or @type='reel' or @type='Item' or @type='item' or @type='Box-folder' 
-         or @type='box-folder' or @type='CD' or @type='cd' or @type='CD-ROM' or @type='DVD' or @type='dvd' 
-         or @type='Image' or @type='image' or @type='Frame' or @type='frame' or @type='Page' or @type='page' 
-         or @type='Folder' or @type='folder' or @type='Folio' or @type='folio' or @type='Dropbox' 
-         or @type='dropbox' or @type='Oversize-folder' or @type='oversize-folder' or @type='Oversize-box' 
-         or @type='oversize-box']"/>
-
-			<xsl:choose>
-				<!--When the container value or the container type of the first
+<xsl:variable name="preceding" select="preceding::did[1]/container[@type='Box' or @type='box' or @type='Oversize' 
+or @type='oversize' or @type='Volume' or @type='volume' or @type='Carton' or @type='carton' or @type='Folder' 
+or @type='folder' or @type='Item' or @type='item' or @type='Reel' or @type='reel' or @type='box-folder' 
+or @type='Box-folder' or @type='oversize-box' or @type='oversize-folder' or @type='CD' or @type='CD-ROM' 
+or @type='DVD' or @type='image' or @type='image-file' or @type='Frame' or @type='frame' or @type='Page' 
+or @type='page' or @type='Folio' or @type='folio']"/>
+         
+         <xsl:choose>
+            <!--When the container value or the container type of the first
                container is not are the same as that of the comparable container
                in the previous component, insert column heads and the contents of
                the container elements.-->
@@ -1403,58 +1384,57 @@
                the container elements.-->
 				<xsl:when test="not($preceding=$first) or
                not($preceding/@type=$first/@type)">
-					<tr>
-						<td valign="top">
-							<xsl:value-of select="$first/@type"/>
-						</td>
-						<td valign="top">
-							<xsl:value-of select="$second/@type"/>
-						</td>
-					</tr>
-					<tr>
-						<td valign="top">
-							<xsl:apply-templates select="$first"/>
-						</td>
-						<td valign="top">
-							<xsl:apply-templates select="$second"/>
-						</td>
-						<td> </td>
-						<td> </td>
-						<td> </td>
-						<td> </td>
-						<td> </td>
-						<td> </td>
-						<td> </td>
-						<td> </td>
-						<td valign="top" colspan="2">
-							<xsl:call-template name="component-did"/>
-						</td>
-					</tr>
-				</xsl:when>
-				<xsl:otherwise>
-					<tr>
-						<td valign="top">
-							<xsl:apply-templates select="$second"/>
-						</td>
-						<td valign="top">
-							<xsl:apply-templates select="$second"/>
-						</td>
-						<td> </td>
-						<td> </td>
-						<td> </td>
-						<td> </td>
-						<td> </td>
-						<td> </td>
-						<td> </td>
-						<td> </td>
-						<td valign="top" colspan="2">
-							<xsl:call-template name="component-did"/>
-						</td>
-					</tr>
-				</xsl:otherwise>
-			</xsl:choose>
-		</xsl:for-each>
-		<!--Closes the did.-->
-	</xsl:template>
-
+               <tr>
+                  <td valign="top">
+                     <xsl:value-of select="$first/@type"/>
+                  </td>
+                  <td valign="top">
+                     <xsl:value-of select="$second/@type"/>
+                  </td>
+               </tr>
+               <tr>
+                  <td valign="top">
+                     <xsl:apply-templates select="$first"/>
+                  </td>
+                  <td valign="top">
+                     <xsl:apply-templates select="$second"/>
+                  </td>
+                  <td> </td>
+                  <td> </td>
+                  <td> </td>
+                  <td> </td>
+                  <td> </td>
+                  <td> </td>
+                  <td> </td>
+                  <td> </td>
+                  <td valign="top" colspan="2">
+                     <xsl:call-template name="component-did"/>
+                  </td>
+               </tr>
+            </xsl:when>
+            <xsl:otherwise>
+               <tr>
+                  <td valign="top">
+                     <xsl:apply-templates select="$second"/>
+                  </td>
+                  <td valign="top">
+                     <xsl:apply-templates select="$second"/>
+                  </td>
+                  <td> </td>
+                  <td> </td>
+                  <td> </td>
+                  <td> </td>
+                  <td> </td>
+                  <td> </td>
+                  <td> </td>
+                  <td> </td>
+                  <td valign="top" colspan="2">
+                     <xsl:call-template name="component-did"/>
+                  </td>
+               </tr>
+            </xsl:otherwise>
+         </xsl:choose>
+      </xsl:for-each>	<!--Closes the did.-->
+   </xsl:template>
+   
 </xsl:stylesheet>
