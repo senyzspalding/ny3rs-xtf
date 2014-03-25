@@ -592,14 +592,14 @@
       archdesc/phystech/note/p |
       archdesc/controlaccess/note/p |
       archdesc/odd/note/p">
-		<p style="margin-left:25pt">
+		<p>
 			<xsl:apply-templates/>
 		</p>
 	</xsl:template>
 
 	<xsl:template match="archdesc/bioghist/bioghist/head |
       archdesc/scopecontent/scopecontent/head">
-		<h3 style="margin-left:25pt">
+		<h3>
 			<xsl:apply-templates/>
 		</h3>
 	</xsl:template>
@@ -608,7 +608,7 @@
       archdesc/scopecontent/scopecontent/p |
       archdesc/bioghist/bioghist/note/p |
       archdesc/scopecontent/scopecontent/note/p">
-		<p style="margin-left: 50pt">
+		<p>
 			<xsl:apply-templates/>
 		</p>
 	</xsl:template>
@@ -617,7 +617,7 @@
       statement embedded in <scopecontent>.-->
 
 	<xsl:template match="archdesc/scopecontent/arrangement/head">
-		<h4 style="margin-left:25pt">
+		<h4>
 			<xsl:apply-templates/>
 		</h4>
 	</xsl:template>
@@ -625,7 +625,7 @@
 
 	<xsl:template match="archdesc/scopecontent/arrangement/p
       | archdesc/scopecontent/arrangement/note/p">
-		<p style="margin-left:50pt">
+		<p>
 			<xsl:apply-templates/>
 		</p>
 	</xsl:template>
@@ -635,20 +635,20 @@
       <scopecontent>.-->
 
 	<xsl:template match="archdesc/scopecontent/arrangement/list/head">
-		<div style="margin-left:25pt">
+		<div>
 			<xsl:apply-templates/>
 		</div>
 	</xsl:template>
 
 	<xsl:template match="archdesc/arrangement/list/head">
-		<div style="margin-left:25pt">
+		<div>
 			<xsl:apply-templates/>
 		</div>
 	</xsl:template>
 
 	<xsl:template match="archdesc/scopecontent/arrangement/list/item
       | archdesc/arrangement/list/item">
-		<div style="margin-left:50pt">
+		<div>
 			<a>
 				<xsl:attribute name="href">#series<xsl:number/>
 				</xsl:attribute>
@@ -693,7 +693,7 @@
       | archdesc/*/relatedmaterial/note/p
       | archdesc/separatedmaterial/note/p
       | archdesc/*/separatedmaterial/note/p">
-		<p style="margin-left: 25pt">
+		<p>
 			<xsl:apply-templates/>
 		</p>
 	</xsl:template>
@@ -706,7 +706,7 @@
 		<a name="{@id}"></a>
 		<xsl:if test="string(child::*)">
 			<xsl:apply-templates select="head"/>
-			<p style="text-indent:25pt">
+			<p>
 				<xsl:apply-templates select="p | note/p"/>
 			</p>
 			<ul>
@@ -747,7 +747,7 @@
       | archdesc/userestrict/head
       | archdesc/*/accessrestrict/head
       | archdesc/*/userestrict/head">
-		<h4 style="margin-left: 25pt">
+		<h4>
 			<xsl:apply-templates/>
 		</h4>
 	</xsl:template>
@@ -829,7 +829,7 @@
       | archdesc/*/processinfo/head
       | archdesc/*/appraisal/head
       | archdesc/*/accruals/head">
-		<h4 style="margin-left:50pt">
+		<h4>
 			<b>
 				<xsl:apply-templates/>
 			</b>
@@ -866,7 +866,7 @@
       | archdesc/*/appraisal/note/p
       | archdesc/*/accruals/note/p">
 
-		<p style="margin-left:25pt">
+		<p>
 			<xsl:apply-templates/>
 		</p>
 	</xsl:template>
@@ -914,7 +914,7 @@
       | archdesc/phystechc/note/p
       | archdesc/originalsloc/p
       | archdesc/originalsloc/note/p">
-		<p style="margin-left:25pt">
+		<p>
 			<xsl:apply-templates/>
 		</p>
 	</xsl:template>
