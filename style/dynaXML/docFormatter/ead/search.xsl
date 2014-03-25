@@ -46,12 +46,12 @@
       
       <xsl:choose>
          <xsl:when test="xtf:term">
-            <span class="hitsection">
+            <span class="bg-info">
                <xsl:apply-templates/>
             </span>
          </xsl:when>
          <xsl:otherwise>
-            <span class="hit">
+            <span class="bg-info">
                <xsl:apply-templates/>
             </span>
          </xsl:otherwise>
@@ -65,7 +65,7 @@
    
    <xsl:template match="xtf:more">
       
-      <span class="hitsection">
+      <span class="bg-info">
          <xsl:apply-templates/>
       </span>
       
@@ -76,7 +76,7 @@
    </xsl:template>
    
    <xsl:template match="xtf:term">
-      <span class="subhit">
+      <span class="bg-info">
          <xsl:apply-templates/>
       </span>
    </xsl:template>
