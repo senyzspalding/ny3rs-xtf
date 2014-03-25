@@ -383,20 +383,29 @@
 	</xsl:template>
 
 	<!--Suppreses all other elements of eadheader.-->
-	<xsl:template match="eadheader">
-		<h2 style="text-align:center">
-			<xsl:value-of select="filedesc/titlestmt/titleproper"/>
-		</h2>
-		<h3 style="text-align:center">
-			<xsl:value-of select="filedesc/titlestmt/subtitle"/>
-		</h3>
-	<h4 style="text-align:center">
+	 <xsl:template match="eadheader">
+      <h2 style="text-align:center">
+         <xsl:value-of select="filedesc/titlestmt/titleproper"/>
+      </h2>
+      <h3 style="text-align:center">
+         <xsl:value-of select="filedesc/titlestmt/subtitle"/>
+      </h3>
+      <br></br>
+
 <xsl:value-of select="filedesc/titlestmt/author"/>
-</h4>
-<h4 style="text-align:center">
+ <br></br>
 <xsl:value-of select="filedesc/titlestmt/sponsor"/>
-</h4>
-	</xsl:template>
+
+ <br></br>
+<xsl:value-of select="profiledesc/creation"/>
+
+ <br></br>
+<xsl:value-of select="profiledesc/descrules"/>
+ <br></br>
+
+<xsl:value-of select="profiledesc/langusage"/>
+
+   </xsl:template>
 
 	<!--This template creates a table for the did, inserts the head and then
       each of the other did elements.  To change the order of appearance of these
