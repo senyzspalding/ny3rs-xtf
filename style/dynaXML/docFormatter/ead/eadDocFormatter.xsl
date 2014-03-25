@@ -465,15 +465,14 @@
 		</xsl:if>
 
 		<li>
-
-			<xsl:if test="$hit.count &gt; 0">
-				<span class="hit-count">
-					<xsl:value-of select="$hit.count"/>
-				</span>
-			</xsl:if>
 			<a href="#{$id}">
 				<xsl:value-of select="$name"/>
 			</a>
+			<xsl:if test="$hit.count &gt; 0">
+				<span class="badge">
+					<xsl:value-of select="$hit.count"/>
+				</span>
+			</xsl:if>
 		</li>
 
 		<!--<table border="0" cellpadding="1" cellspacing="0" width="820">
