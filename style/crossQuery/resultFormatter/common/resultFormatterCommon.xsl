@@ -452,11 +452,32 @@
    <!-- ====================================================================== -->
    
    <xsl:template match="subject">
-      <a href="{$xtfURL}{$crossqueryPath}?subject={editURL:protectValue(.)};subject-join=exact;smode={$smode};rmode={$rmode};style={$style};brand={$brand}">
-         <xsl:apply-templates/>
-      </a>
-      <xsl:if test="not(position() = last())">
-         <xsl:text> | </xsl:text>
+      <xsl:if test="position() &lt; 11">
+            <a
+               href="{$xtfURL}{$crossqueryPath}?subject={editURL:protectValue(.)};subject-join=exact;smode={$smode};rmode={$rmode};style={$style};brand={$brand}">
+               <xsl:apply-templates/>
+            </a>
+            <xsl:if test="not(position() = last())">
+               <xsl:text> | </xsl:text>
+            </xsl:if>
+      </xsl:if>
+      <xsl:if test="position() &gt; 10">
+         <span class="more">
+            <a
+               href="{$xtfURL}{$crossqueryPath}?subject={editURL:protectValue(.)};subject-join=exact;smode={$smode};rmode={$rmode};style={$style};brand={$brand}">
+               <xsl:apply-templates/>
+            </a>
+            <xsl:if test="not(position() = last())">
+               <xsl:text> | </xsl:text>
+            </xsl:if>
+         </span>
+      </xsl:if>
+      <xsl:if test="position() = 10">
+         <a class="more btn btn-default btn-xs">show more</a>
+      </xsl:if>
+      <xsl:if test="position() = last()">
+         <xsl:text> </xsl:text>
+         <a class="less btn btn-default btn-xs">show less</a>
       </xsl:if>
    </xsl:template>
    
