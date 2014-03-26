@@ -1177,5 +1177,5 @@ or string(archdesc/*/separatedmaterial/separatedmaterial)">
 	</xsl:template>
 
 	<!--Insert the address for the dsc stylesheet of your choice here.-->
-   <xsl:include href="dsc6.xsl"/>
+   <xsl:include href="dsc3nyead.xsl"/>
 </xsl:stylesheet>
