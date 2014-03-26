@@ -334,17 +334,28 @@
    <!-- creator -->
    <xsl:template name="get-ead-creator">
       <xsl:choose>
+         <!--HA 3/21/2014 adding selection of creator by role attribute -->
          <xsl:when test="($dtdVersion)/ead/archdesc/did/origination[starts-with(@label, 'Creator')]">
             <creator xtf:meta="true">
                <xsl:value-of select="string(($dtdVersion)/ead/archdesc/did/origination[@label, 'Creator'][1])"/>
             </creator>
          </xsl:when>
-         <!--HA 3/21/2014 adding selection of creator by role attribute -->
          <xsl:when test="($dtdVersion)/ead/archdesc/did/origination[starts-with(@role, 'creator')]">
             <creator xtf:meta="true">
                <xsl:value-of select="string(($dtdVersion)/ead/archdesc/did/origination[@role, 'creator'][1])"/>
             </creator>
-         </xsl:when>   
+         </xsl:when>
+         <!-- HA 3/26/2014 adding selection of collector by role attribute -->
+         <xsl:when test="($dtdVersion)/ead/archdesc/did/origination[starts-with(@label, 'Collector')]">
+            <creator xtf:meta="true">
+               <xsl:value-of select="string(($dtdVersion)/ead/archdesc/did/origination[@label, 'Collector'][1])"/>
+            </creator>
+         </xsl:when>
+         <xsl:when test="($dtdVersion)/ead/archdesc/did/origination[starts-with(@label, 'collector')]">
+            <creator xtf:meta="true">
+               <xsl:value-of select="string(($dtdVersion)/ead/archdesc/did/origination[@label, 'collector'][1])"/>
+            </creator>
+         </xsl:when>
          <!-- HA 3/21/2014 disabling indexing of author in titlestmt -->
          <!--<xsl:when test="($dtdVersion)/ead/eadheader/filedesc/titlestmt/author">
             <creator xtf:meta="true">
