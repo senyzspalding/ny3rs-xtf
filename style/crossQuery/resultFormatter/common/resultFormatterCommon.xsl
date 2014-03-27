@@ -945,9 +945,7 @@
             </div>
          </xsl:if>
          <div class="facetGroup">
-            <table class="table">
                <xsl:apply-templates/>
-            </table>
          </div>
          <xsl:if test="$needExpand and not($expand=$field)">
             <div class="facetMore">
@@ -975,36 +973,35 @@
          editURL:replaceEmpty(editURL:remove($queryString, concat('f[0-9]+-',$field,'=',
                             editURL:escapeRegex(editURL:protectValue($value)))),
                             'browse-all=yes'))"> </xsl:variable>
-      <tr>
-         <td class="col1"></td>
+      <div class="row">
          <!-- Display the group name, with '[X]' box if it is selected. -->
          <xsl:choose>
             <xsl:when test="//param[matches(@name,concat('f[0-9]+-',$field))]/@value=$value">
-               <td class="col2">
+               <div class="col-md-11">
                   <xsl:apply-templates select="." mode="beforeGroupValue"/>
                   <i>
                      <xsl:value-of select="$value"/>
                   </i>
                   <xsl:apply-templates select="." mode="afterGroupValue"/>
-               </td>
-               <td class="col3">
+               </div>
+               <div class="pull-right">
                   <a href="{$clearLink}">[X]</a>
-               </td>
+               </div>
             </xsl:when>
             <xsl:otherwise>
-               <td class="col2">
+               <div class="col-md-11">
                   <xsl:apply-templates select="." mode="beforeGroupValue"/>
                   <a href="{$selectLink}">
                      <xsl:value-of select="$value"/>
                   </a>
                   <xsl:apply-templates select="." mode="afterGroupValue"/>
-               </td>
-               <td class="col3">
+               </div>
+               <div class="pull-right">
                   (<xsl:value-of select="@totalDocs"/>)
-               </td>
+               </div>
             </xsl:otherwise>
          </xsl:choose>
-      </tr>
+      </div>
    </xsl:template>
    
    <!-- Hierarchical group or sub-group of facet -->
@@ -1068,103 +1065,96 @@
       </xsl:variable>
       
       <!-- Figure out which choice to give the user for this group -->
-      <tr>
+      <div class="row">
          <xsl:choose>
             <!-- selected terminal node: click [X] to collapse -->
             <xsl:when test="count(group) = 0 and //param[matches(@name,concat('f[0-9]+-',$field))]/@value=$fullValue">
-               <td class="col1"></td>
-               <td class="col2">
+               <div class="col-md-11">
                   <xsl:apply-templates select="." mode="beforeGroupValue"/>
                   <i>
                      <xsl:value-of select="@value"/>
                   </i>
                   <xsl:apply-templates select="." mode="afterGroupValue"/>
-               </td>
-               <td class="col3"><a href="{$collapseLink}">[X]</a></td>
+               </div>
+               <div class="pull-right"><a href="{$collapseLink}">[X]</a></div>
             </xsl:when>
             
             <!-- non-selected terminal node: click to select -->
             <xsl:when test="count(group) = 0 and @totalSubGroups = 0">
-               <td class="col1"></td>
-               <td class="col2">
+               <div class="col-md-11">
                   <xsl:apply-templates select="." mode="beforeGroupValue"/>
                   <a href="{$selectLink}">
                      <xsl:value-of select="@value"/>
                   </a>
                   <xsl:apply-templates select="." mode="afterGroupValue"/>
-               </td>
-               <td class="col3">
+               </div>
+               <div class="pull-right">
                   (<xsl:value-of select="@totalDocs"/>)
-               </td>
+               </div>
             </xsl:when>
             
             <!-- closed node: click to expand -->
             <xsl:when test="count(group) = 0">
-               <td class="col1">
+               <div>
                   <a href="{$selectLink}">
                      <img src="{$icon.path}/i_expand.gif" border="0" alt="expand"/>
                   </a>
-               </td>
-               <td class="col2">
+               </div>
+               <div class="col-md-11">
                   <xsl:apply-templates select="." mode="beforeGroupValue"/>
                   <a href="{$selectLink}">
                      <xsl:value-of select="@value"/>
                   </a>
                   <xsl:apply-templates select="." mode="afterGroupValue"/>
-               </td>
-               <td class="col3">
+               </div>
+               <div class="pull-right">
                   (<xsl:value-of select="@totalDocs"/>)
-               </td>
+               </div>
             </xsl:when>
                
             <!-- top-level open node: click to clear the facet -->
             <xsl:when test="not(parent::group)">
-               <td class="col1">
+               <div>
                   <a href="{$clearLink}">
                      <img src="{$icon.path}/i_colpse.gif" border="0" alt="collapse"/>
                   </a>
-               </td>
-               <td class="col2">
+               </div>
+               <div class="col-md-11">
                   <xsl:apply-templates select="." mode="beforeGroupValue"/>
                   <a href="{$clearLink}">
                      <xsl:value-of select="@value"/>
                   </a>
                   <xsl:apply-templates select="." mode="afterGroupValue"/>
-               </td>
-               <td class="col3"/>
+               </div>
             </xsl:when>
                
             <!-- mid-level open node: click to collapse -->
             <xsl:otherwise>
-               <td class="col1">
+               <div>
                   <a href="{$collapseLink}">
                      <img src="{$icon.path}/i_colpse.gif" border="0" alt="collapse"/>
                   </a>
-               </td>
-               <td colspan="col2">
+               </div>
+               <div class="col-md-11">
                   <xsl:apply-templates select="." mode="beforeGroupValue"/>
                   <a href="{$collapseLink}">
                      <xsl:value-of select="@value"/>
                   </a>
                   <xsl:apply-templates select="." mode="afterGroupValue"/>
-               </td>
-               <td colspan="col3"/>
+               </div>
             </xsl:otherwise>
          </xsl:choose>
-      </tr>
+      </div>
       
       <!-- Handle sub-groups if any -->
       <xsl:if test="group">
-         <tr>
-            <td class="col1"/>
-            <td class="col2" colspan="2">
+         <div class="row">
+            <div>
                <div class="facetSubGroup">
-                  <table border="0" cellspacing="0" cellpadding="0">
-                     <xsl:apply-templates/>                  
-                  </table>
+                  <xsl:apply-templates/>
                </div>
-            </td>
-         </tr>
+            </div>
+         </div>
       </xsl:if>
    </xsl:template>
 
