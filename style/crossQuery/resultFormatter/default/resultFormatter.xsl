@@ -707,6 +707,16 @@ Item number <xsl:value-of select="$num"/>:
                </div>
             </div>
             </xsl:if>
+         <xsl:if test="meta/publisher">
+            <div class="row">
+               <div class="col-md-1 col-md-offset-1">
+                  <b>Repository:&#160;&#160;</b>
+               </div>
+               <div class="col-md-10">
+                  <xsl:apply-templates select="meta/publisher[1]"/>
+               </div>
+            </div>
+         </xsl:if>
             <xsl:if test="meta/subject">
                <div class="row">
                   <div class="col-md-1 col-md-offset-1">
