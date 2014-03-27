@@ -404,7 +404,7 @@
                   <li>
                      <a
                         href="{$xtfURL}{$crossqueryPath}?{$pageQueryString};{$startName}={$prevPage}"
-                        >&lt;&lt;</a>
+                        >&#171;</a>
                   </li>
                </xsl:if>
 
@@ -452,7 +452,7 @@
                   <li>
                      <a
                         href="{$xtfURL}{$crossqueryPath}?{$pageQueryString};{$startName}={$nextPage}"
-                        >&gt;&gt;</a>
+                        >&#187;</a>
                   </li>
                </xsl:if>
 
