@@ -19,26 +19,32 @@
    
    <header>
       <div class="header col-xs-12">
-         <img src="icons/default/nyeadpilot.gif" width="215" height="77" alt="New York 3Rs Association" class="xtf-logo"/>
-         <img src="icons/default/ny3rslogo2.gif" width="100" height="60" alt="graphic" class="your-logo pull-right" />
+         <a href="/xtf/search">
+            <img src="icons/default/nyeadpilot.gif" width="215" height="77"
+               alt="New York 3Rs Association EAD Consortium" class="xtf-logo"/>
+         </a>
+         <img src="icons/default/ny3rslogo2.gif" width="100" height="60" alt="New York 3Rs Association" class="your-logo pull-right" />
          <br class="clear" />
       </div>
    </header>
    
    <dynaxml.header>
       <div class="header">
-         <img src="icons/default/nyeadpilot.gif" width="215" height="77" alt="New York 3Rs Association" class="xtf-logo"/>
-         <img src="icons/default/ny3rslogo2.gif" width="100" height="60" alt="graphic" class="your-logo pull-right" />
+         <a href="/xtf/search">
+            <img src="icons/default/nyeadpilot.gif" width="215" height="77"
+               alt="New York 3Rs Association EAD Consortium" class="xtf-logo"/>
+         </a>
+         <img src="icons/default/ny3rslogo2.gif" width="100" height="60" alt="New York 3Rs Association" class="your-logo pull-right" />
          <br class="clear" />
       </div>
    </dynaxml.header>
    
    <footer>
-      <div class="row">
-         <div class="footer col-md-12">
-            <a href="mailto:you@yourserver.com">Comments? Questions?</a> | <a href="javascript://"
-               onclick="javascript:window.open('/xtf/search?smode=getLang','popup','width=500,height=200,resizable=no,scrollbars=no')"
-               >Choose Language</a>
+      <div class="container-fluid">
+         <div class="row">
+            <div class="footer col-md-12">
+               <p>A project of the New York 3Rs Association | <a href="mailto:you@yourserver.com">Contact us</a></p>
+            </div>
          </div>
       </div>
    </footer>
