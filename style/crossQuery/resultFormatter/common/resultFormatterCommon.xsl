@@ -368,82 +368,95 @@
          <xsl:value-of select="editURL:remove($queryString, 'startDoc')"/>
       </xsl:variable>   
       
-      <xsl:choose>
+      <!--<xsl:choose>
          <xsl:when test="$nPages &gt; 2">
             <xsl:text>Page: </xsl:text>
          </xsl:when>
          <xsl:otherwise>
             <xsl:text>Page: 1</xsl:text>
          </xsl:otherwise>
-      </xsl:choose>
+      </xsl:choose>-->
       
-      <xsl:for-each select="(1 to $maxPages)">
-         <!-- Figure out which block you need to be in -->
-         <xsl:variable name="blockStart" as="xs:integer">
-            <xsl:choose>
-               <xsl:when test="$start &lt;= ($perPage * $blockSize)">
-                  <xsl:value-of select="1"/>
-               </xsl:when>
-               <xsl:otherwise>
-                  <xsl:value-of select="((floor($start div ($perPage * $blockSize))) * $blockSize) + 1"/>
-               </xsl:otherwise>
-            </xsl:choose>
-         </xsl:variable>
-         <!-- Figure out what page we're on -->
-         <xsl:variable name="pageNum" as="xs:integer" select="position()"/>
-         <xsl:variable name="pageStart" as="xs:integer" select="(($pageNum - 1) * $perPage) + 1"/>
-         
-         <!-- Individual Paging -->
-         <xsl:if test="($pageNum = 1) and ($pageStart != $start)">
-            <xsl:variable name="prevPage" as="xs:integer" select="$start - $perPage"/>
-            <a href="{$xtfURL}{$crossqueryPath}?{$pageQueryString};{$startName}={$prevPage}">Prev</a>
-            <xsl:text>&#160;&#160;</xsl:text>
-         </xsl:if>
-         
-         <!-- Paging by Blocks -->
-         <xsl:variable name="prevBlock" as="xs:integer" select="(($blockStart - $blockSize) * $perPage) - ($perPage - 1)"/>
+      <div class="row text-center">
+         <ul class="pagination">
+
+            <xsl:for-each select="(1 to $maxPages)">
+               <!-- Figure out which block you need to be in -->
+               <xsl:variable name="blockStart" as="xs:integer">
+                  <xsl:choose>
+                     <xsl:when test="$start &lt;= ($perPage * $blockSize)">
+                        <xsl:value-of select="1"/>
+                     </xsl:when>
+                     <xsl:otherwise>
+                        <xsl:value-of
+                           select="((floor($start div ($perPage * $blockSize))) * $blockSize) + 1"/>
+                     </xsl:otherwise>
+                  </xsl:choose>
+               </xsl:variable>
+               <!-- Figure out what page we're on -->
+               <xsl:variable name="pageNum" as="xs:integer" select="position()"/>
+               <xsl:variable name="pageStart" as="xs:integer"
+                  select="(($pageNum - 1) * $perPage) + 1"/>
+
+               <!-- Individual Paging -->
+               <xsl:if test="($pageNum = 1) and ($pageStart != $start)">
+                  <xsl:variable name="prevPage" as="xs:integer" select="$start - $perPage"/>
+                  <li>
+                     <a
+                        href="{$xtfURL}{$crossqueryPath}?{$pageQueryString};{$startName}={$prevPage}"
+                        >&lt;&lt;</a>
+                  </li>
+               </xsl:if>
+
+               <!-- Paging by Blocks -->
+               <!--<xsl:variable name="prevBlock" as="xs:integer" select="(($blockStart - $blockSize) * $perPage) - ($perPage - 1)"/>
          <xsl:if test="($pageNum = 1) and ($prevBlock &gt;= 1)">
             <a href="{$xtfURL}{$crossqueryPath}?{$pageQueryString};{$startName}={$prevBlock}">...</a>
             <xsl:text>&#160;&#160;</xsl:text>
-         </xsl:if>
-         
-         <!-- If there are hits on the page, show it -->
-         <xsl:if test="(($pageNum &gt;= $blockStart) and ($pageNum &lt;= ($blockStart + ($blockSize - 1)))) and
+         </xsl:if>-->
+
+               <!-- If there are hits on the page, show it -->
+               <xsl:if
+                  test="(($pageNum &gt;= $blockStart) and ($pageNum &lt;= ($blockStart + ($blockSize - 1)))) and
             (($nPages &gt; $pageNum) and ($nPages &gt; 2))">
-            <xsl:choose>
-               <!-- Make a hyperlink if it's not the page we're currently on. -->
-               <xsl:when test="($pageStart != $start)">
-                  <a href="{$xtfURL}{$crossqueryPath}?{$pageQueryString};{$startName}={$pageStart}">
-                     <xsl:value-of select="$pageNum"/>
-                  </a>
-                  <xsl:if test="$pageNum &lt; $showPages">
-                     <xsl:text>&#160;</xsl:text>
-                  </xsl:if>
-               </xsl:when>
-               <xsl:when test="($pageStart = $start)">
-                  <xsl:value-of select="$pageNum"/>
-                  <xsl:if test="$pageNum &lt; $showPages">
-                     <xsl:text>&#160;</xsl:text>
-                  </xsl:if>
-               </xsl:when>
-            </xsl:choose>
-         </xsl:if>
-         
-         <!-- Paging by Blocks -->   
-         <xsl:variable name="nextBlock" as="xs:integer" select="(($blockStart + $blockSize) * $perPage) - ($perPage - 1)"/>
+                  <xsl:choose>
+                     <!-- Make a hyperlink if it's not the page we're currently on. -->
+                     <xsl:when test="($pageStart != $start)">
+                        <li>
+                           <a
+                              href="{$xtfURL}{$crossqueryPath}?{$pageQueryString};{$startName}={$pageStart}">
+                              <xsl:value-of select="$pageNum"/>
+                           </a>
+                        </li>
+                     </xsl:when>
+                     <xsl:when test="($pageStart = $start)">
+                        <li class="active">
+                           <xsl:value-of select="$pageNum"/>
+                        </li>
+                     </xsl:when>
+                  </xsl:choose>
+               </xsl:if>
+
+               <!-- Paging by Blocks -->
+               <!--<xsl:variable name="nextBlock" as="xs:integer" select="(($blockStart + $blockSize) * $perPage) - ($perPage - 1)"/>
          <xsl:if test="($pageNum = $showPages) and (($showPages * $perPage) &gt; $nextBlock)">
             <xsl:text>&#160;&#160;</xsl:text>
             <a href="{$xtfURL}{$crossqueryPath}?{$pageQueryString};{$startName}={$nextBlock}">...</a>
-         </xsl:if>
-         
-         <!-- Individual Paging -->      
-         <xsl:if test="($pageNum = $showPages) and ($pageStart != $start)">
-            <xsl:variable name="nextPage" as="xs:integer" select="$start + $perPage"/>
-            <xsl:text>&#160;&#160;</xsl:text>
-            <a href="{$xtfURL}{$crossqueryPath}?{$pageQueryString};{$startName}={$nextPage}">Next</a>
-         </xsl:if>
-         
-      </xsl:for-each>
+         </xsl:if>-->
+
+               <!-- Individual Paging -->
+               <xsl:if test="($pageNum = $showPages) and ($pageStart != $start)">
+                  <xsl:variable name="nextPage" as="xs:integer" select="$start + $perPage"/>
+                  <li>
+                     <a
+                        href="{$xtfURL}{$crossqueryPath}?{$pageQueryString};{$startName}={$nextPage}"
+                        >&gt;&gt;</a>
+                  </li>
+               </xsl:if>
+
+            </xsl:for-each>
+         </ul>
+      </div>
       
    </xsl:template>
    
