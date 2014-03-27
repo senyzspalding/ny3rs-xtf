@@ -176,69 +176,72 @@
             <script src="script/moreless.js" type="text/javascript"/>
          </head>
          <body>
-            <div class="container-fluid">
 
                <!-- header -->
-               <xsl:copy-of select="$brand.header"/>
+               <!--<xsl:copy-of select="$brand.header"/>-->
 
                <!-- result header -->
-               <div class="row">
-               <div class="resultsHeader col-md-12">
-                  <xsl:if test="$smode != 'showBag'">
-                     <xsl:variable name="bag" select="session:getData('bag')"/>
-                     <div class="pull-right">
-                        <a href="{$xtfURL}{$crossqueryPath}?smode=showBag">Bookbag</a>(<span
-                           id="bagCount"><xsl:value-of select="count($bag/bag/savedDoc)"/></span>)
+               <div class="navbar navbar-default navbar-static-top" role="navigation">
+                  <div class="container-fluid">
+                     <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse"
+                           data-target=".navbar-collapse">
+                           <span class="sr-only">Toggle navigation</span>
+                           <span class="icon-bar"/>
+                           <span class="icon-bar"/>
+                           <span class="icon-bar"/>
+                        </button>
+                        <a class="navbar-brand" href="{$xtfURL}search">NY3RS Demo</a>
                      </div>
+                     <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                           <xsl:if test="$smode != 'showBag'">
+                              <li>
+                                 <a href="{$xtfURL}{$crossqueryPath}?{$modifyString}">
+                                    <xsl:text>Modify Search</xsl:text>
+                                 </a>
+                              </li>
+                           </xsl:if>
+                           <li>
+                              <a href="{$xtfURL}{$crossqueryPath}">
+                                 <xsl:text>New Search</xsl:text>
+                              </a>
+                           </li>
+                           <xsl:if test="$smode = 'showBag'">
+                              <li>
+                                 <a href="{session:getData('queryURL')}">
+                                    <xsl:text>Return to Search Results</xsl:text>
+                                 </a>
+                              </li>
+                           </xsl:if>
+                        </ul>
+                        <form method="get" action="{$xtfURL}{$crossqueryPath}" class="navbar-form navbar-right">
+                           <div class="form-group form-inline">
+                              <label>Sorted by:&#160;</label>
+                              <xsl:call-template name="sort.options"/>
+                              <xsl:call-template name="hidden.query">
+                                 <xsl:with-param name="queryString"
+                                    select="editURL:remove($queryString, 'sort')"/>
+                              </xsl:call-template>
+                              <xsl:text>&#160;</xsl:text>
+                              <input class="btn btn-primary" type="submit" value="Go!"/>
+                           </div>
+                        </form>
+                     </div>
+                  </div>
+               </div>
+            <div class="container-fluid">
+               <div class="alert alert-info">
+                  <b><xsl:value-of select="if($browse-all) then 'Browse by' else 'Search'"/>:</b>
+                  <xsl:call-template name="format-query"/>
+                  <xsl:if test="//spelling">
+                     <xsl:call-template name="did-you-mean">
+                        <xsl:with-param name="baseURL"
+                           select="concat($xtfURL, $crossqueryPath, '?', $queryString)"/>
+                        <xsl:with-param name="spelling" select="//spelling"/>
+                     </xsl:call-template>
                   </xsl:if>
-                  <xsl:choose>
-                     <xsl:when test="$smode='showBag'">
-                        <a>
-                           <xsl:attribute name="href">javascript://</xsl:attribute>
-                           <xsl:attribute name="onclick">
-                              <xsl:text>javascript:window.open('</xsl:text><xsl:value-of
-                                 select="$xtfURL"
-                              />search?smode=getAddress<xsl:text>','popup','width=500,height=200,resizable=no,scrollbars=no')</xsl:text>
-                           </xsl:attribute>
-                           <xsl:text>E-mail My Bookbag</xsl:text>
-                        </a>
-                     </xsl:when>
-                     <xsl:otherwise>
-                        <div class="query">
-                           <b><xsl:value-of select="if($browse-all) then 'Browse by' else 'Search'"
-                              />:</b>
-                           <xsl:call-template name="format-query"/>
-                        </div>
-                     </xsl:otherwise>
-                  </xsl:choose>
-                  <div class="pull-right">
-                     <xsl:if test="$smode != 'showBag'">
-                        <a href="{$xtfURL}{$crossqueryPath}?{$modifyString}">
-                           <xsl:text>Modify Search</xsl:text>
-                        </a>
-                        <xsl:text>&#160;|&#160;</xsl:text>
-                     </xsl:if>
-                     <a href="{$xtfURL}{$crossqueryPath}">
-                        <xsl:text>New Search</xsl:text>
-                     </a>
-                     <xsl:if test="$smode = 'showBag'">
-                        <xsl:text>&#160;|&#160;</xsl:text>
-                        <a href="{session:getData('queryURL')}">
-                           <xsl:text>Return to Search Results</xsl:text>
-                        </a>
-                     </xsl:if>
-                  </div>
-                  <div>
-                     <xsl:if test="//spelling">
-                        <xsl:call-template name="did-you-mean">
-                           <xsl:with-param name="baseURL"
-                              select="concat($xtfURL, $crossqueryPath, '?', $queryString)"/>
-                           <xsl:with-param name="spelling" select="//spelling"/>
-                        </xsl:call-template>
-                     </xsl:if>
-                  </div>
-                  <b><xsl:value-of select="if($smode='showBag') then 'Bookbag' else 'Results'"
-                     />:</b>&#160; <xsl:variable name="items" select="@totalDocs"/>
+                  <b>&#160;Results:</b>&#160; <xsl:variable name="items" select="@totalDocs"/>
                   <xsl:choose>
                      <xsl:when test="$items = 1">
                         <span id="itemCount">1</span>
@@ -251,25 +254,12 @@
                         <xsl:text> Items</xsl:text>
                      </xsl:otherwise>
                   </xsl:choose>
-                  <xsl:if test="docHit">
+               </div>
+               <!--<xsl:if test="docHit">
                      <div>
                         <xsl:call-template name="pages"/>
                      </div>
-                     <form method="get" action="{$xtfURL}{$crossqueryPath}" class="pull-right">
-                        <div class="form-group form-inline">
-                           <label>Sorted by:&#160;</label>
-                           <xsl:call-template name="sort.options"/>
-                           <xsl:call-template name="hidden.query">
-                              <xsl:with-param name="queryString"
-                                 select="editURL:remove($queryString, 'sort')"/>
-                           </xsl:call-template>
-                           <xsl:text>&#160;</xsl:text>
-                           <input class="btn btn-primary" type="submit" value="Go!"/>
-                        </div>
-                     </form>
-                  </xsl:if>
-               </div>
-               </div>
+                  </xsl:if>-->
 
                <!-- results -->
                <xsl:choose>
@@ -324,10 +314,11 @@
                      </div>
                   </xsl:otherwise>
                </xsl:choose>
+            </div>
 
                <!-- footer -->
                <xsl:copy-of select="$brand.footer"/>
-            </div>
+            
          </body>
       </html>
    </xsl:template>
