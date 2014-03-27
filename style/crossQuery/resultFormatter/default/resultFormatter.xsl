@@ -231,30 +231,7 @@
                   </div>
                </div>
             <div class="container-fluid">
-               <div class="alert alert-info">
-                  <b><xsl:value-of select="if($browse-all) then 'Browse by' else 'Search'"/>:</b>
-                  <xsl:call-template name="format-query"/>
-                  <xsl:if test="//spelling">
-                     <xsl:call-template name="did-you-mean">
-                        <xsl:with-param name="baseURL"
-                           select="concat($xtfURL, $crossqueryPath, '?', $queryString)"/>
-                        <xsl:with-param name="spelling" select="//spelling"/>
-                     </xsl:call-template>
-                  </xsl:if>
-                  <b>&#160;Results:</b>&#160; <xsl:variable name="items" select="@totalDocs"/>
-                  <xsl:choose>
-                     <xsl:when test="$items = 1">
-                        <span id="itemCount">1</span>
-                        <xsl:text> Item</xsl:text>
-                     </xsl:when>
-                     <xsl:otherwise>
-                        <span id="itemCount">
-                           <xsl:value-of select="$items"/>
-                        </span>
-                        <xsl:text> Items</xsl:text>
-                     </xsl:otherwise>
-                  </xsl:choose>
-               </div>
+               
                <!--<xsl:if test="docHit">
                      <div>
                         <xsl:call-template name="pages"/>
@@ -272,6 +249,33 @@
                            </div>
                         </xsl:if>
                         <div class="docHit col-md-9">
+                           
+                           <!-- search query and results -->
+                           <div class="alert alert-info">
+                              <b><xsl:value-of select="if($browse-all) then 'Browse by' else 'Search'"/>:</b>
+                              <xsl:call-template name="format-query"/>
+                              <xsl:if test="//spelling">
+                                 <xsl:call-template name="did-you-mean">
+                                    <xsl:with-param name="baseURL"
+                                       select="concat($xtfURL, $crossqueryPath, '?', $queryString)"/>
+                                    <xsl:with-param name="spelling" select="//spelling"/>
+                                 </xsl:call-template>
+                              </xsl:if>
+                              <b>&#160;Results:</b>&#160; <xsl:variable name="items" select="@totalDocs"/>
+                              <xsl:choose>
+                                 <xsl:when test="$items = 1">
+                                    <span id="itemCount">1</span>
+                                    <xsl:text> Item</xsl:text>
+                                 </xsl:when>
+                                 <xsl:otherwise>
+                                    <span id="itemCount">
+                                       <xsl:value-of select="$items"/>
+                                    </span>
+                                    <xsl:text> Items</xsl:text>
+                                 </xsl:otherwise>
+                              </xsl:choose>
+                           </div>
+                           
                            <xsl:apply-templates select="docHit"/>
                         </div>
                         <xsl:if test="@totalDocs > $docsPerPage">

@@ -431,7 +431,9 @@
                      </xsl:when>
                      <xsl:when test="($pageStart = $start)">
                         <li class="active">
+                           <a href="#">
                            <xsl:value-of select="$pageNum"/>
+                           </a>
                         </li>
                      </xsl:when>
                   </xsl:choose>

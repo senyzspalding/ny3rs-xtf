@@ -42,7 +42,7 @@
    <footer>
       <div class="container-fluid">
          <div class="row">
-            <div class="footer col-md-12">
+            <div class="footer col-md-12 text-center text-muted">
                <p>A project of the New York 3Rs Association | <a href="mailto:you@yourserver.com">Contact us</a></p>
             </div>
          </div>
