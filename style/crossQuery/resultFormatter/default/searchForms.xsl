@@ -97,13 +97,14 @@
    
    <!-- simple form -->
    <xsl:template name="simpleForm" exclude-result-prefixes="#all">
-      <form method="get" action="{$xtfURL}{$crossqueryPath}">
+      <div class="row">&#160;</div>
+      <form class="form text-center" method="get" action="{$xtfURL}{$crossqueryPath}">
          <div class="form-group form-inline">
-                  <input class="form-control" type="text" name="keyword" size="40" value="{$keyword}"/>
-                  <xsl:text>&#160;</xsl:text>
-                  <input class="btn btn-primary" type="submit" value="Search"/>
-                  <input class="btn btn-default" type="reset" onclick="location.href='{$xtfURL}{$crossqueryPath}'" value="Clear"/>
+            <input class="form-control" type="text" name="keyword" size="60" value="{$keyword}"/>
+            <xsl:text>&#160;</xsl:text>
+            <input class="btn btn-primary" type="submit" value="Search"/>
          </div>
+      </form>
          <h3>Examples:</h3>
                   <table class="table table-striped sampleTable">
                      <tr>
@@ -127,7 +128,6 @@
                         <td class="sampleDescrip">Search keywords for the string 'africa' followed by a single character</td>
                      </tr>
                   </table>
-      </form>
    </xsl:template>
    
    <!-- advanced form -->
@@ -310,8 +310,7 @@
          </div>
          <div class="col-md-12">
             <input type="hidden" name="smode" value="advanced"/>
-            <input type="submit" value="Search"/>
-            <input type="reset" onclick="location.href='{$xtfURL}{$crossqueryPath}?smode=advanced'" value="Clear"/>
+            <input class="btn btn-primary" type="submit" value="Search"/>
          </div>
          <div class="col-md-12">
             <h3>Examples:</h3>      
