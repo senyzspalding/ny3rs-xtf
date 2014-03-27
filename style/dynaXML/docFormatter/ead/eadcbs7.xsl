@@ -383,29 +383,43 @@
 	</xsl:template>
 
 	<!--Suppreses all other elements of eadheader.-->
-	 <xsl:template match="eadheader">
-      <h2 style="text-align:center">
-         <xsl:value-of select="filedesc/titlestmt/titleproper"/>
-      </h2>
-      <h3 style="text-align:center">
-         <xsl:value-of select="filedesc/titlestmt/subtitle"/>
-      </h3>
-      <br></br>
-
-<xsl:value-of select="filedesc/titlestmt/author"/>
- <br></br>
-<xsl:value-of select="filedesc/titlestmt/sponsor"/>
-
- <br></br>
-<xsl:value-of select="profiledesc/creation"/>
-
- <br></br>
-<xsl:value-of select="profiledesc/descrules"/>
- <br></br>
-
-<xsl:value-of select="profiledesc/langusage"/>
-
-   </xsl:template>
+	<xsl:template match="eadheader">
+		<div class="text-center">
+			<h2>
+				<xsl:value-of select="filedesc/titlestmt/titleproper"/>
+			</h2>
+			<xsl:if test="filedesc/titlestmt/subtitle">
+				<h3>
+					<xsl:value-of select="filedesc/titlestmt/subtitle"/>
+				</h3>
+			</xsl:if>
+			<xsl:if test="filedesc/titlestmt/author">
+				<p class="text-muted">
+					<xsl:value-of select="filedesc/titlestmt/author"/>
+				</p>
+			</xsl:if>
+			<xsl:if test="filedesc/titlestmt/sponsor">
+				<p class="text-muted">
+					<xsl:value-of select="filedesc/titlestmt/sponsor"/>
+				</p>
+			</xsl:if>
+			<xsl:if test="profiledesc/creation">
+				<p class="text-muted">
+					<xsl:value-of select="profiledesc/creation"/>
+				</p>
+			</xsl:if>
+			<xsl:if test="profiledesc/descrules">
+				<p class="text-muted">
+					<xsl:value-of select="profiledesc/descrules"/>
+				</p>
+			</xsl:if>
+			<xsl:if test="profiledesc/langusage">
+				<p class="text-muted">
+					<xsl:value-of select="profiledesc/langusage"/>
+				</p>
+			</xsl:if>
+		</div>
+	</xsl:template>
 
 	<!--This template creates a table for the did, inserts the head and then
       each of the other did elements.  To change the order of appearance of these
