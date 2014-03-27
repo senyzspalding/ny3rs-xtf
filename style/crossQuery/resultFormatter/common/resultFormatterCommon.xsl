@@ -973,6 +973,7 @@
          editURL:replaceEmpty(editURL:remove($queryString, concat('f[0-9]+-',$field,'=',
                             editURL:escapeRegex(editURL:protectValue($value)))),
                             'browse-all=yes'))"> </xsl:variable>
+      <xsl:if test="@value !=''">
       <div class="row">
          <!-- Display the group name, with '[X]' box if it is selected. -->
          <xsl:choose>
@@ -1002,6 +1003,7 @@
             </xsl:otherwise>
          </xsl:choose>
       </div>
+      </xsl:if>
    </xsl:template>
    
    <!-- Hierarchical group or sub-group of facet -->
