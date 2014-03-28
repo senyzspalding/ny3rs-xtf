@@ -690,53 +690,42 @@
       elements by combining any related or separated materials
       elements. It begins by testing to see if there related or separated
       materials elements with content.-->
-   <xsl:template name="archdesc-relatedmaterial">
-      <xsl:if test="string(archdesc/relatedmaterial) or
+	<xsl:template name="archdesc-relatedmaterial">
+		<xsl:if test="string(archdesc/relatedmaterial) or
          string(archdesc/*/relatedmaterial) or
-string(archdesc/*/relatedmaterial/relatedmaterial)
-or 
+		string(archdesc/*/relatedmaterial/relatedmaterial) or 
          string(archdesc/separatedmaterial) or
          string(archdesc/*/separatedmaterial)
-or string(archdesc/*/separatedmaterial/separatedmaterial)">
-         <h3>
-            <a name="relatedmatlink">
-               <b>
-                  <xsl:text>Related Material</xsl:text>
-               </b>
-            </a>
-         </h3>
+		or string(archdesc/*/separatedmaterial/separatedmaterial)">
+			<a name="relatedmatlink"/>
+			<h3> Related Material </h3>
+			<p>
+				<xsl:apply-templates
+					select="archdesc/relatedmaterial/p
+		            | archdesc/*/relatedmaterial/p
+					| archdesc/*/relatedmaterial/relatedmaterial/p
+		            | archdesc/relatedmaterial/note/p
+            		| archdesc/*/relatedmaterial/note/p
+					| archdesc/*/relatedmaterial/relatedmaterial/note/p
+					| archdesc/relatedmaterial/list/*
+      		        | archdesc/*/relatedmaterial/list/*
+					| archdesc/*/relatedmaterial/relatedmaterial/list/*"
+				/>
+			</p>
 
-<p>
-         <xsl:apply-templates select="archdesc/relatedmaterial/p
-            | archdesc/*/relatedmaterial/p
-| archdesc/*/relatedmaterial/relatedmaterial/p
-
-            | archdesc/relatedmaterial/note/p
-            | archdesc/*/relatedmaterial/note/p
-| archdesc/*/relatedmaterial/relatedmaterial/note/p
-
-|archdesc/relatedmaterial/list/*
-            | archdesc/*/relatedmaterial/list/*
-| archdesc/*/relatedmaterial/relatedmaterial/list/*"/>
-         </p>
-
-<xsl:apply-templates select="archdesc/separatedmaterial/p
-            | archdesc/*/separatedmaterial/p
-| archdesc/*/separatedmaterial/separatedmaterial/p
-
-            | archdesc/separatedmaterial/note/p
-            | archdesc/*/separatedmaterial/note/p
-| archdesc/*/separatedmaterial/separatedmaterial/note/p
-
-| archdesc/separatedmaterial/list/*
-            | archdesc/*/separatedmaterial/list/*
-| archdesc/*/separatedmaterial/separatedmaterial/list/*"/>
-
-
-
-         <hr></hr>
-      </xsl:if>
-   </xsl:template>
+			<xsl:apply-templates
+				select="archdesc/separatedmaterial/p
+            	| archdesc/*/separatedmaterial/p
+				| archdesc/*/separatedmaterial/separatedmaterial/p
+            	| archdesc/separatedmaterial/note/p
+            	| archdesc/*/separatedmaterial/note/p
+				| archdesc/*/separatedmaterial/separatedmaterial/note/p
+				| archdesc/separatedmaterial/list/*
+  	            | archdesc/*/separatedmaterial/list/*
+				| archdesc/*/separatedmaterial/separatedmaterial/list/*"/>
+			<hr/>
+		</xsl:if>
+	</xsl:template>
    
    <xsl:template match="archdesc/relatedmaterial/p
       | archdesc/*/relatedmaterial/p
@@ -914,16 +903,116 @@ or string(archdesc/*/separatedmaterial/separatedmaterial)">
 			<p>
 				<xsl:apply-templates select="p | note/p"/>
 			</p>
-			<ul>
-				<xsl:for-each select="descendant::subject |descendant::corpname | descendant::famname | descendant::persname | descendant::genreform | descendant::title | descendant::geogname | descendant::occupation">
-					<xsl:sort select="." data-type="text" order="ascending"/>
-					<li>
-						<a href="{$xtfURL}search?f1-{local-name()}={.}">
-							<xsl:apply-templates/>
-						</a>
-					</li>
-				</xsl:for-each>
-			</ul>			
+			<xsl:if test="descendant::subject">
+				<h4>Subjects</h4>
+				<ul>
+					<xsl:for-each select="descendant::subject">
+						<xsl:sort select="." data-type="text" order="ascending"/>
+						<li>
+							<a href="{$xtfURL}search?f1-{local-name()}={.}">
+								<xsl:apply-templates/>
+							</a>
+						</li>
+					</xsl:for-each>
+				</ul>
+			</xsl:if>
+			<xsl:if test="descendant::corpname">
+				<h4>Organizations</h4>
+				<ul>
+					<xsl:for-each select="descendant::corpname">
+						<xsl:sort select="." data-type="text" order="ascending"/>
+						<li>
+							<a href="{$xtfURL}search?f1-{local-name()}={.}">
+								<xsl:apply-templates/>
+							</a>
+						</li>
+					</xsl:for-each>
+				</ul>
+			</xsl:if>
+
+			<xsl:if test="descendant::famname">
+				<h4>Families</h4>
+				<ul>
+					<xsl:for-each select="descendant::famname">
+						<xsl:sort select="." data-type="text" order="ascending"/>
+						<li>
+							<a href="{$xtfURL}search?f1-{local-name()}={.}">
+								<xsl:apply-templates/>
+							</a>
+						</li>
+					</xsl:for-each>
+				</ul>
+			</xsl:if>
+
+			<xsl:if test="descendant::persname">
+				<h4>People</h4>
+				<ul>
+					<xsl:for-each select="descendant::persname">
+						<xsl:sort select="." data-type="text" order="ascending"/>
+						<li>
+							<a href="{$xtfURL}search?f1-{local-name()}={.}">
+								<xsl:apply-templates/>
+							</a>
+						</li>
+					</xsl:for-each>
+				</ul>
+			</xsl:if>
+
+			<xsl:if test="descendant::genreform">
+				<h4>Formats</h4>
+				<ul>
+					<xsl:for-each select="descendant::genreform">
+						<xsl:sort select="." data-type="text" order="ascending"/>
+						<li>
+							<a href="{$xtfURL}search?f1-{local-name()}={.}">
+								<xsl:apply-templates/>
+							</a>
+						</li>
+					</xsl:for-each>
+				</ul>
+			</xsl:if>
+
+			<xsl:if test="descendant::title">
+				<h4>Titles</h4>
+				<ul>
+					<xsl:for-each select="descendant::title">
+						<xsl:sort select="." data-type="text" order="ascending"/>
+						<li>
+							<a href="{$xtfURL}search?f1-{local-name()}={.}">
+								<xsl:apply-templates/>
+							</a>
+						</li>
+					</xsl:for-each>
+				</ul>
+			</xsl:if>
+
+			<xsl:if test="descendant::geogname">
+				<h4>Places</h4>
+				<ul>
+					<xsl:for-each select="descendant::geogname">
+						<xsl:sort select="." data-type="text" order="ascending"/>
+						<li>
+							<a href="{$xtfURL}search?f1-{local-name()}={.}">
+								<xsl:apply-templates/>
+							</a>
+						</li>
+					</xsl:for-each>
+				</ul>
+			</xsl:if>
+
+			<xsl:if test="descendant::occupation">
+				<h4>Occupations</h4>
+				<ul>
+					<xsl:for-each select="descendant::occupation">
+						<xsl:sort select="." data-type="text" order="ascending"/>
+						<li>
+							<a href="{$xtfURL}search?f1-{local-name()}={.}">
+								<xsl:apply-templates/>
+							</a>
+						</li>
+					</xsl:for-each>
+				</ul>
+			</xsl:if>
 		</xsl:if>
 	</xsl:template>
 
@@ -966,7 +1055,7 @@ or string(archdesc/*/separatedmaterial/separatedmaterial)">
       | archdesc/userestrict/note/p
       | archdesc/*/accessrestrict/note/p
       | archdesc/*/userestrict/note/p">
-		<p style="margin-left:50pt">
+		<p>
 			<xsl:apply-templates/>
 		</p>
 	</xsl:template>
