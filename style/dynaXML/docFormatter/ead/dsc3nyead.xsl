@@ -29,10 +29,6 @@ any introductory paragraphs.-->
 
 	<xsl:template match="archdesc/dsc">
 		<xsl:apply-templates/>
-		<xsl:call-template name="btop"/>
-		<span class="section_divider">
-			<hr/>
-		</span>
 	</xsl:template>
 
 	<xsl:template match="dsc/head">
@@ -156,14 +152,10 @@ that are used generically throughout the stylesheet.-->
 
 	<xsl:template name="component-did">
 		<!--Inserts unitid and a space if it exists in the markup.-->
+
 		<xsl:if test="unitid">
-
-
-			<xsl:text/>
 			<xsl:apply-templates select="unitid"/>
-			<xsl:text>&#x00A0;&#x00A0;&#x00A0;&#x00A0;</xsl:text>
-
-
+			<xsl:text>.&#160;</xsl:text>
 		</xsl:if>
 
 		<!--This choose statement selects between cases where unitdate is a child of
@@ -172,60 +164,20 @@ that are used generically throughout the stylesheet.-->
 			<!--This code processes the elements when unitdate is a child
 			of unittitle.-->
 			<xsl:when test="unittitle">
-
 				<xsl:for-each select="unittitle">
-					<span class="unittitle">
-						<xsl:apply-templates/>
-					</span>
-					<xsl:text>&#x20;</xsl:text>
+					<xsl:apply-templates/>
 				</xsl:for-each>
 			</xsl:when>
 
 			<!--This code process the elements when unitdate is not a
 					child of untititle-->
 			<xsl:otherwise>
-				<span class="unittitle">
-					<xsl:apply-templates select="unittitle"/>
-				</span>
-				<xsl:text>&#x20;</xsl:text>
+				<xsl:apply-templates select="unittitle"/>
 				<xsl:for-each select="unitdate">
-					<span class="clist_unitdate">
-						<xsl:apply-templates/>
-					</span>
-
+					<xsl:apply-templates/>
 				</xsl:for-each>
 			</xsl:otherwise>
 		</xsl:choose>
-
-		<xsl:if test="dao">
-			<xsl:text>&#x20;&#x20;</xsl:text>
-			<xsl:apply-templates select="dao"/>
-		</xsl:if>
-
-
-		<xsl:if test="physdesc">
-			<br/>
-			<span class="series-physdesc">
-				<xsl:apply-templates select="physdesc"/>
-			</span>
-		</xsl:if>
-		<xsl:if test="physloc">
-			<br/>
-			<span class="series-physloc">
-				<xsl:apply-templates select="physloc"/>
-			</span>
-		</xsl:if>
-		<!--Inserts origination and a space if it exists in the markup.-->
-		<xsl:if test="origination">
-
-			<br/>
-			<span class="listcreators">
-				<xsl:value-of select="origination/@label"/>
-				<xsl:text>&#x20;</xsl:text>
-				<xsl:apply-templates select="origination"/>
-				<xsl:text>&#x20;</xsl:text>
-			</span>
-		</xsl:if>
 
 	</xsl:template>
 
@@ -239,12 +191,12 @@ The named templates are in section 4.-->
 		<xsl:for-each select=".">
 			<xsl:choose>
 				<xsl:when test="@level='subseries' or @level='series' or @level='subgrp'">
-					<div class="c01">
+					<div class="row">
 						<xsl:call-template name="c01-level"/>
 					</div>
 				</xsl:when>
 				<xsl:otherwise>
-					<div class="c02">
+					<div class="row">
 						<xsl:call-template name="c02-level-container"/>
 					</div>
 				</xsl:otherwise>
@@ -253,12 +205,12 @@ The named templates are in section 4.-->
 			<xsl:for-each select="c02|c">
 				<xsl:choose>
 					<xsl:when test="@level='subseries' or @level='series' or @level='subgrp'">
-						<div class="c02">
+						<div class="row">
 							<xsl:call-template name="c02-level-subseries"/>
 						</div>
 					</xsl:when>
 					<xsl:otherwise>
-						<div class="c02">
+						<div class="row">
 							<xsl:call-template name="c02-level-container"/>
 						</div>
 					</xsl:otherwise>
@@ -333,201 +285,107 @@ for each level.-->
 	<!--Processes c01 which is assumed to be a series
 	description without associated components.-->
 	<xsl:template name="c01-level">
-		<table border="0" cellpadding="0" cellspacing="0" width="100%">
-			<xsl:for-each select="did">
-				<tr>
-					<td colspan="3"> &#x20;</td>
-				</tr>
-				<tr>
-					<td width="95%" align="left" valign="top">
-						<!-- version to supply counted c01s
-						<a>
-							<xsl:attribute name="name">
-								<xsl:text>series</xsl:text><xsl:number from="dsc" count="c01 "/>
-							
-							</xsl:attribute>
-							<div class="series1">
-								<span class="component_did"><xsl:call-template name="component-did"/></span>
-							</div>
-							</a> -->
-						<a>
-							<xsl:attribute name="name">
-								<xsl:value-of select="../@id"/>
-							</xsl:attribute>
-						</a>
-							<div class="series1">
-								<span class="component_did">
-									<xsl:call-template name="component-did"/>
-								</span>
-							</div>
-					</td>
-				</tr>
-				<xsl:for-each select="note/p | langmaterial | materialspec">
-					<tr>
-						<td width="95%" valign="top">
-							<br/>
-							<xsl:apply-templates/>
-						</td>
-					</tr>
+		<xsl:for-each select="did">
+				<a>
+					<xsl:attribute name="name">
+						<xsl:value-of select="../@id"/>
+					</xsl:attribute>
+				</a>
+				<div class="col-md-12">
+					<h4><xsl:call-template name="component-did"/></h4>
+				</div>
+				<xsl:for-each select="physdesc | physloc| origination | note/p | langmaterial | materialspec">
+					<div class="col-md-12">
+						<xsl:apply-templates/>
+					</div>
 				</xsl:for-each>
-			</xsl:for-each>
-			<!--Closes the did.-->
+			
+		</xsl:for-each>
+		<!--Closes the did.-->
 
-			<!--This template creates a separate row for each child of
+		<!--This template creates a separate row for each child of
 		the listed elements. Do we need HEADS for these components? -->
-			<xsl:for-each
-				select="scopecontent | bioghist | arrangement 
+		<xsl:for-each
+			select="scopecontent | bioghist | arrangement 
 		| userestrict | accessrestrict | processinfo |
 		acqinfo | custodhist | controlaccess/controlaccess | odd | note
 		| descgrp/*">
-				<!--The head element is rendered in bold.-->
-				<xsl:for-each select="head">
-					<tr>
-						<td width="95%" valign="top">
-							<b>
-								<xsl:apply-templates/>
-							</b>
-						</td>
-					</tr>
-				</xsl:for-each>
-				<xsl:for-each select="*[not(self::head)]">
-					<tr>
-						<td width="95%" valign="top">
-							<span class="series1_element">
-								<p>
-									<xsl:apply-templates/>
-								</p>
-							</span>
-						</td>
-					</tr>
-				</xsl:for-each>
+			<!--The head element is rendered in bold.-->
+			<div class="col-md-12">
+			<xsl:for-each select="head">
+				<h5><xsl:apply-templates/></h5>
 			</xsl:for-each>
-		</table>
+			<xsl:for-each select="*[not(self::head)]">
+				<xsl:apply-templates/>
+			</xsl:for-each>
+			</div>
+		</xsl:for-each>
+
 	</xsl:template>
 
 	<!--This template processes c02 elements that have associated containers, for
 	example when c02 is a file.-->
 	<xsl:template name="c02-level-container">
-		<span class="item_record">
-			<table border="0" cellpadding="0" cellspacing="0" width="100%">
-				<xsl:for-each select="did">
-					<xsl:if test="not(container/@type=preceding::did[1]/container/@type)">
-						<tr>
-							<td colspan="3">&#x20;</td>
-						</tr>
-						<tr valign="top">
-							<td width="15%" align="left" valign="top" class="componenttext">
-								<b>
-									<span class="column-head">
-										<xsl:value-of
-											select="concat(translate(substring(container[1]/@type, 1, 1),
+		<xsl:for-each select="did">
+			<xsl:if test="not(container/@type=preceding::did[1]/container/@type)">
+				<div class="bg-primary col-md-12">
+					<div class="col-md-1">
+						<xsl:value-of
+							select="concat(translate(substring(container[1]/@type, 1, 1),
 							'abcdefghijklmnopqrstuvwxyz',
 							'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 							), substring(container[1]/@type, 2))"
-										/>
-									</span>
-								</b>
-							</td>
-							<td width="15%" align="left" valign="top" class="componenttext">
-								<b>
-									<span class="column-head">
-										<xsl:value-of
-											select="concat(translate(substring(container[2]/@type, 1, 1),
+						/>
+					</div>
+					<div class="col-md-1">
+						<xsl:value-of
+							select="concat(translate(substring(container[2]/@type, 1, 1),
 							'abcdefghijklmnopqrstuvwxyz',
 							'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 							), substring(container[2]/@type, 2))"
-										/>
-									</span>
-								</b>
-							</td>
-							<td width="70%" align="left" valign="top" class="componenttext">
-								<b>
-									<span class="column-head">
-										<xsl:text>Contents</xsl:text>
-									</span>
-								</b>
-							</td>
-						</tr>
-					</xsl:if>
-					<tr>
-						<td colspan="3">&#x20;</td>
-					</tr>
-					<tr>
-						<td width="15%" valign="top" class="componenttext">
-							<span class="numbering">
-								<xsl:value-of select="container[1]"/>
-								<xsl:text>&#x20;</xsl:text>
-							</span>
-						</td>
-						<td width="15%" valign="top" class="componenttext">
-							<span class="numbering">
-								<xsl:value-of select="container[2]"/>
-								<xsl:text>&#x20;</xsl:text>
-							</span>
-						</td>
-						<td width="70%" valign="top">
-							<xsl:call-template name="component-did"/>
-						</td>
-					</tr>
-
-					<xsl:for-each select="abstract | note/p | langmaterial | materialspec">
-						<tr>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="70%" valign="top">
-								<div class="listnotes">
-									<xsl:apply-templates/>
-								</div>
-							</td>
-						</tr>
-					</xsl:for-each>
-
-				</xsl:for-each>
-				<!--Closes the did.-->
+						/>
+					</div>
+					<div class="col-md-10">
+						<xsl:text>Contents</xsl:text>
+					</div>
+				</div>
+			</xsl:if>
+			<div class="col-md-12">
+				<div class="col-md-1">
+					<xsl:value-of select="container[1]"/>
+				</div>
+				<div class="col-md-1">
+					<xsl:value-of select="container[2]"/>
+				</div>
+				<div class="col-md-10">
+					<xsl:call-template name="component-did"/>
+				</div>
 
 				<xsl:for-each
-					select="scopecontent | bioghist | arrangement |
+					select="physdesc | physloc| origination | abstract | note/p | langmaterial | materialspec">
+					<div class="col-md-10 col-md-offset-2 text-muted">
+						<xsl:apply-templates/>
+					</div>
+				</xsl:for-each>
+			</div>
+		</xsl:for-each>
+		<!--Closes the did.-->
+
+		<xsl:for-each
+			select="scopecontent | bioghist | arrangement |
 			userestrict | accessrestrict | processinfo |
 			acqinfo | custodhist | controlaccess/controlaccess | odd | note | descgrp/*">
-					<!--The head element is rendered in bold.-->
-					<xsl:for-each select="head">
-						<tr>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="70%" valign="top">
-								<b>
-									<xsl:apply-templates/>
-								</b>
-							</td>
-						</tr>
-					</xsl:for-each>
-					<xsl:for-each select="*[not(self::head)]">
-						<tr>
-
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="70%" valign="top">
-								<p class="seriesleveltext">
-									<xsl:apply-templates/>
-								</p>
-							</td>
-						</tr>
-					</xsl:for-each>
+			<div class="col-md-10 col-md-offset-2">
+				<xsl:for-each select="head">
+					<h5>
+						<xsl:apply-templates/>
+					</h5>
 				</xsl:for-each>
-			</table>
-		</span>
+				<xsl:for-each select="*[not(self::head)]">
+					<xsl:apply-templates/>
+				</xsl:for-each>
+			</div>
+		</xsl:for-each>
 	</xsl:template>
 
 	<!--This template processes c02 level components that do not have
@@ -535,1236 +393,651 @@ for each level.-->
 
 
 	<xsl:template name="c02-level-subseries">
-		<table border="0" cellpadding="0" cellspacing="0" width="100%">
-			<xsl:for-each select="did">
-				<tr>
-					<td colspan="3">&#x20;</td>
-				</tr>
-				<tr>
-					<td width="95%" align="left" valign="top">
-						<div class="series2">
-							<!-- this CHOOSE provides a name for an anchor for those unitid elements that were not assigned id attributes. 
-	This allows links to be created from a table of contents (see eadDocFormatter.xsl) 
-	without overwriting ids already written in as id attributes in unitid. This could be repeated at c03 level if c03's are ever reflected in table of contents -->
-						
-									<a>
-										<xsl:attribute name="name">
-											<xsl:value-of select="../@id"/>
-										</xsl:attribute>
-									</a>
-							<span class="pageheadline_smm">
-								<!-- <xsl:text>Subseries </xsl:text> -->
-								<span class="component_did">
-									<xsl:call-template name="component-did"/>
-								</span>
-							</span>
-
-						</div>
-					</td>
-				</tr>
-				<xsl:for-each select="note/p | langmaterial | materialspec">
-					<tr>
-						<td width="95%" valign="top">
-							<br/>
-							<xsl:apply-templates/>
-						</td>
-					</tr>
-				</xsl:for-each>
-			</xsl:for-each>
-			<!--Closes the did.-->
-
-
-
-
-
-
-
-			<!--This template creates a separate row for each child of
-				the listed elements. Do we need HEADS for these components? -->
+		<xsl:for-each select="did">
+			<a>
+				<xsl:attribute name="name">
+					<xsl:value-of select="../@id"/>
+				</xsl:attribute>
+			</a>
+			<div class="col-md-12">
+				<h4>
+					<xsl:call-template name="component-did"/>
+				</h4>
+			</div>
 			<xsl:for-each
-				select="scopecontent | bioghist | arrangement 
+				select="physdesc | physloc| origination | note/p | langmaterial | materialspec">
+				<div class="col-md-12">
+					<xsl:apply-templates/>
+				</div>
+			</xsl:for-each>
+		</xsl:for-each>
+		<!--Closes the did.-->
+
+		<!--This template creates a separate row for each child of
+				the listed elements. Do we need HEADS for these components? -->
+		<xsl:for-each
+			select="scopecontent | bioghist | arrangement 
 				| userestrict | accessrestrict | processinfo |
 				acqinfo | custodhist | controlaccess/controlaccess | odd | note
 				| descgrp/*">
-				<!--The head element is rendered in bold.-->
+			<div class="col-md-12">
 				<xsl:for-each select="head">
-					<tr>
-						<td width="95%" valign="top">
-							<b>
-								<xsl:apply-templates/>
-							</b>
-						</td>
-					</tr>
+					<h5>
+						<xsl:apply-templates/>
+					</h5>
 				</xsl:for-each>
 				<xsl:for-each select="*[not(self::head)]">
-					<tr>
-						<td width="95%" valign="top">
-							<span class="series2_element">
-								<xsl:apply-templates/>
-							</span>
-						</td>
-					</tr>
-					<tr>
-						<td width="95%" valign="top" height="10">
-							<xsl:text>&#x20;</xsl:text>
-						</td>
-					</tr>
+					<xsl:apply-templates/>
 				</xsl:for-each>
-			</xsl:for-each>
-		</table>
+			</div>
+		</xsl:for-each>
+
 	</xsl:template>
 
 	<!--This template processes c03 elements that have associated containers, for
 		example when c03 is a file.-->
 	<xsl:template name="c03-level-container">
-		<span class="item_record">
-			<table border="0" cellpadding="0" cellspacing="0" width="100%">
-				<xsl:for-each select="did">
-					<xsl:if test="not(container/@type=preceding::did[1]/container/@type)">
-						<tr>
-							<td colspan="3">&#x20;</td>
-						</tr>
-						<tr valign="top">
-							<td width="15%" align="left" valign="top" class="componenttext">
-								<b>
-									<span class="column-head">
-										<xsl:value-of
-											select="concat(translate(substring(container[1]/@type, 1, 1),
-									'abcdefghijklmnopqrstuvwxyz',
-									'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-									), substring(container[1]/@type, 2))"
-										/>
-									</span>
-								</b>
-							</td>
-							<td width="15%" align="left" valign="top" class="componenttext">
-								<b>
-									<span class="column-head">
-										<xsl:value-of
-											select="concat(translate(substring(container[2]/@type, 1, 1),
-									'abcdefghijklmnopqrstuvwxyz',
-									'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-									), substring(container[2]/@type, 2))"
-										/>
-									</span>
-								</b>
-							</td>
-							<td width="70%" align="left" valign="top" class="componenttext">
-								<b>
-									<span class="column-head">
-										<xsl:text>Contents</xsl:text>
-									</span>
-								</b>
-							</td>
-						</tr>
-					</xsl:if>
-					<tr>
-						<td colspan="3">&#x20;</td>
-					</tr>
-					<tr>
-						<td width="15%" valign="top" class="componenttext">
-							<span class="numbering">
-								<xsl:value-of select="container[1]"/>
-								<xsl:text>&#x20;</xsl:text>
-							</span>
-						</td>
-						<td width="15%" valign="top" class="componenttext">
-							<span class="numbering">
-								<xsl:value-of select="container[2]"/>
-								<xsl:text>&#x20;</xsl:text>
-							</span>
-						</td>
-						<td width="70%" valign="top">
-							<div class="containertext">
-								<xsl:call-template name="component-did"/>
-							</div>
-						</td>
-					</tr>
-
-					<xsl:for-each select="abstract | note/p | langmaterial | materialspec">
-						<tr>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="70%" valign="top">
-								<div class="listnotes">
-									<xsl:apply-templates/>
-								</div>
-							</td>
-						</tr>
-					</xsl:for-each>
-
-				</xsl:for-each>
-				<!--Closes the did.-->
+		<xsl:for-each select="did">
+			<xsl:if test="not(container/@type=preceding::did[1]/container/@type)">
+				<div class="bg-info col-md-12">
+					<div class="col-md-1">
+						<xsl:value-of
+							select="concat(translate(substring(container[1]/@type, 1, 1),
+							'abcdefghijklmnopqrstuvwxyz',
+							'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+							), substring(container[1]/@type, 2))"
+						/>
+					</div>
+					<div class="col-md-1">
+						<xsl:value-of
+							select="concat(translate(substring(container[2]/@type, 1, 1),
+							'abcdefghijklmnopqrstuvwxyz',
+							'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+							), substring(container[2]/@type, 2))"
+						/>
+					</div>
+					<div class="col-md-10">
+						<xsl:text>Contents</xsl:text>
+					</div>
+				</div>
+			</xsl:if>
+			<div class="col-md-12">
+				<div class="col-md-1">
+					<xsl:value-of select="container[1]"/>
+				</div>
+				<div class="col-md-1">
+					<xsl:value-of select="container[2]"/>
+				</div>
+				<div class="col-md-10">
+					<xsl:call-template name="component-did"/>
+				</div>
 
 				<xsl:for-each
-					select="scopecontent | bioghist | arrangement |
-				userestrict | accessrestrict | processinfo | 
-				acqinfo | custodhist | controlaccess/controlaccess | odd | note | descgrp/*">
-					<!--The head element is rendered in bold.-->
-					<xsl:for-each select="head">
-						<tr>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="70%" valign="top">
-								<b>
-									<xsl:apply-templates/>
-								</b>
-							</td>
-						</tr>
-					</xsl:for-each>
-					<xsl:for-each select="*[not(self::head)]">
-						<tr>
-
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="70%" valign="top">
-								<span class="series3_element">
-									<p>
-										<xsl:apply-templates/>
-									</p>
-								</span>
-							</td>
-						</tr>
-					</xsl:for-each>
+					select="physdesc | physloc| origination | abstract | note/p | langmaterial | materialspec">
+					<div class="col-md-10 col-md-offset-2 text-muted">
+						<xsl:apply-templates/>
+					</div>
 				</xsl:for-each>
-			</table>
-		</span>
+			</div>
+		</xsl:for-each>
+		<!--Closes the did.-->
+		
+		<xsl:for-each
+			select="scopecontent | bioghist | arrangement |
+			userestrict | accessrestrict | processinfo |
+			acqinfo | custodhist | controlaccess/controlaccess | odd | note | descgrp/*">
+			<div class="col-md-10 col-md-offset-2">
+				<xsl:for-each select="head">
+					<h5>
+						<xsl:apply-templates/>
+					</h5>
+				</xsl:for-each>
+				<xsl:for-each select="*[not(self::head)]">
+					<xsl:apply-templates/>
+				</xsl:for-each>
+			</div>
+		</xsl:for-each>
 	</xsl:template>
 
 	<!--This template processes c03 level components that do not have
 		associated containers, for example if the c03 is a subseries.-->
 	<xsl:template name="c03-level-subseries">
-		<table border="0" cellpadding="0" cellspacing="0" width="100%">
-			<xsl:for-each select="did">
-				<tr>
-					<td colspan="3">&#x20;</td>
-				</tr>
-
-
-				<tr>
-					<td width="95%" align="left" valign="top" class="componenttext">
-						<div class="series3">
-							<a>
-								<xsl:attribute name="name">
-									<!-- originally <xsl:text>subseries</xsl:text><xsl:number from="dsc" count="c03"/> -->
-									<xsl:value-of select="unitid/@id"/>
-								</xsl:attribute>
-								<span class="pageheadline_smm">
-									<span class="component_did">
-										<xsl:call-template name="component-did"/>
-									</span>
-								</span>
-							</a>
-						</div>
-					</td>
-				</tr>
-				<xsl:for-each select="note/p | langmaterial | materialspec">
-					<tr>
-						<td width="95%" valign="top">
-							<xsl:apply-templates/>
-						</td>
-					</tr>
-				</xsl:for-each>
+		<xsl:for-each select="did">
+			<a>
+				<xsl:attribute name="name">
+					<!-- originally <xsl:text>subseries</xsl:text><xsl:number from="dsc" count="c03"/> -->
+					<xsl:value-of select="unitid/@id"/>
+				</xsl:attribute>
+				<div class="col-md-12">
+					<h4>
+						<xsl:call-template name="component-did"/>
+					</h4>
+				</div>
+			</a>
+			<xsl:for-each select="physdesc | physloc| origination | note/p | langmaterial | materialspec">
+				<div class="col-md-12">
+					<xsl:apply-templates/>
+				</div>
 			</xsl:for-each>
+		</xsl:for-each>
 			<!--Closes the did.-->
 
 			<!--This template creates a separate row for each child of
 			the listed elements.-->
-			<xsl:for-each
-				select="scopecontent | bioghist | arrangement 
+		<xsl:for-each
+			select="scopecontent | bioghist | arrangement 
 			| userestrict | accessrestrict | processinfo | 
 			acqinfo | custodhist | controlaccess/controlaccess | odd | note
 			| descgrp/*">
-				<!--The head element is rendered in bold.-->
+			<div class="col-md-12">
 				<xsl:for-each select="head">
-					<tr>
-						<td width="95%" valign="top">
-							<b>
-								<xsl:apply-templates/>
-							</b>
-						</td>
-					</tr>
+					<h5>
+						<xsl:apply-templates/>
+					</h5>
 				</xsl:for-each>
 				<xsl:for-each select="*[not(self::head)]">
-					<tr>
-
-						<td width="95%" valign="top">
-							<span class="series3_element">
-								<p>
-									<xsl:apply-templates/>
-								</p>
-							</span>
-						</td>
-					</tr>
-					<tr>
-						<td width="95%" valign="top" height="10">
-							<xsl:text>&#x20;</xsl:text>
-						</td>
-					</tr>
+					<xsl:apply-templates/>
 				</xsl:for-each>
-			</xsl:for-each>
-		</table>
+			</div>
+		</xsl:for-each>
+		
 	</xsl:template>
 
 	<!--This template processes c04 elements that have associated containers, for
 		example when c04 is a file.-->
 	<xsl:template name="c04-level-container">
-		<span class="item_record">
-			<table border="0" cellpadding="0" cellspacing="0" width="100%">
-				<xsl:for-each select="did">
-					<xsl:if test="not(container/@type=preceding::did[1]/container/@type)">
-						<tr>
-							<td colspan="3">&#x20;</td>
-						</tr>
-						<tr valign="top">
-							<td width="15%" align="left" valign="top" class="componenttext">
-								<b>
-									<span class="column-head">
-										<xsl:value-of
-											select="concat(translate(substring(container[1]/@type, 1, 1),
-									'abcdefghijklmnopqrstuvwxyz',
-									'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-									), substring(container[1]/@type, 2))"
-										/>
-									</span>
-								</b>
-							</td>
-							<td width="15%" align="left" valign="top" class="componenttext">
-								<b>
-									<span class="column-head">
-										<xsl:value-of
-											select="concat(translate(substring(container[2]/@type, 1, 1),
-									'abcdefghijklmnopqrstuvwxyz',
-									'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-									), substring(container[2]/@type, 2))"
-										/>
-									</span>
-								</b>
-							</td>
-							<td width="70%" align="left" valign="top" class="componenttext">
-								<b>
-									<span class="column-head">
-										<xsl:text>Contents</xsl:text>
-									</span>
-								</b>
-							</td>
-						</tr>
-					</xsl:if>
-					<tr>
-						<td colspan="3">&#x20;</td>
-					</tr>
-					<tr>
-						<td width="15%" valign="top" class="componenttext">
-							<span class="numbering">
-								<xsl:value-of select="container[1]"/>
-								<xsl:text>&#x20;</xsl:text>
-							</span>
-						</td>
-						<td width="15%" valign="top" class="componenttext">
-							<span class="numbering">
-								<xsl:value-of select="container[2]"/>
-								<xsl:text>&#x20;</xsl:text>
-							</span>
-						</td>
-						<td width="70%" valign="top">
-							<div class="containertext">
-								<xsl:call-template name="component-did"/>
-							</div>
-						</td>
-					</tr>
-
-					<xsl:for-each select="abstract | note/p | langmaterial | materialspec">
-						<tr>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="70%" valign="top">
-								<div class="listnotes">
-									<xsl:apply-templates/>
-								</div>
-							</td>
-						</tr>
-					</xsl:for-each>
-
-				</xsl:for-each>
-				<!--Closes the did.-->
+		<xsl:for-each select="did">
+			<xsl:if test="not(container/@type=preceding::did[1]/container/@type)">
+				<div class="bg-info col-md-12">
+					<div class="col-md-1">
+						<xsl:value-of
+							select="concat(translate(substring(container[1]/@type, 1, 1),
+						'abcdefghijklmnopqrstuvwxyz',
+						'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+						), substring(container[1]/@type, 2))"
+						/>
+					</div>
+					<div class="col-md-1">
+						<xsl:value-of
+							select="concat(translate(substring(container[2]/@type, 1, 1),
+						'abcdefghijklmnopqrstuvwxyz',
+						'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+						), substring(container[2]/@type, 2))"
+						/>
+					</div>
+					<div class="col-md-10">
+						<xsl:text>Contents</xsl:text>
+					</div>
+				</div>
+			</xsl:if>
+			<div class="col-md-12">
+				<div class="col-md-1">
+					<xsl:value-of select="container[1]"/>
+				</div>
+				<div class="col-md-1">
+					<xsl:value-of select="container[2]"/>
+				</div>
+				<div class="col-md-10">
+					<xsl:call-template name="component-did"/>
+				</div>
 
 				<xsl:for-each
-					select="scopecontent | bioghist | arrangement |
-				userestrict | accessrestrict | processinfo |
-				acqinfo | custodhist | controlaccess/controlaccess | odd | note | descgrp/*">
-					<!--The head element is rendered in bold.-->
-					<xsl:for-each select="head">
-						<tr>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="70%" valign="top">
-								<b>
-									<xsl:apply-templates/>
-								</b>
-							</td>
-						</tr>
-					</xsl:for-each>
-					<xsl:for-each select="*[not(self::head)]">
-						<tr>
-
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="70%" valign="top">
-								<p class="seriesleveltext">
-									<xsl:apply-templates/>
-								</p>
-							</td>
-						</tr>
-					</xsl:for-each>
+					select="physdesc | physloc| origination | abstract | note/p | langmaterial | materialspec">
+					<div class="col-md-10 col-md-offset-2 text-muted">
+						<xsl:apply-templates/>
+					</div>
 				</xsl:for-each>
-			</table>
-		</span>
+			</div>
+		</xsl:for-each>
+		<!--Closes the did.-->
+
+		<xsl:for-each
+			select="scopecontent | bioghist | arrangement |
+			userestrict | accessrestrict | processinfo |
+			acqinfo | custodhist | controlaccess/controlaccess | odd | note | descgrp/*">
+			<div class="col-md-10 col-md-offset-2 text-muted">
+				<xsl:for-each select="head">
+					<h5>
+						<xsl:apply-templates/>
+					</h5>
+				</xsl:for-each>
+				<xsl:for-each select="*[not(self::head)]">
+					<xsl:apply-templates/>
+				</xsl:for-each>
+			</div>
+		</xsl:for-each>
 	</xsl:template>
 
 	<xsl:template name="c04-level-subseries">
-		<table border="0" cellpadding="0" cellspacing="0" width="100%">
-			<xsl:for-each select="did">
-				<tr>
-					<td colspan="3">&#x20;</td>
-				</tr>
-				<tr>
-					<td width="95%" align="left" valign="top" class="componenttext">
-						<a>
-							<xsl:attribute name="name">
-								<!-- originally <xsl:text>subseries</xsl:text><xsl:number from="dsc" count="c04 "/> -->
-								<xsl:value-of select="unitid/@id"/>
-							</xsl:attribute>
-							<div class="series3">
-								<span class="component_did">
-									<xsl:call-template name="component-did"/>
-								</span>
-							</div>
-						</a>
-					</td>
-				</tr>
-				<xsl:for-each select="note/p | langmaterial | materialspec">
-					<tr>
-						<td width="95%" valign="top">
-							<br/>
-							<xsl:apply-templates/>
-						</td>
-					</tr>
-				</xsl:for-each>
-			</xsl:for-each>
-			<!--Closes the did.-->
-
-			<!--This template creates a separate row for each child of
-				the listed elements. Do we need HEADS for these components? -->
+		<xsl:for-each select="did">
+			<a>
+				<xsl:attribute name="name">
+					<!-- originally <xsl:text>subseries</xsl:text><xsl:number from="dsc" count="c03"/> -->
+					<xsl:value-of select="unitid/@id"/>
+				</xsl:attribute>
+				<div class="col-md-12">
+					<h4>
+						<xsl:call-template name="component-did"/>
+					</h4>
+				</div>
+			</a>
 			<xsl:for-each
-				select="scopecontent | bioghist | arrangement 
-				| userestrict | accessrestrict | processinfo |
-				acqinfo | custodhist | controlaccess/controlaccess | odd | note
-				| descgrp/*">
-				<!--The head element is rendered in bold.-->
+				select="physdesc | physloc| origination | note/p | langmaterial | materialspec">
+				<div class="col-md-12">
+					<xsl:apply-templates/>
+				</div>
+			</xsl:for-each>
+		</xsl:for-each>
+		<!--Closes the did.-->
+
+		<!--This template creates a separate row for each child of
+			the listed elements.-->
+		<xsl:for-each
+			select="scopecontent | bioghist | arrangement 
+			| userestrict | accessrestrict | processinfo | 
+			acqinfo | custodhist | controlaccess/controlaccess | odd | note
+			| descgrp/*">
+			<div class="col-md-12">
 				<xsl:for-each select="head">
-					<tr>
-						<td width="95%" valign="top">
-							<b>
-								<xsl:apply-templates/>
-							</b>
-						</td>
-					</tr>
+					<h5>
+						<xsl:apply-templates/>
+					</h5>
 				</xsl:for-each>
 				<xsl:for-each select="*[not(self::head)]">
-					<tr>
-						<td width="95%" valign="top">
-							<span class="series4_element">
-								<xsl:apply-templates/>
-							</span>
-						</td>
-					</tr>
-					<tr>
-						<td width="95%" valign="top" height="10">
-							<xsl:text>&#x20;</xsl:text>
-						</td>
-					</tr>
+					<xsl:apply-templates/>
 				</xsl:for-each>
-			</xsl:for-each>
-		</table>
+			</div>
+		</xsl:for-each>
 	</xsl:template>
 
 	<!--This template processes c05 elements that have associated containers, for
 		example when c05 is a file.-->
 	<xsl:template name="c05-level">
-		<span class="item_record">
-			<table border="0" cellpadding="0" cellspacing="0" width="100%">
-				<xsl:for-each select="did">
-					<xsl:if test="not(container/@type=preceding::did[1]/container/@type)">
-						<tr>
-							<td colspan="3">&#x20;</td>
-						</tr>
-						<tr valign="top">
-							<td width="15%" align="left" valign="top" class="componenttext">
-								<b>
-									<span class="column-head">
-										<xsl:value-of
-											select="concat(translate(substring(container[1]/@type, 1, 1),
-									'abcdefghijklmnopqrstuvwxyz',
-									'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-									), substring(container[1]/@type, 2))"
-										/>
-									</span>
-								</b>
-							</td>
-							<td width="15%" align="left" valign="top" class="componenttext">
-								<b>
-									<span class="column-head">
-										<xsl:value-of
-											select="concat(translate(substring(container[2]/@type, 1, 1),
-									'abcdefghijklmnopqrstuvwxyz',
-									'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-									), substring(container[2]/@type, 2))"
-										/>
-									</span>
-								</b>
-							</td>
-							<td width="70%" align="left" valign="top" class="componenttext">
-								<b>
-									<span class="column-head">
-										<xsl:text>Contents</xsl:text>
-									</span>
-								</b>
-							</td>
-						</tr>
-					</xsl:if>
-					<tr>
-						<td colspan="3">&#x20;</td>
-					</tr>
-					<tr>
-						<td width="15%" valign="top" class="componenttext">
-							<span class="numbering">
-								<xsl:value-of select="container[1]"/>
-								<xsl:text>&#x20;</xsl:text>
-							</span>
-						</td>
-						<td width="15%" valign="top" class="componenttext">
-							<span class="numbering">
-								<xsl:value-of select="container[2]"/>
-								<xsl:text>&#x20;</xsl:text>
-							</span>
-						</td>
-						<td width="70%" valign="top">
-							<div class="containertext">
-								<xsl:call-template name="component-did"/>
-							</div>
-						</td>
-					</tr>
-
-					<xsl:for-each select="abstract | note/p | langmaterial | materialspec">
-						<tr>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="70%" valign="top">
-								<xsl:apply-templates/>
-							</td>
-						</tr>
-					</xsl:for-each>
-
-				</xsl:for-each>
-				<!--Closes the did.-->
+		<xsl:for-each select="did">
+			<xsl:if test="not(container/@type=preceding::did[1]/container/@type)">
+				<div class="bg-info col-md-12">
+					<div class="col-md-1">
+						<xsl:value-of
+							select="concat(translate(substring(container[1]/@type, 1, 1),
+							'abcdefghijklmnopqrstuvwxyz',
+							'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+							), substring(container[1]/@type, 2))"
+						/>
+					</div>
+					<div class="col-md-1">
+						<xsl:value-of
+							select="concat(translate(substring(container[2]/@type, 1, 1),
+							'abcdefghijklmnopqrstuvwxyz',
+							'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+							), substring(container[2]/@type, 2))"
+						/>
+					</div>
+					<div class="col-md-10">
+						<xsl:text>Contents</xsl:text>
+					</div>
+				</div>
+			</xsl:if>
+			<div class="col-md-12">
+				<div class="col-md-1">
+					<xsl:value-of select="container[1]"/>
+				</div>
+				<div class="col-md-1">
+					<xsl:value-of select="container[2]"/>
+				</div>
+				<div class="col-md-10">
+					<xsl:call-template name="component-did"/>
+				</div>
 
 				<xsl:for-each
-					select="scopecontent | bioghist | arrangement |
-				userestrict | accessrestrict | processinfo |
-				acqinfo | custodhist | controlaccess/controlaccess | odd | note | descgrp/*">
-					<!--The head element is rendered in bold.-->
-					<xsl:for-each select="head">
-						<tr>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="70%" valign="top">
-								<b>
-									<xsl:apply-templates/>
-								</b>
-							</td>
-						</tr>
-					</xsl:for-each>
-					<xsl:for-each select="*[not(self::head)]">
-						<tr>
-
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="70%" valign="top">
-								<br/>
-								<xsl:apply-templates/>
-							</td>
-						</tr>
-					</xsl:for-each>
+					select="physdesc | physloc| origination | abstract | note/p | langmaterial | materialspec">
+					<div class="col-md-10 col-md-offset-2 text-muted">
+						<xsl:apply-templates/>
+					</div>
 				</xsl:for-each>
-			</table>
-		</span>
+			</div>
+		</xsl:for-each>
+		<!--Closes the did.-->
+		
+		<xsl:for-each
+			select="scopecontent | bioghist | arrangement |
+			userestrict | accessrestrict | processinfo |
+			acqinfo | custodhist | controlaccess/controlaccess | odd | note | descgrp/*">
+			<div class="col-md-10 col-md-offset-2 text-muted">
+				<xsl:for-each select="head">
+					<h5>
+						<xsl:apply-templates/>
+					</h5>
+				</xsl:for-each>
+				<xsl:for-each select="*[not(self::head)]">
+					<xsl:apply-templates/>
+				</xsl:for-each>
+			</div>
+		</xsl:for-each>
 	</xsl:template>
 
 	<!--This template processes c06 elements that have associated containers, for
 		example when c06 is a file.-->
 	<xsl:template name="c06-level">
-		<span class="item_record">
-			<table border="0" cellpadding="0" cellspacing="0" width="100%">
-				<xsl:for-each select="did">
-					<xsl:if test="not(container/@type=preceding::did[1]/container/@type)">
-						<tr>
-							<td colspan="3">&#x20;</td>
-						</tr>
-						<tr valign="top">
-							<td width="15%" align="left" valign="top" class="componenttext">
-								<b>
-									<span class="column-head">
-										<xsl:value-of
-											select="concat(translate(substring(container[1]/@type, 1, 1),
-									'abcdefghijklmnopqrstuvwxyz',
-									'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-									), substring(container[1]/@type, 2))"
-										/>
-									</span>
-								</b>
-							</td>
-							<td width="15%" align="left" valign="top" class="componenttext">
-								<b>
-									<span class="column-head">
-										<xsl:value-of
-											select="concat(translate(substring(container[2]/@type, 1, 1),
-									'abcdefghijklmnopqrstuvwxyz',
-									'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-									), substring(container[2]/@type, 2))"
-										/>
-									</span>
-								</b>
-							</td>
-							<td width="70%" align="left" valign="top" class="componenttext">
-								<b>
-									<span class="column-head">
-										<xsl:text>Contents</xsl:text>
-									</span>
-								</b>
-							</td>
-						</tr>
-					</xsl:if>
-					<tr>
-						<td colspan="3">&#x20;</td>
-					</tr>
-					<tr>
-						<td width="15%" valign="top" class="componenttext">
-							<span class="numbering">
-								<xsl:value-of select="container[1]"/>
-								<xsl:text>&#x20;</xsl:text>
-							</span>
-						</td>
-						<td width="15%" valign="top" class="componenttext">
-							<span class="numbering">
-								<xsl:value-of select="container[2]"/>
-								<xsl:text>&#x20;</xsl:text>
-							</span>
-						</td>
-						<td width="70%" valign="top">
-							<div class="containertext">
-								<xsl:call-template name="component-did"/>
-							</div>
-						</td>
-					</tr>
-
-					<xsl:for-each select="abstract | note/p | langmaterial | materialspec">
-						<tr>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="70%" valign="top">
-								<xsl:apply-templates/>
-							</td>
-						</tr>
-					</xsl:for-each>
-
+		<xsl:for-each select="did">
+			<xsl:if test="not(container/@type=preceding::did[1]/container/@type)">
+				<div class="bg-info col-md-12">
+					<div class="col-md-1">
+						<xsl:value-of
+							select="concat(translate(substring(container[1]/@type, 1, 1),
+							'abcdefghijklmnopqrstuvwxyz',
+							'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+							), substring(container[1]/@type, 2))"
+						/>
+					</div>
+					<div class="col-md-1">
+						<xsl:value-of
+							select="concat(translate(substring(container[2]/@type, 1, 1),
+							'abcdefghijklmnopqrstuvwxyz',
+							'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+							), substring(container[2]/@type, 2))"
+						/>
+					</div>
+					<div class="col-md-10">
+						<xsl:text>Contents</xsl:text>
+					</div>
+				</div>
+			</xsl:if>
+			<div class="col-md-12">
+			<div class="col-md-1">
+				<xsl:value-of select="container[1]"/>
+			</div>
+			<div class="col-md-1">
+				<xsl:value-of select="container[2]"/>
+			</div>
+			<div class="col-md-10">
+				<xsl:call-template name="component-did"/>
+			</div>
+			
+			<xsl:for-each
+				select="physdesc | physloc| origination | abstract | note/p | langmaterial | materialspec">
+				<div class="col-md-10 col-md-offset-2 text-muted">
+					<xsl:apply-templates/>
+				</div>
+			</xsl:for-each>
+			</div>
+		</xsl:for-each>
+		<!--Closes the did.-->
+		
+		<xsl:for-each
+			select="scopecontent | bioghist | arrangement |
+			userestrict | accessrestrict | processinfo |
+			acqinfo | custodhist | controlaccess/controlaccess | odd | note | descgrp/*">
+			<div class="col-md-10 col-md-offset-2 text-muted">
+				<xsl:for-each select="head">
+					<h5>
+						<xsl:apply-templates/>
+					</h5>
 				</xsl:for-each>
-				<!--Closes the did.-->
-
-				<xsl:for-each
-					select="scopecontent | bioghist | arrangement |
-				userestrict | accessrestrict | processinfo |
-				acqinfo | custodhist | controlaccess/controlaccess | odd | note | descgrp/*">
-					<!--The head element is rendered in bold.-->
-					<xsl:for-each select="head">
-						<tr>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="70%" valign="top">
-								<b>
-									<xsl:apply-templates/>
-								</b>
-							</td>
-						</tr>
-					</xsl:for-each>
-					<xsl:for-each select="*[not(self::head)]">
-						<tr>
-
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="70%" valign="top">
-								<br/>
-								<xsl:apply-templates/>
-							</td>
-						</tr>
-					</xsl:for-each>
+				<xsl:for-each select="*[not(self::head)]">
+					<xsl:apply-templates/>
 				</xsl:for-each>
-			</table>
-		</span>
+			</div>
+		</xsl:for-each>
 	</xsl:template>
 
 	<!--This template processes c07 elements that have associated containers, for
 		example when c07 is a file.-->
 	<xsl:template name="c07-level">
-		<span class="item_record">
-			<table border="0" cellpadding="0" cellspacing="0" width="100%">
-				<xsl:for-each select="did">
-					<xsl:if test="not(container/@type=preceding::did[1]/container/@type)">
-						<tr>
-							<td colspan="3">&#x20;</td>
-						</tr>
-						<tr valign="top">
-							<td width="15%" align="left" valign="top" class="componenttext">
-								<b>
-									<span class="column-head">
-										<xsl:value-of
-											select="concat(translate(substring(container[1]/@type, 1, 1),
-									'abcdefghijklmnopqrstuvwxyz',
-									'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-									), substring(container[1]/@type, 2))"
-										/>
-									</span>
-								</b>
-							</td>
-							<td width="15%" align="left" valign="top" class="componenttext">
-								<b>
-									<span class="column-head">
-										<xsl:value-of
-											select="concat(translate(substring(container[2]/@type, 1, 1),
-									'abcdefghijklmnopqrstuvwxyz',
-									'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-									), substring(container[2]/@type, 2))"
-										/>
-									</span>
-								</b>
-							</td>
-							<td width="70%" align="left" valign="top" class="componenttext">
-								<b>
-									<span class="column-head">
-										<xsl:text>Contents</xsl:text>
-									</span>
-								</b>
-							</td>
-						</tr>
-					</xsl:if>
-					<tr>
-						<td colspan="3">&#x20;</td>
-					</tr>
-					<tr>
-						<td width="15%" valign="top" class="componenttext">
-							<span class="numbering">
-								<xsl:value-of select="container[1]"/>
-								<xsl:text>&#x20;</xsl:text>
-							</span>
-						</td>
-						<td width="15%" valign="top" class="componenttext">
-							<span class="numbering">
-								<xsl:value-of select="container[2]"/>
-								<xsl:text>&#x20;</xsl:text>
-							</span>
-						</td>
-						<td width="70%" valign="top">
-							<div class="containertext">
-								<span class="component_did">
-									<xsl:call-template name="component-did"/>
-								</span>
-							</div>
-						</td>
-					</tr>
-
-					<xsl:for-each select="abstract | note/p | langmaterial | materialspec">
-						<tr>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="70%" valign="top">
-								<xsl:apply-templates/>
-							</td>
-						</tr>
-					</xsl:for-each>
-
-				</xsl:for-each>
-				<!--Closes the did.-->
+		<xsl:for-each select="did">
+			<xsl:if test="not(container/@type=preceding::did[1]/container/@type)">
+				<div class="bg-info col-md-12">
+					<div class="col-md-1">
+						<xsl:value-of
+							select="concat(translate(substring(container[1]/@type, 1, 1),
+							'abcdefghijklmnopqrstuvwxyz',
+							'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+							), substring(container[1]/@type, 2))"
+						/>
+					</div>
+					<div class="col-md-1">
+						<xsl:value-of
+							select="concat(translate(substring(container[2]/@type, 1, 1),
+							'abcdefghijklmnopqrstuvwxyz',
+							'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+							), substring(container[2]/@type, 2))"
+						/>
+					</div>
+					<div class="col-md-10">
+						<xsl:text>Contents</xsl:text>
+					</div>
+				</div>
+			</xsl:if>
+			<div class="col-md-12">
+				<div class="col-md-1">
+					<xsl:value-of select="container[1]"/>
+				</div>
+				<div class="col-md-1">
+					<xsl:value-of select="container[2]"/>
+				</div>
+				<div class="col-md-10">
+					<xsl:call-template name="component-did"/>
+				</div>
 
 				<xsl:for-each
-					select="scopecontent | bioghist | arrangement |
-				userestrict | accessrestrict | processinfo |
-				acqinfo | custodhist | controlaccess/controlaccess | odd | note | descgrp/*">
-					<!--The head element is rendered in bold.-->
-					<xsl:for-each select="head">
-						<tr>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="70%" valign="top">
-								<b>
-									<xsl:apply-templates/>
-								</b>
-							</td>
-						</tr>
-					</xsl:for-each>
-					<xsl:for-each select="*[not(self::head)]">
-						<tr>
-
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="70%" valign="top">
-								<br/>
-								<xsl:apply-templates/>
-							</td>
-						</tr>
-					</xsl:for-each>
+					select="physdesc | physloc| origination | abstract | note/p | langmaterial | materialspec">
+					<div class="col-md-10 col-md-offset-2 text-muted">
+						<xsl:apply-templates/>
+					</div>
 				</xsl:for-each>
-			</table>
-		</span>
+			</div>
+		</xsl:for-each>
+		<!--Closes the did.-->
+
+		<xsl:for-each
+			select="scopecontent | bioghist | arrangement |
+			userestrict | accessrestrict | processinfo |
+			acqinfo | custodhist | controlaccess/controlaccess | odd | note | descgrp/*">
+			<div class="col-md-10 col-md-offset-2 text-muted">
+				<xsl:for-each select="head">
+					<h5>
+						<xsl:apply-templates/>
+					</h5>
+				</xsl:for-each>
+				<xsl:for-each select="*[not(self::head)]">
+					<xsl:apply-templates/>
+				</xsl:for-each>
+			</div>
+		</xsl:for-each>
 	</xsl:template>
 
 	<!--This template processes c08 elements that have associated containers, for
 		example when c08 is a file.-->
 	<xsl:template name="c08-level">
-		<span class="item_record">
-			<table border="0" cellpadding="0" cellspacing="0" width="100%">
-				<xsl:for-each select="did">
-					<xsl:if test="not(container/@type=preceding::did[1]/container/@type)">
-						<tr>
-							<td colspan="3">&#x20;</td>
-						</tr>
-						<tr valign="top">
-							<td width="15%" align="left" valign="top" class="componenttext">
-								<b>
-									<span class="column-head">
-										<xsl:value-of
-											select="concat(translate(substring(container[1]/@type, 1, 1),
-									'abcdefghijklmnopqrstuvwxyz',
-									'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-									), substring(container[1]/@type, 2))"
-										/>
-									</span>
-								</b>
-							</td>
-							<td width="15%" align="left" valign="top" class="componenttext">
-								<b>
-									<span class="column-head">
-										<xsl:value-of
-											select="concat(translate(substring(container[2]/@type, 1, 1),
-									'abcdefghijklmnopqrstuvwxyz',
-									'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-									), substring(container[2]/@type, 2))"
-										/>
-									</span>
-								</b>
-							</td>
-							<td width="70%" align="left" valign="top" class="componenttext">
-								<b>
-									<span class="column-head">
-										<xsl:text>Contents</xsl:text>
-									</span>
-								</b>
-							</td>
-						</tr>
-					</xsl:if>
-					<tr>
-						<td colspan="3">&#x20;</td>
-					</tr>
-					<tr>
-						<td width="15%" valign="top" class="componenttext">
-							<span class="numbering">
-								<xsl:value-of select="container[1]"/>
-								<xsl:text>&#x20;</xsl:text>
-							</span>
-						</td>
-						<td width="15%" valign="top" class="componenttext">
-							<span class="numbering">
-								<xsl:value-of select="container[2]"/>
-								<xsl:text>&#x20;</xsl:text>
-							</span>
-						</td>
-						<td width="70%" valign="top">
-							<div class="containertext">
-								<xsl:call-template name="component-did"/>
-							</div>
-						</td>
-					</tr>
-
-					<xsl:for-each select="abstract | note/p | langmaterial | materialspec">
-						<tr>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="70%" valign="top">
-								<xsl:apply-templates/>
-							</td>
-						</tr>
-					</xsl:for-each>
-
-				</xsl:for-each>
-				<!--Closes the did.-->
+		<xsl:for-each select="did">
+			<xsl:if test="not(container/@type=preceding::did[1]/container/@type)">
+				<div class="bg-info col-md-12">
+					<div class="col-md-1">
+						<xsl:value-of
+							select="concat(translate(substring(container[1]/@type, 1, 1),
+							'abcdefghijklmnopqrstuvwxyz',
+							'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+							), substring(container[1]/@type, 2))"
+						/>
+					</div>
+					<div class="col-md-1">
+						<xsl:value-of
+							select="concat(translate(substring(container[2]/@type, 1, 1),
+							'abcdefghijklmnopqrstuvwxyz',
+							'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+							), substring(container[2]/@type, 2))"
+						/>
+					</div>
+					<div class="col-md-10">
+						<xsl:text>Contents</xsl:text>
+					</div>
+				</div>
+			</xsl:if>
+			<div class="col-md-12">
+				<div class="col-md-1">
+					<xsl:value-of select="container[1]"/>
+				</div>
+				<div class="col-md-1">
+					<xsl:value-of select="container[2]"/>
+				</div>
+				<div class="col-md-10">
+					<xsl:call-template name="component-did"/>
+				</div>
 
 				<xsl:for-each
-					select="scopecontent | bioghist | arrangement |
-				userestrict | accessrestrict | processinfo |
-				acqinfo | custodhist | controlaccess/controlaccess | odd | note | descgrp/*">
-					<!--The head element is rendered in bold.-->
-					<xsl:for-each select="head">
-						<tr>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="70%" valign="top">
-								<b>
-									<xsl:apply-templates/>
-								</b>
-							</td>
-						</tr>
-					</xsl:for-each>
-					<xsl:for-each select="*[not(self::head)]">
-						<tr>
-
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="70%" valign="top">
-								<br/>
-								<xsl:apply-templates/>
-							</td>
-						</tr>
-					</xsl:for-each>
+					select="physdesc | physloc| origination | abstract | note/p | langmaterial | materialspec">
+					<div class="col-md-10 col-md-offset-2 text-muted">
+						<xsl:apply-templates/>
+					</div>
 				</xsl:for-each>
-			</table>
-		</span>
+			</div>
+		</xsl:for-each>
+		<!--Closes the did.-->
+		
+		<xsl:for-each
+			select="scopecontent | bioghist | arrangement |
+			userestrict | accessrestrict | processinfo |
+			acqinfo | custodhist | controlaccess/controlaccess | odd | note | descgrp/*">
+			<div class="col-md-10 col-md-offset-2 text-muted">
+				<xsl:for-each select="head">
+					<h5>
+						<xsl:apply-templates/>
+					</h5>
+				</xsl:for-each>
+				<xsl:for-each select="*[not(self::head)]">
+					<xsl:apply-templates/>
+				</xsl:for-each>
+			</div>
+		</xsl:for-each>
 	</xsl:template>
 
 	<!--This template processes c09 elements that have associated containers, for
 		example when c09 is a file.-->
 	<xsl:template name="c09-level">
-		<span class="item_record">
-			<table border="0" cellpadding="0" cellspacing="0" width="100%">
-				<xsl:for-each select="did">
-					<xsl:if test="not(container/@type=preceding::did[1]/container/@type)">
-						<tr>
-							<td colspan="3">&#x20;</td>
-						</tr>
-						<tr valign="top">
-							<td width="15%" align="left" valign="top" class="componenttext">
-								<b>
-									<span class="column-head">
-										<xsl:value-of
-											select="concat(translate(substring(container[1]/@type, 1, 1),
-									'abcdefghijklmnopqrstuvwxyz',
-									'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-									), substring(container[1]/@type, 2))"
-										/>
-									</span>
-								</b>
-							</td>
-							<td width="15%" align="left" valign="top" class="componenttext">
-								<b>
-									<span class="column-head">
-										<xsl:value-of
-											select="concat(translate(substring(container[2]/@type, 1, 1),
-									'abcdefghijklmnopqrstuvwxyz',
-									'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-									), substring(container[2]/@type, 2))"
-										/>
-									</span>
-								</b>
-							</td>
-							<td width="70%" align="left" valign="top" class="componenttext">
-								<b>
-									<span class="column-head">
-										<xsl:text>Contents</xsl:text>
-									</span>
-								</b>
-							</td>
-						</tr>
-					</xsl:if>
-					<tr>
-						<td colspan="3">&#x20;</td>
-					</tr>
-					<tr>
-						<td width="15%" valign="top" class="componenttext">
-							<span class="numbering">
-								<xsl:value-of select="container[1]"/>
-								<xsl:text>&#x20;</xsl:text>
-							</span>
-						</td>
-						<td width="15%" valign="top" class="componenttext">
-							<span class="numbering">
-								<xsl:value-of select="container[2]"/>
-								<xsl:text>&#x20;</xsl:text>
-							</span>
-						</td>
-						<td width="70%" valign="top">
-							<div class="containertext">
-								<xsl:call-template name="component-did"/>
-							</div>
-						</td>
-					</tr>
-
-					<xsl:for-each select="abstract | note/p | langmaterial | materialspec">
-						<tr>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="70%" valign="top">
-								<xsl:apply-templates/>
-							</td>
-						</tr>
-					</xsl:for-each>
-
-				</xsl:for-each>
-				<!--Closes the did.-->
+		<xsl:for-each select="did">
+			<xsl:if test="not(container/@type=preceding::did[1]/container/@type)">
+				<div class="bg-info col-md-12">
+					<div class="col-md-1">
+						<xsl:value-of
+							select="concat(translate(substring(container[1]/@type, 1, 1),
+							'abcdefghijklmnopqrstuvwxyz',
+							'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+							), substring(container[1]/@type, 2))"
+						/>
+					</div>
+					<div class="col-md-1">
+						<xsl:value-of
+							select="concat(translate(substring(container[2]/@type, 1, 1),
+							'abcdefghijklmnopqrstuvwxyz',
+							'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+							), substring(container[2]/@type, 2))"
+						/>
+					</div>
+					<div class="col-md-10">
+						<xsl:text>Contents</xsl:text>
+					</div>
+				</div>
+			</xsl:if>
+			<div class="col-md-12">
+				<div class="col-md-1">
+					<xsl:value-of select="container[1]"/>
+				</div>
+				<div class="col-md-1">
+					<xsl:value-of select="container[2]"/>
+				</div>
+				<div class="col-md-10">
+					<xsl:call-template name="component-did"/>
+				</div>
 
 				<xsl:for-each
-					select="scopecontent | bioghist | arrangement |
-				userestrict | accessrestrict | processinfo |
-				acqinfo | custodhist | controlaccess/controlaccess | odd | note | descgrp/*">
-					<!--The head element is rendered in bold.-->
-					<xsl:for-each select="head">
-						<tr>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="70%" valign="top">
-								<b>
-									<xsl:apply-templates/>
-								</b>
-							</td>
-						</tr>
-					</xsl:for-each>
-					<xsl:for-each select="*[not(self::head)]">
-						<tr>
-
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="70%" valign="top">
-								<br/>
-								<xsl:apply-templates/>
-							</td>
-						</tr>
-					</xsl:for-each>
+					select="physdesc | physloc| origination | abstract | note/p | langmaterial | materialspec">
+					<div class="col-md-10 col-md-offset-2 text-muted">
+						<xsl:apply-templates/>
+					</div>
 				</xsl:for-each>
-			</table>
-		</span>
+			</div>
+		</xsl:for-each>
+		<!--Closes the did.-->
+		
+		<xsl:for-each
+			select="scopecontent | bioghist | arrangement |
+			userestrict | accessrestrict | processinfo |
+			acqinfo | custodhist | controlaccess/controlaccess | odd | note | descgrp/*">
+			<div class="col-md-10 col-md-offset-2 text-muted">
+				<xsl:for-each select="head">
+					<h5>
+						<xsl:apply-templates/>
+					</h5>
+				</xsl:for-each>
+				<xsl:for-each select="*[not(self::head)]">
+					<xsl:apply-templates/>
+				</xsl:for-each>
+			</div>
+		</xsl:for-each>
 	</xsl:template>
 
 	<!--This template processes c10 elements that have associated containers, for
 		example when c10 is a file.-->
 	<xsl:template name="c10-level">
-		<span class="item_record">
-			<table border="0" cellpadding="0" cellspacing="0" width="100%">
-				<xsl:for-each select="did">
-					<xsl:if test="not(container/@type=preceding::did[1]/container/@type)">
-						<tr>
-							<td colspan="3">&#x20;</td>
-						</tr>
-						<tr valign="top">
-							<td width="15%" align="left" valign="top" class="componenttext">
-								<b>
-									<span class="column-head">
-										<xsl:value-of
-											select="concat(translate(substring(container[1]/@type, 1, 1),
-									'abcdefghijklmnopqrstuvwxyz',
-									'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-									), substring(container[1]/@type, 2))"
-										/>
-									</span>
-								</b>
-							</td>
-							<td width="15%" align="left" valign="top" class="componenttext">
-								<b>
-									<span class="column-head">
-										<xsl:value-of
-											select="concat(translate(substring(container[2]/@type, 1, 1),
-									'abcdefghijklmnopqrstuvwxyz',
-									'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-									), substring(container[2]/@type, 2))"
-										/>
-									</span>
-								</b>
-							</td>
-							<td width="70%" align="left" valign="top" class="componenttext">
-								<b>
-									<span class="column-head">
-										<xsl:text>Contents</xsl:text>
-									</span>
-								</b>
-							</td>
-						</tr>
-					</xsl:if>
-					<tr>
-						<td colspan="3">&#x20;</td>
-					</tr>
-					<tr>
-						<td width="15%" valign="top" class="componenttext">
-							<span class="numbering">
-								<xsl:value-of select="container[1]"/>
-								<xsl:text>&#x20;</xsl:text>
-							</span>
-						</td>
-						<td width="15%" valign="top" class="componenttext">
-							<span class="numbering">
-								<xsl:value-of select="container[2]"/>
-								<xsl:text>&#x20;</xsl:text>
-							</span>
-						</td>
-						<td width="70%" valign="top">
-							<div class="containertext">
-								<xsl:call-template name="component-did"/>
-							</div>
-						</td>
-					</tr>
-
-					<xsl:for-each select="abstract | note/p | langmaterial | materialspec">
-						<tr>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="70%" valign="top">
-								<xsl:apply-templates/>
-							</td>
-						</tr>
-					</xsl:for-each>
-
-				</xsl:for-each>
-				<!--Closes the did.-->
+		<xsl:for-each select="did">
+			<xsl:if test="not(container/@type=preceding::did[1]/container/@type)">
+				<div class="bg-info col-md-12">
+					<div class="col-md-1">
+						<xsl:value-of
+							select="concat(translate(substring(container[1]/@type, 1, 1),
+							'abcdefghijklmnopqrstuvwxyz',
+							'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+							), substring(container[1]/@type, 2))"
+						/>
+					</div>
+					<div class="col-md-1">
+						<xsl:value-of
+							select="concat(translate(substring(container[2]/@type, 1, 1),
+							'abcdefghijklmnopqrstuvwxyz',
+							'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+							), substring(container[2]/@type, 2))"
+						/>
+					</div>
+					<div class="col-md-10">
+						<xsl:text>Contents</xsl:text>
+					</div>
+				</div>
+			</xsl:if>
+			<div class="col-md-12">
+				<div class="col-md-1">
+					<xsl:value-of select="container[1]"/>
+				</div>
+				<div class="col-md-1">
+					<xsl:value-of select="container[2]"/>
+				</div>
+				<div class="col-md-10">
+					<xsl:call-template name="component-did"/>
+				</div>
 
 				<xsl:for-each
-					select="scopecontent | bioghist | arrangement |
-				userestrict | accessrestrict | processinfo |
-				acqinfo | custodhist | controlaccess/controlaccess | odd | note | descgrp/*">
-					<!--The head element is rendered in bold.-->
-					<xsl:for-each select="head">
-						<tr>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="70%" valign="top">
-								<b>
-									<xsl:apply-templates/>
-								</b>
-							</td>
-						</tr>
-					</xsl:for-each>
-					<xsl:for-each select="*[not(self::head)]">
-						<tr>
-
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="15%">
-								<xsl:text>&#x20;</xsl:text>
-							</td>
-							<td width="70%" valign="top">
-								<br/>
-								<xsl:apply-templates/>
-							</td>
-						</tr>
-					</xsl:for-each>
+					select="physdesc | physloc| origination | abstract | note/p | langmaterial | materialspec">
+					<div class="col-md-10 col-md-offset-2 text-muted">
+						<xsl:apply-templates/>
+					</div>
 				</xsl:for-each>
-			</table>
-		</span>
+			</div>
+		</xsl:for-each>
+		<!--Closes the did.-->
+		
+		<xsl:for-each
+			select="scopecontent | bioghist | arrangement |
+			userestrict | accessrestrict | processinfo |
+			acqinfo | custodhist | controlaccess/controlaccess | odd | note | descgrp/*">
+			<div class="col-md-10 col-md-offset-2 text-muted">
+				<xsl:for-each select="head">
+					<h5>
+						<xsl:apply-templates/>
+					</h5>
+				</xsl:for-each>
+				<xsl:for-each select="*[not(self::head)]">
+					<xsl:apply-templates/>
+				</xsl:for-each>
+			</div>
+		</xsl:for-each>
 	</xsl:template>
 
-	<!--BACK TO TOP TEMPLATE-->
-
-	<xsl:template name="btop">
-		<div class="bttop" align="center">
-			<a href="#top" class="itoc">[Return to Top]</a>
-		</div>
-	</xsl:template>
-
-	<!--END OF BACK TO TOP TEMPLATE-->
 </xsl:stylesheet>
