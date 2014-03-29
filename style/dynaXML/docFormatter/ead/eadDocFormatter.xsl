@@ -376,8 +376,8 @@
 								to form a hyperlink to each.   Delete this section if you do not
 								wish the c01 titles to appear in the table of contents.-->
 
-							<xsl:for-each select="archdesc/dsc/c01[@level='series' or @level='subseries' or @level='subgrp' or @level='subcollection']">
-
+							<xsl:for-each select="archdesc/dsc/c01[@level='series' or @level='subseries' or @level='subgrp' or @level='subcollection']
+								| archdesc/dsc/c[@level='series' or @level='subseries' or @level='subgrp' or @level='subcollection']">
 								<ul>
 									<xsl:call-template name="make-toc-link">
 										<xsl:with-param name="name">
@@ -406,7 +406,8 @@
 										Delete this section if you do not wish the c02 titles to appear in the 
 										table of contents. -->
 									<ul>
-										<xsl:for-each select="c02[@level='subseries']">
+										<xsl:for-each select="c02[@level='subseries']
+											| c[@level='subseries']">
 											<xsl:call-template name="make-toc-link">
 												<xsl:with-param name="name">
 													<xsl:choose>
