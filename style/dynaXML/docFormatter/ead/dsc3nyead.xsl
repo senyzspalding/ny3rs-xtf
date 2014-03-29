@@ -33,13 +33,15 @@ any introductory paragraphs.-->
 		<span class="section_divider">
 			<hr/>
 		</span>
-
 	</xsl:template>
 
-
+	<xsl:template match="dsc/head">
+		<a name="{../@id}"/>
+		<h3><xsl:apply-templates/></h3>
+	</xsl:template>
 
 	<xsl:template match="dsc/p | dsc/note/p">
-		<p style="margin-left:25pt">
+		<p>
 			<xsl:apply-templates/>
 		</p>
 	</xsl:template>
@@ -350,14 +352,14 @@ for each level.-->
 							</a> -->
 						<a>
 							<xsl:attribute name="name">
-								<xsl:value-of select="unitid/@id"/>
+								<xsl:value-of select="../@id"/>
 							</xsl:attribute>
+						</a>
 							<div class="series1">
 								<span class="component_did">
 									<xsl:call-template name="component-did"/>
 								</span>
 							</div>
-						</a>
 					</td>
 				</tr>
 				<xsl:for-each select="note/p | langmaterial | materialspec">
@@ -544,19 +546,12 @@ for each level.-->
 							<!-- this CHOOSE provides a name for an anchor for those unitid elements that were not assigned id attributes. 
 	This allows links to be created from a table of contents (see eadDocFormatter.xsl) 
 	without overwriting ids already written in as id attributes in unitid. This could be repeated at c03 level if c03's are ever reflected in table of contents -->
-
-							<xsl:choose>
-								<xsl:when test="unitid[@id]">
+						
 									<a>
 										<xsl:attribute name="name">
-											<xsl:value-of select="unitid/@id"/>
+											<xsl:value-of select="../@id"/>
 										</xsl:attribute>
 									</a>
-								</xsl:when>
-							<!--	<xsl:otherwise>
-									<a name="{xtf:make-id(.)}"/>
-								</xsl:otherwise> -->
-							</xsl:choose>
 							<span class="pageheadline_smm">
 								<!-- <xsl:text>Subseries </xsl:text> -->
 								<span class="component_did">

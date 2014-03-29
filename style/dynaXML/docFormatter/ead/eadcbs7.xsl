@@ -31,8 +31,7 @@
 	</xsl:template>
 
 	<!-- Creates the body of the finding aid.-->
-	<xsl:template name="body">
-		<!-- HA 3/14/2014 Need to call missing templates, including bioghist, scopecontent, etc here -->	
+	<xsl:template name="body">	
 		<xsl:apply-templates select="archdesc/bioghist"/>
 		<xsl:apply-templates select="archdesc/scopecontent"/>
 		<xsl:apply-templates select="archdesc/arrangement"/>
@@ -1122,9 +1121,7 @@
       | archdesc/*/appraisal/head
       | archdesc/*/accruals/head">
 		<h4>
-			<b>
-				<xsl:apply-templates/>
-			</b>
+			<xsl:apply-templates/>
 		</h4>
 	</xsl:template>
 
@@ -1182,9 +1179,7 @@
       | archdesc/phystech/head
       | archdesc/originalsloc/head">
 		<h3>
-			<b>
-				<xsl:apply-templates/>
-			</b>
+			<xsl:apply-templates/>
 		</h3>
 	</xsl:template>
 
