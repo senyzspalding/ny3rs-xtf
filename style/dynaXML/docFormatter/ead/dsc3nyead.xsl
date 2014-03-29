@@ -370,22 +370,24 @@ for each level.-->
 			</div>
 		</xsl:for-each>
 		<!--Closes the did.-->
-
-		<xsl:for-each
-			select="scopecontent | bioghist | arrangement |
+		
+		<div class="col-md-12">
+			<xsl:for-each
+				select="scopecontent | bioghist | arrangement |
 			userestrict | accessrestrict | processinfo |
 			acqinfo | custodhist | controlaccess/controlaccess | odd | note | descgrp/*">
-			<div class="col-md-10 col-md-offset-2">
-				<xsl:for-each select="head">
-					<h5>
+				<div class="col-md-10 col-md-offset-2 text-muted">
+					<xsl:for-each select="head">
+						<h5>
+							<xsl:apply-templates/>
+						</h5>
+					</xsl:for-each>
+					<xsl:for-each select="*[not(self::head)]">
 						<xsl:apply-templates/>
-					</h5>
-				</xsl:for-each>
-				<xsl:for-each select="*[not(self::head)]">
-					<xsl:apply-templates/>
-				</xsl:for-each>
-			</div>
-		</xsl:for-each>
+					</xsl:for-each>
+				</div>
+			</xsl:for-each>
+		</div>
 	</xsl:template>
 
 	<!--This template processes c02 level components that do not have
@@ -482,6 +484,7 @@ for each level.-->
 		</xsl:for-each>
 		<!--Closes the did.-->
 		
+		<div class="col-md-12">
 		<xsl:for-each
 			select="scopecontent | bioghist | arrangement |
 			userestrict | accessrestrict | processinfo |
@@ -497,6 +500,7 @@ for each level.-->
 				</xsl:for-each>
 			</div>
 		</xsl:for-each>
+		</div>
 	</xsl:template>
 
 	<!--This template processes c03 level components that do not have
@@ -591,21 +595,23 @@ for each level.-->
 		</xsl:for-each>
 		<!--Closes the did.-->
 
-		<xsl:for-each
-			select="scopecontent | bioghist | arrangement |
+		<div class="col-md-12">
+			<xsl:for-each
+				select="scopecontent | bioghist | arrangement |
 			userestrict | accessrestrict | processinfo |
 			acqinfo | custodhist | controlaccess/controlaccess | odd | note | descgrp/*">
-			<div class="col-md-10 col-md-offset-2 text-muted">
-				<xsl:for-each select="head">
-					<h5>
+				<div class="col-md-10 col-md-offset-2 text-muted">
+					<xsl:for-each select="head">
+						<h5>
+							<xsl:apply-templates/>
+						</h5>
+					</xsl:for-each>
+					<xsl:for-each select="*[not(self::head)]">
 						<xsl:apply-templates/>
-					</h5>
-				</xsl:for-each>
-				<xsl:for-each select="*[not(self::head)]">
-					<xsl:apply-templates/>
-				</xsl:for-each>
-			</div>
-		</xsl:for-each>
+					</xsl:for-each>
+				</div>
+			</xsl:for-each>
+		</div>
 	</xsl:template>
 
 	<xsl:template name="c04-level-subseries">
@@ -698,7 +704,8 @@ for each level.-->
 		</xsl:for-each>
 		<!--Closes the did.-->
 		
-		<xsl:for-each
+		<div class="col-md-12">
+			<xsl:for-each
 			select="scopecontent | bioghist | arrangement |
 			userestrict | accessrestrict | processinfo |
 			acqinfo | custodhist | controlaccess/controlaccess | odd | note | descgrp/*">
@@ -713,6 +720,7 @@ for each level.-->
 				</xsl:for-each>
 			</div>
 		</xsl:for-each>
+		</div>
 	</xsl:template>
 
 	<!--This template processes c06 elements that have associated containers, for
@@ -763,7 +771,8 @@ for each level.-->
 		</xsl:for-each>
 		<!--Closes the did.-->
 		
-		<xsl:for-each
+		<div class="col-md-12">
+			<xsl:for-each
 			select="scopecontent | bioghist | arrangement |
 			userestrict | accessrestrict | processinfo |
 			acqinfo | custodhist | controlaccess/controlaccess | odd | note | descgrp/*">
@@ -778,6 +787,7 @@ for each level.-->
 				</xsl:for-each>
 			</div>
 		</xsl:for-each>
+		</div>
 	</xsl:template>
 
 	<!--This template processes c07 elements that have associated containers, for
@@ -828,21 +838,23 @@ for each level.-->
 		</xsl:for-each>
 		<!--Closes the did.-->
 
-		<xsl:for-each
-			select="scopecontent | bioghist | arrangement |
+		<div class="col-md-12">
+			<xsl:for-each
+				select="scopecontent | bioghist | arrangement |
 			userestrict | accessrestrict | processinfo |
 			acqinfo | custodhist | controlaccess/controlaccess | odd | note | descgrp/*">
-			<div class="col-md-10 col-md-offset-2 text-muted">
-				<xsl:for-each select="head">
-					<h5>
+				<div class="col-md-10 col-md-offset-2 text-muted">
+					<xsl:for-each select="head">
+						<h5>
+							<xsl:apply-templates/>
+						</h5>
+					</xsl:for-each>
+					<xsl:for-each select="*[not(self::head)]">
 						<xsl:apply-templates/>
-					</h5>
-				</xsl:for-each>
-				<xsl:for-each select="*[not(self::head)]">
-					<xsl:apply-templates/>
-				</xsl:for-each>
-			</div>
-		</xsl:for-each>
+					</xsl:for-each>
+				</div>
+			</xsl:for-each>
+		</div>
 	</xsl:template>
 
 	<!--This template processes c08 elements that have associated containers, for
@@ -892,22 +904,24 @@ for each level.-->
 			</div>
 		</xsl:for-each>
 		<!--Closes the did.-->
-		
-		<xsl:for-each
-			select="scopecontent | bioghist | arrangement |
+
+		<div class="col-md-12">
+			<xsl:for-each
+				select="scopecontent | bioghist | arrangement |
 			userestrict | accessrestrict | processinfo |
 			acqinfo | custodhist | controlaccess/controlaccess | odd | note | descgrp/*">
-			<div class="col-md-10 col-md-offset-2 text-muted">
-				<xsl:for-each select="head">
-					<h5>
+				<div class="col-md-10 col-md-offset-2 text-muted">
+					<xsl:for-each select="head">
+						<h5>
+							<xsl:apply-templates/>
+						</h5>
+					</xsl:for-each>
+					<xsl:for-each select="*[not(self::head)]">
 						<xsl:apply-templates/>
-					</h5>
-				</xsl:for-each>
-				<xsl:for-each select="*[not(self::head)]">
-					<xsl:apply-templates/>
-				</xsl:for-each>
-			</div>
-		</xsl:for-each>
+					</xsl:for-each>
+				</div>
+			</xsl:for-each>
+		</div>
 	</xsl:template>
 
 	<!--This template processes c09 elements that have associated containers, for
@@ -957,22 +971,24 @@ for each level.-->
 			</div>
 		</xsl:for-each>
 		<!--Closes the did.-->
-		
-		<xsl:for-each
-			select="scopecontent | bioghist | arrangement |
+
+		<div class="col-md-12">
+			<xsl:for-each
+				select="scopecontent | bioghist | arrangement |
 			userestrict | accessrestrict | processinfo |
 			acqinfo | custodhist | controlaccess/controlaccess | odd | note | descgrp/*">
-			<div class="col-md-10 col-md-offset-2 text-muted">
-				<xsl:for-each select="head">
-					<h5>
+				<div class="col-md-10 col-md-offset-2 text-muted">
+					<xsl:for-each select="head">
+						<h5>
+							<xsl:apply-templates/>
+						</h5>
+					</xsl:for-each>
+					<xsl:for-each select="*[not(self::head)]">
 						<xsl:apply-templates/>
-					</h5>
-				</xsl:for-each>
-				<xsl:for-each select="*[not(self::head)]">
-					<xsl:apply-templates/>
-				</xsl:for-each>
-			</div>
-		</xsl:for-each>
+					</xsl:for-each>
+				</div>
+			</xsl:for-each>
+		</div>
 	</xsl:template>
 
 	<!--This template processes c10 elements that have associated containers, for
@@ -1022,22 +1038,24 @@ for each level.-->
 			</div>
 		</xsl:for-each>
 		<!--Closes the did.-->
-		
-		<xsl:for-each
-			select="scopecontent | bioghist | arrangement |
+
+		<div class="col-md-12">
+			<xsl:for-each
+				select="scopecontent | bioghist | arrangement |
 			userestrict | accessrestrict | processinfo |
 			acqinfo | custodhist | controlaccess/controlaccess | odd | note | descgrp/*">
-			<div class="col-md-10 col-md-offset-2 text-muted">
-				<xsl:for-each select="head">
-					<h5>
+				<div class="col-md-10 col-md-offset-2 text-muted">
+					<xsl:for-each select="head">
+						<h5>
+							<xsl:apply-templates/>
+						</h5>
+					</xsl:for-each>
+					<xsl:for-each select="*[not(self::head)]">
 						<xsl:apply-templates/>
-					</h5>
-				</xsl:for-each>
-				<xsl:for-each select="*[not(self::head)]">
-					<xsl:apply-templates/>
-				</xsl:for-each>
-			</div>
-		</xsl:for-each>
+					</xsl:for-each>
+				</div>
+			</xsl:for-each>
+		</div>
 	</xsl:template>
 
 </xsl:stylesheet>

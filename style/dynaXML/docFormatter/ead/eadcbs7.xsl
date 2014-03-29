@@ -305,39 +305,27 @@
 	</xsl:template>
 	<!--This template rule formats a chronlist element.-->
 	<xsl:template match="chronlist">
-		<table width="100%" style="margin-left:25pt">
-			<tr>
-				<td width="5%"> </td>
-				<td width="15%"> </td>
-				<td width="80%"> </td>
-			</tr>
+		<table class="table table-condensed">
 			<xsl:apply-templates/>
 		</table>
 	</xsl:template>
 
 	<xsl:template match="chronlist/head">
 		<tr>
-			<td colspan="3">
-				<h4>
-					<xsl:apply-templates/>
-				</h4>
-			</td>
+			<th colspan="3">
+				<xsl:apply-templates/>
+			</th>
 		</tr>
 	</xsl:template>
 
 	<xsl:template match="chronlist/listhead">
 		<tr>
-			<td> </td>
-			<td>
-				<b>
-					<xsl:apply-templates select="head01"/>
-				</b>
-			</td>
-			<td>
-				<b>
-					<xsl:apply-templates select="head02"/>
-				</b>
-			</td>
+			<th>
+				<xsl:apply-templates select="head01"/>
+			</th>
+			<th>
+				<xsl:apply-templates select="head02"/>
+			</th>
 		</tr>
 	</xsl:template>
 
@@ -347,20 +335,17 @@
 			<xsl:when test="eventgrp">
 				<!--Put the date and first event on the first line.-->
 				<tr>
-					<td> </td>
-					<td valign="top">
+					<td>
 						<xsl:apply-templates select="date"/>
 					</td>
-					<td valign="top">
+					<td>
 						<xsl:apply-templates select="eventgrp/event[position()=1]"/>
 					</td>
 				</tr>
 				<!--Put each successive event on another line.-->
 				<xsl:for-each select="eventgrp/event[not(position()=1)]">
 					<tr>
-						<td> </td>
-						<td> </td>
-						<td valign="top">
+						<td>
 							<xsl:apply-templates select="."/>
 						</td>
 					</tr>
@@ -369,11 +354,10 @@
 			<!--Put the date and event on a single line.-->
 			<xsl:otherwise>
 				<tr>
-					<td> </td>
-					<td valign="top">
+					<td>
 						<xsl:apply-templates select="date"/>
 					</td>
-					<td valign="top">
+					<td>
 						<xsl:apply-templates select="event"/>
 					</td>
 				</tr>
@@ -619,7 +603,8 @@
       archdesc/scopecontent/note/p |
       archdesc/phystech/note/p |
       archdesc/controlaccess/note/p |
-      archdesc/odd/note/p">
+      archdesc/odd/note/p |
+      archdesc/arrangement/p">
 		<p>
 			<xsl:apply-templates/>
 		</p>
@@ -677,11 +662,7 @@
 	<xsl:template match="archdesc/scopecontent/arrangement/list/item
       | archdesc/arrangement/list/item">
 		<div>
-			<a>
-				<xsl:attribute name="href">#series<xsl:number/>
-				</xsl:attribute>
-				<xsl:apply-templates/>
-			</a>
+			<xsl:apply-templates/>
 		</div>
 	</xsl:template>
 
