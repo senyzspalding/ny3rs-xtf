@@ -667,9 +667,10 @@ Item number <xsl:value-of select="$num"/>:
                                           }, null);
                                     };
                                  </script>
+                                 <!-- remove add while bookbag is disabled
                                  <span id="add_{@rank}">
                                     <a href="javascript:add_{@rank}()">Add</a>
-                                 </span>
+                                 </span> -->
                               </xsl:otherwise>
                            </xsl:choose>
                            <xsl:value-of select="session:setData('queryURL', concat($xtfURL, $crossqueryPath, '?', $queryString))"/>
