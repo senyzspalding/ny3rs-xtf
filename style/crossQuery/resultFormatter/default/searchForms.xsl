@@ -280,7 +280,7 @@
                <input class="form-control" type="text" name="title" size="20" value="{$title}"/>
             </div>
             <div class="form-group">
-               <label>Author</label>
+               <label>Creator</label>
                <input class="form-control" type="text" name="creator" size="20" value="{$creator}"/>
             </div>
             <div class="form-group">
