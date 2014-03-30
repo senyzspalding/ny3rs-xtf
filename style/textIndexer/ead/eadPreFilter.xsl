@@ -130,7 +130,7 @@
 
          <!-- archdesc-admininfo -->
          <xsl:apply-templates mode="addChunkId" select="custodhist"/>
-         <xsl:apply-templates mode="addChunkId" select="altformavailable"/>
+         <xsl:apply-templates mode="addChunkId" select="altformavail"/>
          <xsl:apply-templates mode="addChunkId" select="prefercite"/>
          <xsl:apply-templates mode="addChunkId" select="acqinfo"/>
          <xsl:apply-templates mode="addChunkId" select="processinfo"/>
