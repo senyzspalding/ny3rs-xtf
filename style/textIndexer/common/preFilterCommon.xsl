@@ -126,7 +126,10 @@
          <!--<xsl:apply-templates select="$meta/*:date" mode="facet"/>-->
          <xsl:apply-templates select="$meta/*:subject" mode="facet"/>
          <xsl:apply-templates select="$meta/*:publisher" mode="facet"/>﻿﻿  <!--senylrc added this-->
-
+        
+         <!-- JB 3/31/2014 add to generate materials facet from genreform -->         
+           <xsl:apply-templates select="$meta/*:materials" mode="facet"/>
+           
          <xsl:apply-templates select="$meta/*:title[1]" mode="browse"/>    
          <xsl:apply-templates select="$meta/*:creator[1]" mode="browse"/>
       </xtf:meta>
@@ -199,6 +202,17 @@
          <xsl:value-of select="normalize-unicode(string(.))"/>
       </facet-publisher>
    </xsl:template>
+   
+   <!-- JB 3/31/2014 add to generate materials facet from genreform -->
+   <!-- Generate facet-materials -->
+   <xsl:template match="*:materials" mode="facet">
+      <facet-materials>
+         <xsl:attribute name="xtf:meta" select="'true'"/>
+         <xsl:attribute name="xtf:facet" select="'yes'"/>
+         <xsl:value-of select="normalize-unicode(string(.))"/>
+      </facet-materials>
+   </xsl:template>
+   
 
    <!-- Generate browse-title -->
    <xsl:template match="*:title" mode="browse">
