@@ -388,14 +388,14 @@
          <xsl:when test="($dtdVersion)/ead/archdesc//controlaccess/subject">
             <xsl:for-each-group select="($dtdVersion)/ead/archdesc//controlaccess/subject" group-by="string()">
                <subject xtf:meta="true">
-                  <xsl:value-of select="normalize-space(.)"/>
+                  <xsl:value-of select="replace(normalize-space(.), '^(.*)[.]$', '$1')"/>
                </subject>
             </xsl:for-each-group>
          </xsl:when>
          <xsl:when test="($dtdVersion)/ead/eadheader/filedesc/notestmt/subject">
             <xsl:for-each-group select="($dtdVersion)/ead/eadheader/filedesc/notestmt/subject" group-by="string()">
                <subject xtf:meta="true">
-                  <xsl:value-of select="normalize-space(.)"/>
+                  <xsl:value-of select="replace(normalize-space(.), '^(.*)[.]$', '$1')"/>
                </subject>
             </xsl:for-each-group>
          </xsl:when>
@@ -581,7 +581,7 @@
             <xsl:for-each-group select="($dtdVersion)/ead/archdesc/controlaccess/genreform"
                group-by="string()">
                <genreform xtf:meta="true">
-                  <xsl:value-of select="normalize-space(.)"/>
+                  <xsl:value-of select="replace(normalize-space(.), '^(.*)[.]$', '$1')"/>
                </genreform>
             </xsl:for-each-group>
          </xsl:when>
@@ -589,7 +589,7 @@
             <xsl:for-each-group select="($dtdVersion)/ead/archdesc//controlaccess/genreform"
                group-by="string()">
                <genreform xtf:meta="true">
-                  <xsl:value-of select="normalize-space(.)"/>
+                  <xsl:value-of select="replace(normalize-space(.), '^(.*)[.]$', '$1')"/>
                </genreform>
             </xsl:for-each-group>
          </xsl:when>
@@ -598,7 +598,7 @@
             <xsl:for-each-group select="($dtdVersion)/ead/archdesc//controlaccess/*/genreform"
                group-by="string()">
                <genreform xtf:meta="true">
-                  <xsl:value-of select="normalize-space(.)"/>
+                  <xsl:value-of select="replace(normalize-space(.), '^(.*)[.]$', '$1')"/>
                </genreform>
             </xsl:for-each-group>
          </xsl:when>
@@ -607,7 +607,7 @@
             <xsl:for-each-group select="($dtdVersion)/ead/eadheader/filedesc/notestmt/genreform"
                group-by="string()">
                <genreform xtf:meta="true">
-                  <xsl:value-of select="normalize-space(.)"/>
+                  <xsl:value-of select="replace(normalize-space(.), '^(.*)[.]$', '$1')"/>
                </genreform>
             </xsl:for-each-group>
          </xsl:when>
@@ -621,7 +621,7 @@
             <xsl:for-each-group select="($dtdVersion)/ead/archdesc/controlaccess/persname"
                group-by="string()">
                <persname xtf:meta="true">
-                  <xsl:value-of select="normalize-space(.)"/>
+                  <xsl:value-of select="replace(normalize-space(.), '^(.*)[.]$', '$1')"/>
                </persname>
             </xsl:for-each-group>
          </xsl:when>
@@ -629,7 +629,7 @@
             <xsl:for-each-group select="($dtdVersion)/ead/archdesc//controlaccess/persname"
                group-by="string()">
                <persname xtf:meta="true">
-                  <xsl:value-of select="normalize-space(.)"/>
+                  <xsl:value-of select="replace(normalize-space(.), '^(.*)[.]$', '$1')"/>
                </persname>
             </xsl:for-each-group>
          </xsl:when>
@@ -638,7 +638,7 @@
             <xsl:for-each-group select="($dtdVersion)/ead/archdesc//controlaccess/*/persname"
                group-by="string()">
                <persname xtf:meta="true">
-                  <xsl:value-of select="normalize-space(.)"/>
+                  <xsl:value-of select="replace(normalize-space(.), '^(.*)[.]$', '$1')"/>
                </persname>
             </xsl:for-each-group>
          </xsl:when>
@@ -647,7 +647,7 @@
             <xsl:for-each-group select="($dtdVersion)/ead/eadheader/filedesc/notestmt/persname"
                group-by="string()">
                <persname xtf:meta="true">
-                  <xsl:value-of select="normalize-space(.)"/>
+                  <xsl:value-of select="replace(normalize-space(.), '^(.*)[.]$', '$1')"/>
                </persname>
             </xsl:for-each-group>
          </xsl:when>
@@ -661,7 +661,7 @@
             <xsl:for-each-group select="($dtdVersion)/ead/archdesc/controlaccess/corpname"
                group-by="string()">
                <corpname xtf:meta="true">
-                  <xsl:value-of select="normalize-space(.)"/>
+                  <xsl:value-of select="replace(normalize-space(.), '^(.*)[.]$', '$1')"/>
                </corpname>
             </xsl:for-each-group>
          </xsl:when>
@@ -669,7 +669,7 @@
             <xsl:for-each-group select="($dtdVersion)/ead/archdesc//controlaccess/corpname"
                group-by="string()">
                <corpname xtf:meta="true">
-                  <xsl:value-of select="normalize-space(.)"/>
+                  <xsl:value-of select="replace(normalize-space(.), '^(.*)[.]$', '$1')"/>
                </corpname>
             </xsl:for-each-group>
          </xsl:when>
@@ -678,7 +678,7 @@
             <xsl:for-each-group select="($dtdVersion)/ead/archdesc//controlaccess/*/corpname"
                group-by="string()">
                <corpname xtf:meta="true">
-                  <xsl:value-of select="normalize-space(.)"/>
+                  <xsl:value-of select="replace(normalize-space(.), '^(.*)[.]$', '$1')"/>
                </corpname>
             </xsl:for-each-group>
          </xsl:when>
@@ -687,7 +687,7 @@
             <xsl:for-each-group select="($dtdVersion)/ead/eadheader/filedesc/notestmt/corpname"
                group-by="string()">
                <corpname xtf:meta="true">
-                  <xsl:value-of select="normalize-space(.)"/>
+                  <xsl:value-of select="replace(normalize-space(.), '^(.*)[.]$', '$1')"/>
                </corpname>
             </xsl:for-each-group>
          </xsl:when>
@@ -701,7 +701,7 @@
             <xsl:for-each-group select="($dtdVersion)/ead/archdesc/controlaccess/famname"
                group-by="string()">
                <famname xtf:meta="true">
-                  <xsl:value-of select="normalize-space(.)"/>
+                  <xsl:value-of select="replace(normalize-space(.), '^(.*)[.]$', '$1')"/>
                </famname>
             </xsl:for-each-group>
          </xsl:when>
@@ -709,7 +709,7 @@
             <xsl:for-each-group select="($dtdVersion)/ead/archdesc//controlaccess/famname"
                group-by="string()">
                <famname xtf:meta="true">
-                  <xsl:value-of select="normalize-space(.)"/>
+                  <xsl:value-of select="replace(normalize-space(.), '^(.*)[.]$', '$1')"/>
                </famname>
             </xsl:for-each-group>
          </xsl:when>
@@ -718,7 +718,7 @@
             <xsl:for-each-group select="($dtdVersion)/ead/archdesc//controlaccess/*/famname"
                group-by="string()">
                <famname xtf:meta="true">
-                  <xsl:value-of select="normalize-space(.)"/>
+                  <xsl:value-of select="replace(normalize-space(.), '^(.*)[.]$', '$1')"/>
                </famname>
             </xsl:for-each-group>
          </xsl:when>
@@ -727,7 +727,7 @@
             <xsl:for-each-group select="($dtdVersion)/ead/eadheader/filedesc/notestmt/famname"
                group-by="string()">
                <famname xtf:meta="true">
-                  <xsl:value-of select="normalize-space(.)"/>
+                  <xsl:value-of select="replace(normalize-space(.), '^(.*)[.]$', '$1')"/>
                </famname>
             </xsl:for-each-group>
          </xsl:when>
@@ -741,7 +741,7 @@
             <xsl:for-each-group select="($dtdVersion)/ead/archdesc/controlaccess/occupation"
                group-by="string()">
                <occupation xtf:meta="true">
-                  <xsl:value-of select="normalize-space(.)"/>
+                  <xsl:value-of select="replace(normalize-space(.), '^(.*)[.]$', '$1')"/>
                </occupation>
             </xsl:for-each-group>
          </xsl:when>
@@ -749,7 +749,7 @@
             <xsl:for-each-group select="($dtdVersion)/ead/archdesc//controlaccess/occupation"
                group-by="string()">
                <occupation xtf:meta="true">
-                  <xsl:value-of select="normalize-space(.)"/>
+                  <xsl:value-of select="replace(normalize-space(.), '^(.*)[.]$', '$1')"/>
                </occupation>
             </xsl:for-each-group>
          </xsl:when>
@@ -758,7 +758,7 @@
             <xsl:for-each-group select="($dtdVersion)/ead/archdesc//controlaccess/*/occupation"
                group-by="string()">
                <occupation xtf:meta="true">
-                  <xsl:value-of select="normalize-space(.)"/>
+                  <xsl:value-of select="replace(normalize-space(.), '^(.*)[.]$', '$1')"/>
                </occupation>
             </xsl:for-each-group>
          </xsl:when>
@@ -767,7 +767,7 @@
             <xsl:for-each-group select="($dtdVersion)/ead/eadheader/filedesc/notestmt/occupation"
                group-by="string()">
                <occupation xtf:meta="true">
-                  <xsl:value-of select="normalize-space(.)"/>
+                  <xsl:value-of select="replace(normalize-space(.), '^(.*)[.]$', '$1')"/>
                </occupation>
             </xsl:for-each-group>
          </xsl:when>
@@ -781,7 +781,7 @@
             <xsl:for-each-group select="($dtdVersion)/ead/archdesc/controlaccess/geogname"
                group-by="string()">
                <geogname xtf:meta="true">
-                  <xsl:value-of select="normalize-space(.)"/>
+                  <xsl:value-of select="replace(normalize-space(.), '^(.*)[.]$', '$1')"/>
                </geogname>
             </xsl:for-each-group>
          </xsl:when>
@@ -789,7 +789,7 @@
             <xsl:for-each-group select="($dtdVersion)/ead/archdesc//controlaccess/geogname"
                group-by="string()">
                <geogname xtf:meta="true">
-                  <xsl:value-of select="normalize-space(.)"/>
+                  <xsl:value-of select="replace(normalize-space(.), '^(.*)[.]$', '$1')"/>
                </geogname>
             </xsl:for-each-group>
          </xsl:when>
@@ -798,7 +798,7 @@
             <xsl:for-each-group select="($dtdVersion)/ead/archdesc//controlaccess/*/geogname"
                group-by="string()">
                <geogname xtf:meta="true">
-                  <xsl:value-of select="normalize-space(.)"/>
+                  <xsl:value-of select="replace(normalize-space(.), '^(.*)[.]$', '$1')"/>
                </geogname>
             </xsl:for-each-group>
          </xsl:when>
@@ -807,7 +807,7 @@
             <xsl:for-each-group select="($dtdVersion)/ead/eadheader/filedesc/notestmt/geogname"
                group-by="string()">
                <geogname xtf:meta="true">
-                  <xsl:value-of select="normalize-space(.)"/>
+                  <xsl:value-of select="replace(normalize-space(.), '^(.*)[.]$', '$1')"/>
                </geogname>
             </xsl:for-each-group>
          </xsl:when>
