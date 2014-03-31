@@ -762,14 +762,12 @@
    <xsl:template match="list[parent::*[not(self::arrangement)]]/defitem/item">
       <div class="deflist_item">
          <xsl:apply-templates/>
-         <br/>
       </div>
    </xsl:template>
 
    <xsl:template match="list[parent::*[not(self::arrangement)]]/item">
       <div class="list_item">
          <xsl:apply-templates/>
-         <br/>
       </div>
    </xsl:template>
 
@@ -777,7 +775,6 @@
       <div class="marked_item">
          <xsl:text>&#8226;&#x20;&#x20;&#x20;</xsl:text>
          <xsl:apply-templates/>
-         <br/>
       </div>
    </xsl:template>
 
