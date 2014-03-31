@@ -1012,8 +1012,8 @@
                   </a>
                   <xsl:apply-templates select="." mode="afterGroupValue"/>
                </div>
-               <div class="pull-right">
-                  (<xsl:value-of select="@totalDocs"/>)
+               <div class="badge">
+                  <xsl:value-of select="@totalDocs"/>
                </div>
             </xsl:otherwise>
          </xsl:choose>
@@ -1105,8 +1105,8 @@
                   </a>
                   <xsl:apply-templates select="." mode="afterGroupValue"/>
                </div>
-               <div class="pull-right">
-                  (<xsl:value-of select="@totalDocs"/>)
+               <div class="badge">
+                  <xsl:value-of select="@totalDocs"/>
                </div>
             </xsl:when>
             
@@ -1124,8 +1124,8 @@
                   </a>
                   <xsl:apply-templates select="." mode="afterGroupValue"/>
                </div>
-               <div class="pull-right">
-                  (<xsl:value-of select="@totalDocs"/>)
+               <div class="badge">
+                  <xsl:value-of select="@totalDocs"/>
                </div>
             </xsl:when>
                
