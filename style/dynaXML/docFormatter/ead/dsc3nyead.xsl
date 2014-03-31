@@ -155,7 +155,7 @@ that are used generically throughout the stylesheet.-->
 
 		<xsl:if test="unitid">
 			<xsl:apply-templates select="unitid"/>
-			<xsl:text>.&#160;</xsl:text>
+			<xsl:text>&#160;</xsl:text>
 		</xsl:if>
 
 		<!--This choose statement selects between cases where unitdate is a child of
