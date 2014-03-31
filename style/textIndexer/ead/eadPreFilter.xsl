@@ -282,7 +282,14 @@
                <xsl:call-template name="get-ead-type"/>
                
                <!-- JB 3/31/2014 add to generate materials facet from genreform -->
-               <xsl:call-template name="get-ead-materials"/>
+               <xsl:call-template name="get-ead-genreform"/>
+               
+               <!-- HA 3/31/2014 adding additional facets -->
+               <xsl:call-template name="get-ead-persname"/>
+               <xsl:call-template name="get-ead-corpname"/>
+               <xsl:call-template name="get-ead-geogname"/>
+               <xsl:call-template name="get-ead-famname"/>
+               <xsl:call-template name="get-ead-occupation"/>
 
                <xsl:call-template name="get-ead-format"/>
                <xsl:call-template name="get-ead-identifier"/>
@@ -568,45 +575,244 @@
    </xsl:template>
    
    <!-- JB 3/31/2014 add to generate materials facet from genreform -->
-   <xsl:template name="get-ead-materials">
+   <xsl:template name="get-ead-genreform">
       <xsl:choose>
-<xsl:when test="($dtdVersion)/ead/archdesc/controlaccess/genreform">
+         <xsl:when test="($dtdVersion)/ead/archdesc/controlaccess/genreform">
             <xsl:for-each-group select="($dtdVersion)/ead/archdesc/controlaccess/genreform"
                group-by="string()">
-               <materials xtf:meta="true">
+               <genreform xtf:meta="true">
                   <xsl:value-of select="normalize-space(.)"/>
-               </materials>
+               </genreform>
             </xsl:for-each-group>
-         </xsl:when>         
-<xsl:when test="($dtdVersion)/ead/archdesc//controlaccess/genreform">
+         </xsl:when>
+         <xsl:when test="($dtdVersion)/ead/archdesc//controlaccess/genreform">
             <xsl:for-each-group select="($dtdVersion)/ead/archdesc//controlaccess/genreform"
                group-by="string()">
-               <materials xtf:meta="true">
+               <genreform xtf:meta="true">
                   <xsl:value-of select="normalize-space(.)"/>
-               </materials>
+               </genreform>
             </xsl:for-each-group>
          </xsl:when>
          <!-- add to account for nesting of control access -->
          <xsl:when test="($dtdVersion)/ead/archdesc//controlaccess/*/genreform">
             <xsl:for-each-group select="($dtdVersion)/ead/archdesc//controlaccess/*/genreform"
                group-by="string()">
-               <materials xtf:meta="true">
+               <genreform xtf:meta="true">
                   <xsl:value-of select="normalize-space(.)"/>
-               </materials>
+               </genreform>
             </xsl:for-each-group>
          </xsl:when>
          <!-- will NYEAD use  -->
          <xsl:when test="($dtdVersion)/ead/eadheader/filedesc/notestmt/genreform">
             <xsl:for-each-group select="($dtdVersion)/ead/eadheader/filedesc/notestmt/genreform"
                group-by="string()">
-               <materials xtf:meta="true">
+               <genreform xtf:meta="true">
                   <xsl:value-of select="normalize-space(.)"/>
-               </materials>
+               </genreform>
             </xsl:for-each-group>
          </xsl:when>
       </xsl:choose>
    </xsl:template>
    
+   <!-- persname -->
+   <xsl:template name="get-ead-persname">
+      <xsl:choose>
+         <xsl:when test="($dtdVersion)/ead/archdesc/controlaccess/persname">
+            <xsl:for-each-group select="($dtdVersion)/ead/archdesc/controlaccess/persname"
+               group-by="string()">
+               <persname xtf:meta="true">
+                  <xsl:value-of select="normalize-space(.)"/>
+               </persname>
+            </xsl:for-each-group>
+         </xsl:when>
+         <xsl:when test="($dtdVersion)/ead/archdesc//controlaccess/persname">
+            <xsl:for-each-group select="($dtdVersion)/ead/archdesc//controlaccess/persname"
+               group-by="string()">
+               <persname xtf:meta="true">
+                  <xsl:value-of select="normalize-space(.)"/>
+               </persname>
+            </xsl:for-each-group>
+         </xsl:when>
+         <!-- add to account for nesting of control access -->
+         <xsl:when test="($dtdVersion)/ead/archdesc//controlaccess/*/persname">
+            <xsl:for-each-group select="($dtdVersion)/ead/archdesc//controlaccess/*/persname"
+               group-by="string()">
+               <persname xtf:meta="true">
+                  <xsl:value-of select="normalize-space(.)"/>
+               </persname>
+            </xsl:for-each-group>
+         </xsl:when>
+         <!-- will NYEAD use  -->
+         <xsl:when test="($dtdVersion)/ead/eadheader/filedesc/notestmt/persname">
+            <xsl:for-each-group select="($dtdVersion)/ead/eadheader/filedesc/notestmt/persname"
+               group-by="string()">
+               <persname xtf:meta="true">
+                  <xsl:value-of select="normalize-space(.)"/>
+               </persname>
+            </xsl:for-each-group>
+         </xsl:when>
+      </xsl:choose>
+   </xsl:template>     
+         
+   <!-- corpname -->
+   <xsl:template name="get-ead-corpname">
+      <xsl:choose>
+         <xsl:when test="($dtdVersion)/ead/archdesc/controlaccess/corpname">
+            <xsl:for-each-group select="($dtdVersion)/ead/archdesc/controlaccess/corpname"
+               group-by="string()">
+               <corpname xtf:meta="true">
+                  <xsl:value-of select="normalize-space(.)"/>
+               </corpname>
+            </xsl:for-each-group>
+         </xsl:when>
+         <xsl:when test="($dtdVersion)/ead/archdesc//controlaccess/corpname">
+            <xsl:for-each-group select="($dtdVersion)/ead/archdesc//controlaccess/corpname"
+               group-by="string()">
+               <corpname xtf:meta="true">
+                  <xsl:value-of select="normalize-space(.)"/>
+               </corpname>
+            </xsl:for-each-group>
+         </xsl:when>
+         <!-- add to account for nesting of control access -->
+         <xsl:when test="($dtdVersion)/ead/archdesc//controlaccess/*/corpname">
+            <xsl:for-each-group select="($dtdVersion)/ead/archdesc//controlaccess/*/corpname"
+               group-by="string()">
+               <corpname xtf:meta="true">
+                  <xsl:value-of select="normalize-space(.)"/>
+               </corpname>
+            </xsl:for-each-group>
+         </xsl:when>
+         <!-- will NYEAD use  -->
+         <xsl:when test="($dtdVersion)/ead/eadheader/filedesc/notestmt/corpname">
+            <xsl:for-each-group select="($dtdVersion)/ead/eadheader/filedesc/notestmt/corpname"
+               group-by="string()">
+               <corpname xtf:meta="true">
+                  <xsl:value-of select="normalize-space(.)"/>
+               </corpname>
+            </xsl:for-each-group>
+         </xsl:when>
+      </xsl:choose>
+   </xsl:template>
+   
+   <!-- famname -->
+   <xsl:template name="get-ead-famname">
+      <xsl:choose>
+         <xsl:when test="($dtdVersion)/ead/archdesc/controlaccess/famname">
+            <xsl:for-each-group select="($dtdVersion)/ead/archdesc/controlaccess/famname"
+               group-by="string()">
+               <famname xtf:meta="true">
+                  <xsl:value-of select="normalize-space(.)"/>
+               </famname>
+            </xsl:for-each-group>
+         </xsl:when>
+         <xsl:when test="($dtdVersion)/ead/archdesc//controlaccess/famname">
+            <xsl:for-each-group select="($dtdVersion)/ead/archdesc//controlaccess/famname"
+               group-by="string()">
+               <famname xtf:meta="true">
+                  <xsl:value-of select="normalize-space(.)"/>
+               </famname>
+            </xsl:for-each-group>
+         </xsl:when>
+         <!-- add to account for nesting of control access -->
+         <xsl:when test="($dtdVersion)/ead/archdesc//controlaccess/*/famname">
+            <xsl:for-each-group select="($dtdVersion)/ead/archdesc//controlaccess/*/famname"
+               group-by="string()">
+               <famname xtf:meta="true">
+                  <xsl:value-of select="normalize-space(.)"/>
+               </famname>
+            </xsl:for-each-group>
+         </xsl:when>
+         <!-- will NYEAD use  -->
+         <xsl:when test="($dtdVersion)/ead/eadheader/filedesc/notestmt/famname">
+            <xsl:for-each-group select="($dtdVersion)/ead/eadheader/filedesc/notestmt/famname"
+               group-by="string()">
+               <famname xtf:meta="true">
+                  <xsl:value-of select="normalize-space(.)"/>
+               </famname>
+            </xsl:for-each-group>
+         </xsl:when>
+      </xsl:choose>
+   </xsl:template>
+   
+   <!-- occupation -->
+   <xsl:template name="get-ead-occupation">
+      <xsl:choose>
+         <xsl:when test="($dtdVersion)/ead/archdesc/controlaccess/occupation">
+            <xsl:for-each-group select="($dtdVersion)/ead/archdesc/controlaccess/occupation"
+               group-by="string()">
+               <occupation xtf:meta="true">
+                  <xsl:value-of select="normalize-space(.)"/>
+               </occupation>
+            </xsl:for-each-group>
+         </xsl:when>
+         <xsl:when test="($dtdVersion)/ead/archdesc//controlaccess/occupation">
+            <xsl:for-each-group select="($dtdVersion)/ead/archdesc//controlaccess/occupation"
+               group-by="string()">
+               <occupation xtf:meta="true">
+                  <xsl:value-of select="normalize-space(.)"/>
+               </occupation>
+            </xsl:for-each-group>
+         </xsl:when>
+         <!-- add to account for nesting of control access -->
+         <xsl:when test="($dtdVersion)/ead/archdesc//controlaccess/*/occupation">
+            <xsl:for-each-group select="($dtdVersion)/ead/archdesc//controlaccess/*/occupation"
+               group-by="string()">
+               <occupation xtf:meta="true">
+                  <xsl:value-of select="normalize-space(.)"/>
+               </occupation>
+            </xsl:for-each-group>
+         </xsl:when>
+         <!-- will NYEAD use  -->
+         <xsl:when test="($dtdVersion)/ead/eadheader/filedesc/notestmt/occupation">
+            <xsl:for-each-group select="($dtdVersion)/ead/eadheader/filedesc/notestmt/occupation"
+               group-by="string()">
+               <occupation xtf:meta="true">
+                  <xsl:value-of select="normalize-space(.)"/>
+               </occupation>
+            </xsl:for-each-group>
+         </xsl:when>
+      </xsl:choose>
+   </xsl:template>
+   
+   <!-- geogname -->
+   <xsl:template name="get-ead-geogname">
+      <xsl:choose>
+         <xsl:when test="($dtdVersion)/ead/archdesc/controlaccess/geogname">
+            <xsl:for-each-group select="($dtdVersion)/ead/archdesc/controlaccess/geogname"
+               group-by="string()">
+               <geogname xtf:meta="true">
+                  <xsl:value-of select="normalize-space(.)"/>
+               </geogname>
+            </xsl:for-each-group>
+         </xsl:when>
+         <xsl:when test="($dtdVersion)/ead/archdesc//controlaccess/geogname">
+            <xsl:for-each-group select="($dtdVersion)/ead/archdesc//controlaccess/geogname"
+               group-by="string()">
+               <geogname xtf:meta="true">
+                  <xsl:value-of select="normalize-space(.)"/>
+               </geogname>
+            </xsl:for-each-group>
+         </xsl:when>
+         <!-- add to account for nesting of control access -->
+         <xsl:when test="($dtdVersion)/ead/archdesc//controlaccess/*/geogname">
+            <xsl:for-each-group select="($dtdVersion)/ead/archdesc//controlaccess/*/geogname"
+               group-by="string()">
+               <geogname xtf:meta="true">
+                  <xsl:value-of select="normalize-space(.)"/>
+               </geogname>
+            </xsl:for-each-group>
+         </xsl:when>
+         <!-- will NYEAD use  -->
+         <xsl:when test="($dtdVersion)/ead/eadheader/filedesc/notestmt/geogname">
+            <xsl:for-each-group select="($dtdVersion)/ead/eadheader/filedesc/notestmt/geogname"
+               group-by="string()">
+               <geogname xtf:meta="true">
+                  <xsl:value-of select="normalize-space(.)"/>
+               </geogname>
+            </xsl:for-each-group>
+         </xsl:when>
+      </xsl:choose>
+   </xsl:template>
    
    <!-- format -->
    <xsl:template name="get-ead-format">

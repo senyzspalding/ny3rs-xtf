@@ -124,8 +124,8 @@
          
          <!-- JB 3/31/2014 add materials facet -->
          <xsl:call-template name="facet">
-            <xsl:with-param name="field" select="'facet-materials'"/>
-            <xsl:with-param name="topGroups" select="'*[1-10]'"/>
+            <xsl:with-param name="field" select="'facet-genreform'"/>
+            <xsl:with-param name="topGroups" select="'*[1-5]'"/>
             <xsl:with-param name="sort" select="'totalDocs'"/>
          </xsl:call-template>
          
@@ -141,6 +141,25 @@
          <xsl:call-template name="facet">
             <xsl:with-param name="field" select="'facet-publisher'"/>
             <xsl:with-param name="topGroups" select="'*'"/>
+            <xsl:with-param name="sort" select="'value'"/>
+         </xsl:call-template>
+         
+         <!-- HA 3/31/2014 adding additional facets -->
+         <xsl:call-template name="facet">
+            <xsl:with-param name="field" select="'facet-corpname'"/>
+            <xsl:with-param name="topGroups" select="'*[1-5]'"/>
+            <xsl:with-param name="sort" select="'totalDocs'"/>
+         </xsl:call-template>
+         
+         <xsl:call-template name="facet">
+            <xsl:with-param name="field" select="'facet-persname'"/>
+            <xsl:with-param name="topGroups" select="'*[1-5]'"/>
+            <xsl:with-param name="sort" select="'totalDocs'"/>
+         </xsl:call-template>
+         
+         <xsl:call-template name="facet">
+            <xsl:with-param name="field" select="'facet-geogname'"/>
+            <xsl:with-param name="topGroups" select="'*[1-5]'"/>
             <xsl:with-param name="sort" select="'totalDocs'"/>
          </xsl:call-template>
 

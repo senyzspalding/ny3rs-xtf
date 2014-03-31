@@ -244,10 +244,25 @@
                      <div class="results row">
                         <xsl:if test="not($smode='showBag')">
                            <div class="facet col-md-3">
-                              <xsl:apply-templates select="facet[@field='facet-subject']"/>
-                              <xsl:apply-templates select="facet[@field='facet-publisher']"/>
+                              <xsl:if test="facet[@field='facet-subject']/group">
+                                 <xsl:apply-templates select="facet[@field='facet-subject']"/>
+                              </xsl:if>
+                              <xsl:if test="facet[@field='facet-persname']/group">
+                                 <xsl:apply-templates select="facet[@field='facet-persname']"/>
+                              </xsl:if>
+                              <xsl:if test="facet[@field='facet-corpname']/group">
+                                 <xsl:apply-templates select="facet[@field='facet-corpname']"/>
+                              </xsl:if>
+                              <xsl:if test="facet[@field='facet-geogname']/group">
+                                 <xsl:apply-templates select="facet[@field='facet-geogname']"/>
+                              </xsl:if>
                               <!-- JB 3/31/2014 add for materials facet -->
-                              <xsl:apply-templates select="facet[@field='facet-materials']"/>
+                              <xsl:if test="facet[@field='facet-genreform']/group">
+                                 <xsl:apply-templates select="facet[@field='facet-genreform']"/>
+                              </xsl:if>
+                              <xsl:if test="facet[@field='facet-publisher']/group">
+                                 <xsl:apply-templates select="facet[@field='facet-publisher']"/>
+                              </xsl:if>
                            </div>
                         </xsl:if>
                         <div class="docHit col-md-9">

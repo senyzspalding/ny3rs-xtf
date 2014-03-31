@@ -1178,7 +1178,18 @@
    <!-- Default template to display the name of a facet. Override to specialize. -->
    <xsl:template match="facet" mode="facetName" priority="-1">
       <xsl:variable name="rawName" select="replace(@field, '^facet-', '')"/>
-      <xsl:value-of select="concat(upper-case(substring($rawName, 1, 1)), substring($rawName, 2))"/>
+      <!--<xsl:value-of select="concat(upper-case(substring($rawName, 1, 1)), substring($rawName, 2))"/>-->
+      <xsl:choose>
+         <xsl:when test="$rawName = 'subject'"><xsl:text>Subjects</xsl:text></xsl:when>
+         <xsl:when test="$rawName = 'corpname'"><xsl:text>Organizations</xsl:text></xsl:when>
+         <xsl:when test="$rawName = 'persname'"><xsl:text>People</xsl:text></xsl:when>
+         <xsl:when test="$rawName = 'famname'"><xsl:text>Families</xsl:text></xsl:when>
+         <xsl:when test="$rawName = 'genreform'"><xsl:text>Formats</xsl:text></xsl:when>
+         <xsl:when test="$rawName = 'title'"><xsl:text>Titles</xsl:text></xsl:when>
+         <xsl:when test="$rawName = 'geogname'"><xsl:text>Places</xsl:text></xsl:when>
+         <xsl:when test="$rawName = 'occupation'"><xsl:text>Occupations</xsl:text></xsl:when>
+         <xsl:when test="$rawName = 'publisher'"><xsl:text>Repositories</xsl:text></xsl:when>
+      </xsl:choose>
    </xsl:template>
 
    <!-- Default template to add data before the name of a facet group. Override to specialize. -->
