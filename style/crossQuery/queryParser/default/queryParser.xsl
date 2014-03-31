@@ -122,6 +122,13 @@
             <xsl:with-param name="sort" select="'totalDocs'"/>
          </xsl:call-template>
          
+         <!-- JB 3/31/2014 add materials facet -->
+         <xsl:call-template name="facet">
+            <xsl:with-param name="field" select="'facet-materials'"/>
+            <xsl:with-param name="topGroups" select="'*[1-10]'"/>
+            <xsl:with-param name="sort" select="'totalDocs'"/>
+         </xsl:call-template>
+         
          <!-- hierarchical date facet, shows most recent years first -->
          <xsl:call-template name="facet">
             <xsl:with-param name="field" select="'facet-date'"/>
