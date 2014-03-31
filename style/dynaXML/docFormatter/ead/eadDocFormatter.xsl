@@ -174,6 +174,64 @@
 				</head>
 
 				<body>
+					
+					<!-- Schema.org metadata -->
+					<div itemscope="" typeof="http:/schema.org/CollectionPage">
+						<xsl:if test="/ead/xtf:meta/description">
+							<meta itemprop="http:/schema.org/description">
+								<xsl:attribute name="content">
+									<xsl:value-of select="/ead/xtf:meta/description"/>
+								</xsl:attribute>
+							</meta>
+						</xsl:if>
+						<meta itemprop="http:/schema.org/name">
+							<xsl:attribute name="content">
+								<xsl:value-of select="/ead/xtf:meta/title"/>
+							</xsl:attribute>
+						</meta>
+						<!-- may be able to improve this based on JB work on repository -->
+						<div itemprop="http:/schema.org/contentLocation" itemscope="" itemtype="http:/schema.org/Place">
+							<meta itemprop="http:/schema.org/name">
+								<xsl:attribute name="content">
+									<xsl:value-of select="/ead/xtf:meta/publisher"/>
+								</xsl:attribute>
+							</meta>
+						</div>
+						<xsl:for-each select="/ead/xtf:meta/contributor">
+							<meta itemprop="http:/schema.org/contributor">
+								<xsl:attribute name="content">
+									<xsl:apply-templates/>
+								</xsl:attribute>
+							</meta>
+						</xsl:for-each>
+						<xsl:for-each select="/ead/xtf:meta/creator">
+							<xsl:if test="/ead/xtf:meta/creator != 'unknown'">
+							<meta itemprop="http:/schema.org/creator">
+								<xsl:attribute name="content">
+									<xsl:apply-templates/>
+								</xsl:attribute>
+							</meta>
+							</xsl:if>
+						</xsl:for-each>
+						<div itemprop="http:/schema.org/dateCreated" itemscope="" itemtype="Date">
+							<meta itemprop="date">
+								<xsl:attribute name="content">
+									<xsl:value-of select="/ead/xtf:meta/date"/>
+								</xsl:attribute>
+							</meta>
+						</div>
+						<meta itemprop="http:/schema.org/inLanguage" content="en"/>
+						<!-- may be able to improve this based on JB work on repository -->
+						<div itemprop="http:/schema.org/publisher" itemscope="" itemtype="http:/schema.org/organization">
+							<meta itemprop="http:/schema.org/name">
+								<xsl:attribute name="content">
+									<xsl:value-of select="/ead/xtf:meta/publisher"/>
+								</xsl:attribute>
+							</meta>
+						</div>
+					</div>
+					<!-- End Schema.org metadata -->
+					
 					<xsl:call-template name="bbar"/>
 					<div class="container-fluid">
 						<div class="row">
