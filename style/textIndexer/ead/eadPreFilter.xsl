@@ -280,6 +280,10 @@
                <xsl:call-template name="get-ead-contributor"/>
                <xsl:call-template name="get-ead-date"/>
                <xsl:call-template name="get-ead-type"/>
+               
+               <!-- JB 3/31/2014 add to generate materials facet from genreform -->
+               <xsl:call-template name="get-ead-materials"/>
+
                <xsl:call-template name="get-ead-format"/>
                <xsl:call-template name="get-ead-identifier"/>
                <xsl:call-template name="get-ead-source"/>
@@ -562,6 +566,47 @@
    <xsl:template name="get-ead-type">
       <type xtf:meta="true">ead</type>
    </xsl:template>
+   
+   <!-- JB 3/31/2014 add to generate materials facet from genreform -->
+   <xsl:template name="get-ead-materials">
+      <xsl:choose>
+<xsl:when test="($dtdVersion)/ead/archdesc/controlaccess/genreform">
+            <xsl:for-each-group select="($dtdVersion)/ead/archdesc/controlaccess/genreform"
+               group-by="string()">
+               <materials xtf:meta="true">
+                  <xsl:value-of select="normalize-space(.)"/>
+               </materials>
+            </xsl:for-each-group>
+         </xsl:when>         
+<xsl:when test="($dtdVersion)/ead/archdesc//controlaccess/genreform">
+            <xsl:for-each-group select="($dtdVersion)/ead/archdesc//controlaccess/genreform"
+               group-by="string()">
+               <materials xtf:meta="true">
+                  <xsl:value-of select="normalize-space(.)"/>
+               </materials>
+            </xsl:for-each-group>
+         </xsl:when>
+         <!-- add to account for nesting of control access -->
+         <xsl:when test="($dtdVersion)/ead/archdesc//controlaccess/*/genreform">
+            <xsl:for-each-group select="($dtdVersion)/ead/archdesc//controlaccess/*/genreform"
+               group-by="string()">
+               <materials xtf:meta="true">
+                  <xsl:value-of select="normalize-space(.)"/>
+               </materials>
+            </xsl:for-each-group>
+         </xsl:when>
+         <!-- will NYEAD use  -->
+         <xsl:when test="($dtdVersion)/ead/eadheader/filedesc/notestmt/genreform">
+            <xsl:for-each-group select="($dtdVersion)/ead/eadheader/filedesc/notestmt/genreform"
+               group-by="string()">
+               <materials xtf:meta="true">
+                  <xsl:value-of select="normalize-space(.)"/>
+               </materials>
+            </xsl:for-each-group>
+         </xsl:when>
+      </xsl:choose>
+   </xsl:template>
+   
    
    <!-- format -->
    <xsl:template name="get-ead-format">
