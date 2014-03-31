@@ -286,11 +286,18 @@ for each level.-->
 	description without associated components.-->
 	<xsl:template name="c01-level">
 		<xsl:for-each select="did">
+			<a>
+				<xsl:attribute name="name">
+					<xsl:value-of select="../@id"/>
+				</xsl:attribute>
+			</a>
+			<xsl:if test="unitid/@id">
 				<a>
 					<xsl:attribute name="name">
-						<xsl:value-of select="../@id"/>
+						<xsl:value-of select="unitid/@id"/>
 					</xsl:attribute>
 				</a>
+			</xsl:if>
 				<div class="col-md-12">
 					<h4><xsl:call-template name="component-did"/></h4>
 				</div>
@@ -401,6 +408,13 @@ for each level.-->
 					<xsl:value-of select="../@id"/>
 				</xsl:attribute>
 			</a>
+			<xsl:if test="unitid/@id">
+				<a>
+					<xsl:attribute name="name">
+						<xsl:value-of select="unitid/@id"/>
+					</xsl:attribute>
+				</a>
+			</xsl:if>
 			<div class="col-md-12">
 				<h4>
 					<xsl:call-template name="component-did"/>
