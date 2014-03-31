@@ -590,7 +590,7 @@ Item number <xsl:value-of select="$num"/>:
                   </xsl:if>
                   <b>Title:&#160;&#160;</b>
                </div>
-               <div class="col-md-9">
+               <div class="col-md-10">
                   <a>
                      <xsl:attribute name="href">
                         <xsl:choose>
@@ -620,8 +620,9 @@ Item number <xsl:value-of select="$num"/>:
                      <img src="{$icon.path}i_{$type}.gif" class="typeIcon"/>
                   </span>-->
                </div>
-               <div class="col4 pull-right">
-                  <!-- Add/remove logic for the session bag (only if session tracking enabled) -->
+               
+               <!--<div class="col4 pull-right">
+ 
                   <xsl:if test="session:isEnabled()">
                      <xsl:choose>
                         <xsl:when test="$smode = 'showBag'">
@@ -634,7 +635,7 @@ Item number <xsl:value-of select="$num"/>:
                                     {  success: function(o) { 
                                           var main = YAHOO.util.Dom.get('main_<xsl:value-of select="@rank"/>');
                                           main.parentNode.removeChild(main);
-                                          --(YAHOO.util.Dom.get('itemCount').innerHTML);
+                                          (YAHOO.util.Dom.get('itemCount').innerHTML);
                                        },
                                        failure: function(o) { span.innerHTML = 'Failed to delete!'; }
                                     }, null);
@@ -667,17 +668,17 @@ Item number <xsl:value-of select="$num"/>:
                                           }, null);
                                     };
                                  </script>
-                                 <!-- remove add while bookbag is disabled
+                                 remove add while bookbag is disabled
                                  <span id="add_{@rank}">
                                     <a href="javascript:add_{@rank}()">Add</a>
-                                 </span> -->
+                                 </span>
                               </xsl:otherwise>
                            </xsl:choose>
                            <xsl:value-of select="session:setData('queryURL', concat($xtfURL, $crossqueryPath, '?', $queryString))"/>
                         </xsl:otherwise>
                      </xsl:choose>
                   </xsl:if>
-               </div>
+               </div>--> 
             </div>
             <xsl:if test="meta/creator != ''">
             <div class="row">
