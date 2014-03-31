@@ -246,6 +246,8 @@
                            <div class="facet col-md-3">
                               <xsl:apply-templates select="facet[@field='facet-subject']"/>
                               <xsl:apply-templates select="facet[@field='facet-publisher']"/>
+                              <!-- JB 3/31/2014 add for materials facet -->
+                              <xsl:apply-templates select="facet[@field='facet-materials']"/>
                            </div>
                         </xsl:if>
                         <div class="docHit col-md-9">
