@@ -150,11 +150,6 @@
 				<xsl:call-template name="citation"/>
 			</xsl:when>
 
-			<!-- JB 4/1/2014 add to generate popup box with repository address -->
-			<xsl:when test="$doc.view='repository_contact'">
-				<xsl:call-template name="repository_contact"/>
-			</xsl:when>
-
 			<!-- Creates the basic frameset.-->
 			<xsl:otherwise>
 				<xsl:call-template name="frameset"/>
@@ -177,6 +172,10 @@
 					<link rel="stylesheet"
 						href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
 					<script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"/>
+					<!--[if lt IE 9]>
+      					<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      					<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    				<![endif]-->
 					<!--<link rel="stylesheet" type="text/css" href="{$css.path}ead.css"/>-->
 					<!--<xsl:call-template name="metadata"/>-->
 
