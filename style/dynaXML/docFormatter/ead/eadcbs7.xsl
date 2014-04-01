@@ -377,22 +377,6 @@
 				</h3>
 			</xsl:if>
 			
-			4/1/2014 add to generate repository contact information box IF there is an address in publicationstmt -->
-                    <xsl:if test="filedesc/publicationstmt/address">
-                       <p><a>
-                           <xsl:attribute name="href">javascript://</xsl:attribute>
-                           <xsl:attribute name="onclick">
-                              <xsl:text>javascript:window.open('</xsl:text>
-                              <xsl:value-of select="$xtfURL"/>
-                              <xsl:value-of select="$dynaxmlPath"/>
-                              <xsl:text>?docId=</xsl:text>
-                              <xsl:value-of select="$docId"/>
-                              <xsl:text>;doc.view=repository_contact</xsl:text>
-                              <xsl:text>','popup','width=800,height=400,resizable=yes,scrollbars=no')</xsl:text>
-                           </xsl:attribute>
-                           <xsl:text>Repository Contact Information</xsl:text>
-                        </a></p>
-                   </xsl:if>
 			<xsl:if test="filedesc/titlestmt/author">
 				<p class="text-muted">
 					<xsl:value-of select="filedesc/titlestmt/author"/>
@@ -496,6 +480,31 @@
 		</dt>
 		<dd>
 			<xsl:apply-templates/>
+			
+			<!--4/1/2014 add to generate repository contact information box IF there is an address in publicationstmt -->
+			<xsl:if test="/ead/eadheader/filedesc/publicationstmt/address and self::repository">
+				<button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#contact">
+					Contact Information
+				</button>
+				
+				<div class="modal fade" id="contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+								<h4 class="modal-title" id="myModalLabel"><xsl:value-of select="/ead/eadheader/filedesc/publicationstmt/publisher"/></h4>
+							</div>
+							<div class="modal-body">
+								<xsl:for-each select="/ead/eadheader/filedesc/publicationstmt/address/addressline">
+									<p>
+										<xsl:value-of select="."/>
+									</p>
+								</xsl:for-each>
+							</div>
+						</div>
+					</div>
+				</div>
+			</xsl:if>
 		</dd>
 	</xsl:template>
 

@@ -1,5 +1,6 @@
-<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xtf="http://cdlib.org/xtf" xmlns:session="java:org.cdlib.xtf.xslt.Session" extension-element-prefixes="session"
-	exclude-result-prefixes="#all">
+<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+	xmlns:xtf="http://cdlib.org/xtf" xmlns:session="java:org.cdlib.xtf.xslt.Session"
+	extension-element-prefixes="session" exclude-result-prefixes="#all">
 
 	<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 	<!-- EAD dynaXML Stylesheet                                                 -->
@@ -50,10 +51,14 @@
 	<!-- Output Format                                                          -->
 	<!-- ====================================================================== -->
 
-	<xsl:output method="xhtml" indent="yes" encoding="UTF-8" media-type="text/html; charset=UTF-8" doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
-		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" exclude-result-prefixes="#all" omit-xml-declaration="yes"/>
+	<xsl:output method="xhtml" indent="yes" encoding="UTF-8" media-type="text/html; charset=UTF-8"
+		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
+		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
+		exclude-result-prefixes="#all" omit-xml-declaration="yes"/>
 
-	<xsl:output name="frameset" method="xhtml" indent="yes" encoding="UTF-8" media-type="text/html; charset=UTF-8" doctype-public="HTML" omit-xml-declaration="yes" exclude-result-prefixes="#all"/>
+	<xsl:output name="frameset" method="xhtml" indent="yes" encoding="UTF-8"
+		media-type="text/html; charset=UTF-8" doctype-public="HTML" omit-xml-declaration="yes"
+		exclude-result-prefixes="#all"/>
 
 	<!-- ====================================================================== -->
 	<!-- Strip Space                                                            -->
@@ -73,7 +78,8 @@
 	<!-- Define Keys                                                            -->
 	<!-- ====================================================================== -->
 
-	<xsl:key name="chunk-id" match="*[parent::archdesc or matches(local-name(), '^(c|c[0-9][0-9])$')][@id]" use="@id"/>
+	<xsl:key name="chunk-id"
+		match="*[parent::archdesc or matches(local-name(), '^(c|c[0-9][0-9])$')][@id]" use="@id"/>
 
 	<!-- ====================================================================== -->
 	<!-- EAD-specific parameters                                                -->
@@ -103,7 +109,8 @@
 		<xsl:choose>
 			<xsl:when test="$hit.rank != '0'">
 				<xsl:call-template name="findHitChunk">
-					<xsl:with-param name="hitNode" select="key('hit-rank-dynamic', string($hit.rank))"/>
+					<xsl:with-param name="hitNode"
+						select="key('hit-rank-dynamic', string($hit.rank))"/>
 				</xsl:call-template>
 			</xsl:when>
 			<xsl:otherwise>
@@ -142,60 +149,18 @@
 			<xsl:when test="$doc.view='citation'">
 				<xsl:call-template name="citation"/>
 			</xsl:when>
-			
+
 			<!-- JB 4/1/2014 add to generate popup box with repository address -->
-         <xsl:when test="$doc.view='repository_contact'">
-            <xsl:call-template name="repository_contact"/>
-         </xsl:when>
-         
+			<xsl:when test="$doc.view='repository_contact'">
+				<xsl:call-template name="repository_contact"/>
+			</xsl:when>
+
 			<!-- Creates the basic frameset.-->
 			<xsl:otherwise>
 				<xsl:call-template name="frameset"/>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
-
-<!-- JB 4/1/2014 added - conditioned on presence of an address, thinking if it is in repository they can see it there -->
-<!-- ====================================================================== -->
-	<!-- Repository Contact Template                                                      -->
-	<!-- ====================================================================== -->
-
-	<xsl:template name="repository_contact">         
-         
-		<html xml:lang="en" lang="en">
-			<head>
-				<title>
-					<xsl:value-of select="$doc.title"/>
-				</title>
-				<link rel="stylesheet" type="text/css" href="{$css.path}bbar.css"/>
-				<link rel="shortcut icon" href="icons/default/favicon.ico"/>
-
-			</head>
-			<body>
-				<xsl:copy-of select="$brand.header"/>
-				<div class="container">
-					<h2>Repository Contact Information</h2>
-					
-<h3>						
-<xsl:value-of select="eadheader/filedesc/publicationstmt/publisher"/>
-</h3>
-            <xsl:for-each select="eadheader/filedesc/publicationstmt/address/addressline">
-              <p> <xsl:value-of select="."/></p>
-            </xsl:for-each>
-<div>
-					<p>	<a>
-							<xsl:attribute name="href">javascript://</xsl:attribute>
-							<xsl:attribute name="onClick">
-								<xsl:text>javascript:window.close('popup')</xsl:text>
-							</xsl:attribute>
-							<span class="down1">Close this Window</span>
-						</a></p>
-					</div>
-				</div>
-			</body>
-		</html>
-
-</xsl:template>
 
 	<!-- ====================================================================== -->
 	<!-- Frameset Template                                                      -->
@@ -209,7 +174,8 @@
 					<meta name="viewport" content="width=device-width, initial-scale=1"/>
 					<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"/>
 					<!-- bootstrap -->
-					<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
+					<link rel="stylesheet"
+						href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
 					<script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"/>
 					<!--<link rel="stylesheet" type="text/css" href="{$css.path}ead.css"/>-->
 					<!--<xsl:call-template name="metadata"/>-->
@@ -222,7 +188,7 @@
 				</head>
 
 				<body>
-					
+
 					<!-- Schema.org metadata -->
 					<div itemscope="" typeof="http:/schema.org/CollectionPage">
 						<xsl:if test="/ead/xtf:meta/description">
@@ -238,7 +204,8 @@
 							</xsl:attribute>
 						</meta>
 						<!-- may be able to improve this based on JB work on repository -->
-						<div itemprop="http:/schema.org/contentLocation" itemscope="" itemtype="http:/schema.org/Place">
+						<div itemprop="http:/schema.org/contentLocation" itemscope=""
+							itemtype="http:/schema.org/Place">
 							<meta itemprop="http:/schema.org/name">
 								<xsl:attribute name="content">
 									<xsl:value-of select="/ead/xtf:meta/publisher"/>
@@ -254,11 +221,11 @@
 						</xsl:for-each>
 						<xsl:for-each select="/ead/xtf:meta/creator">
 							<xsl:if test="/ead/xtf:meta/creator != 'unknown'">
-							<meta itemprop="http:/schema.org/creator">
-								<xsl:attribute name="content">
-									<xsl:apply-templates/>
-								</xsl:attribute>
-							</meta>
+								<meta itemprop="http:/schema.org/creator">
+									<xsl:attribute name="content">
+										<xsl:apply-templates/>
+									</xsl:attribute>
+								</meta>
 							</xsl:if>
 						</xsl:for-each>
 						<div itemprop="http:/schema.org/dateCreated" itemscope="" itemtype="Date">
@@ -270,7 +237,8 @@
 						</div>
 						<meta itemprop="http:/schema.org/inLanguage" content="en"/>
 						<!-- may be able to improve this based on JB work on repository -->
-						<div itemprop="http:/schema.org/publisher" itemscope="" itemtype="http:/schema.org/organization">
+						<div itemprop="http:/schema.org/publisher" itemscope=""
+							itemtype="http:/schema.org/organization">
 							<meta itemprop="http:/schema.org/name">
 								<xsl:attribute name="content">
 									<xsl:value-of select="/ead/xtf:meta/publisher"/>
@@ -279,7 +247,7 @@
 						</div>
 					</div>
 					<!-- End Schema.org metadata -->
-					
+
 					<xsl:call-template name="bbar"/>
 					<div class="container-fluid">
 						<div class="row">
@@ -367,7 +335,7 @@
 							<a>
 								<xsl:attribute name="href">
 									<xsl:value-of select="$doc.path"/>
-								</xsl:attribute>								
+								</xsl:attribute>
 								<xsl:text>Clear Hits</xsl:text>
 							</a>
 							<xsl:text>]</xsl:text>
@@ -393,27 +361,35 @@
 							<xsl:apply-templates select="archdesc/bioghist/head" mode="tocLink"/>
 						</xsl:if>
 						<xsl:if test="archdesc/scopecontent/head">
-							<xsl:apply-templates select="archdesc/scopecontent/head" mode="tocLink"/>
+							<xsl:apply-templates select="archdesc/scopecontent/head" mode="tocLink"
+							/>
 						</xsl:if>
 						<xsl:if test="archdesc/arrangement/head">
 							<xsl:apply-templates select="archdesc/arrangement/head" mode="tocLink"/>
 						</xsl:if>
 
-						<xsl:if test="archdesc/userestrict/head   or archdesc/accessrestrict/head   or archdesc/*/userestrict/head   or archdesc/*/accessrestrict/head">
+						<xsl:if
+							test="archdesc/userestrict/head   or archdesc/accessrestrict/head   or archdesc/*/userestrict/head   or archdesc/*/accessrestrict/head">
 							<xsl:call-template name="make-toc-link">
 								<xsl:with-param name="name" select="'Restrictions'"/>
 								<xsl:with-param name="id" select="'restrictlink'"/>
-								<xsl:with-param name="nodes" select="archdesc/userestrict|archdesc/accessrestrict|archdesc/*/userestrict|archdesc/*/accessrestrict"/>
+								<xsl:with-param name="nodes"
+									select="archdesc/userestrict|archdesc/accessrestrict|archdesc/*/userestrict|archdesc/*/accessrestrict"
+								/>
 							</xsl:call-template>
 						</xsl:if>
 						<xsl:if test="archdesc/controlaccess/head">
-							<xsl:apply-templates select="archdesc/controlaccess/head" mode="tocLink"/>
+							<xsl:apply-templates select="archdesc/controlaccess/head" mode="tocLink"
+							/>
 						</xsl:if>
-						<xsl:if test="archdesc/relatedmaterial   or archdesc/separatedmaterial   or archdesc/*/relatedmaterial   or archdesc/*/separatedmaterial">
+						<xsl:if
+							test="archdesc/relatedmaterial   or archdesc/separatedmaterial   or archdesc/*/relatedmaterial   or archdesc/*/separatedmaterial">
 							<xsl:call-template name="make-toc-link">
 								<xsl:with-param name="name" select="'Related Material'"/>
 								<xsl:with-param name="id" select="'relatedmatlink'"/>
-								<xsl:with-param name="nodes" select="archdesc/relatedmaterial|archdesc/separatedmaterial|archdesc/*/relatedmaterial|archdesc/*/separatedmaterial"/>
+								<xsl:with-param name="nodes"
+									select="archdesc/relatedmaterial|archdesc/separatedmaterial|archdesc/*/relatedmaterial|archdesc/*/separatedmaterial"
+								/>
 							</xsl:call-template>
 						</xsl:if>
 						<xsl:if
@@ -435,10 +411,12 @@
 						<xsl:if test="archdesc/otherfindaid/head    or archdesc/*/otherfindaid/head">
 							<xsl:choose>
 								<xsl:when test="archdesc/otherfindaid/head">
-									<xsl:apply-templates select="archdesc/otherfindaid/head" mode="tocLink"/>
+									<xsl:apply-templates select="archdesc/otherfindaid/head"
+										mode="tocLink"/>
 								</xsl:when>
 								<xsl:when test="archdesc/*/otherfindaid/head">
-									<xsl:apply-templates select="archdesc/*/otherfindaid/head" mode="tocLink"/>
+									<xsl:apply-templates select="archdesc/*/otherfindaid/head"
+										mode="tocLink"/>
 								</xsl:when>
 							</xsl:choose>
 						</xsl:if>
@@ -456,10 +434,12 @@
 						<xsl:if test="archdesc/bibliography/head    or archdesc/*/bibliography/head">
 							<xsl:choose>
 								<xsl:when test="archdesc/bibliography/head">
-									<xsl:apply-templates select="archdesc/bibliography/head" mode="tocLink"/>
+									<xsl:apply-templates select="archdesc/bibliography/head"
+										mode="tocLink"/>
 								</xsl:when>
 								<xsl:when test="archdesc/*/bibliography/head">
-									<xsl:apply-templates select="archdesc/*/bibliography/head" mode="tocLink"/>
+									<xsl:apply-templates select="archdesc/*/bibliography/head"
+										mode="tocLink"/>
 								</xsl:when>
 							</xsl:choose>
 						</xsl:if>
@@ -467,10 +447,12 @@
 						<xsl:if test="archdesc/index/head    or archdesc/*/index/head">
 							<xsl:choose>
 								<xsl:when test="archdesc/index/head">
-									<xsl:apply-templates select="archdesc/index/head" mode="tocLink"/>
+									<xsl:apply-templates select="archdesc/index/head" mode="tocLink"
+									/>
 								</xsl:when>
 								<xsl:when test="archdesc/*/index/head">
-									<xsl:apply-templates select="archdesc/*/index/head" mode="tocLink"/>
+									<xsl:apply-templates select="archdesc/*/index/head"
+										mode="tocLink"/>
 								</xsl:when>
 							</xsl:choose>
 						</xsl:if>
@@ -482,23 +464,24 @@
 								to form a hyperlink to each.   Delete this section if you do not
 								wish the c01 titles to appear in the table of contents.-->
 
-							<xsl:for-each select="archdesc/dsc/c01[@level='series' or @level='subseries' or @level='subgrp' or @level='subcollection']
+							<xsl:for-each
+								select="archdesc/dsc/c01[@level='series' or @level='subseries' or @level='subgrp' or @level='subcollection']
 								| archdesc/dsc/c[@level='series' or @level='subseries' or @level='subgrp' or @level='subcollection']">
 								<ul>
 									<xsl:call-template name="make-toc-link">
 										<xsl:with-param name="name">
 											<xsl:choose>
 												<xsl:when test="did/unittitle/unitdate">
-													<xsl:for-each select="did/unittitle">
-														<xsl:value-of select="text()"/>
-														<xsl:text> </xsl:text>
-														<xsl:apply-templates select="./unitdate"/>
-													</xsl:for-each>
+												<xsl:for-each select="did/unittitle">
+												<xsl:value-of select="text()"/>
+												<xsl:text> </xsl:text>
+												<xsl:apply-templates select="./unitdate"/>
+												</xsl:for-each>
 												</xsl:when>
 												<xsl:otherwise>
-													<xsl:apply-templates select="did/unittitle"/>
-													<xsl:text> </xsl:text>
-													<xsl:apply-templates select="did/unitdate"/>
+												<xsl:apply-templates select="did/unittitle"/>
+												<xsl:text> </xsl:text>
+												<xsl:apply-templates select="did/unitdate"/>
 												</xsl:otherwise>
 											</xsl:choose>
 										</xsl:with-param>
@@ -512,24 +495,25 @@
 										Delete this section if you do not wish the c02 titles to appear in the 
 										table of contents. -->
 									<ul>
-										<xsl:for-each select="c02[@level='subseries']
+										<xsl:for-each
+											select="c02[@level='subseries']
 											| c[@level='subseries']">
 											<xsl:call-template name="make-toc-link">
 												<xsl:with-param name="name">
-													<xsl:choose>
-														<xsl:when test="did/unittitle/unitdate">
-															<xsl:for-each select="did/unittitle">
-																<xsl:value-of select="text()"/>
-																<xsl:text> </xsl:text>
-																<xsl:apply-templates select="./unitdate"/>
-															</xsl:for-each>
-														</xsl:when>
-														<xsl:otherwise>
-															<xsl:apply-templates select="did/unittitle"/>
-															<xsl:text> </xsl:text>
-															<xsl:apply-templates select="did/unitdate"/>
-														</xsl:otherwise>
-													</xsl:choose>
+												<xsl:choose>
+												<xsl:when test="did/unittitle/unitdate">
+												<xsl:for-each select="did/unittitle">
+												<xsl:value-of select="text()"/>
+												<xsl:text> </xsl:text>
+												<xsl:apply-templates select="./unitdate"/>
+												</xsl:for-each>
+												</xsl:when>
+												<xsl:otherwise>
+												<xsl:apply-templates select="did/unittitle"/>
+												<xsl:text> </xsl:text>
+												<xsl:apply-templates select="did/unitdate"/>
+												</xsl:otherwise>
+												</xsl:choose>
 												</xsl:with-param>
 												<xsl:with-param name="id" select="@id"/>
 												<xsl:with-param name="nodes" select="."/>
@@ -565,7 +549,7 @@
 		<xsl:param name="nodes"/>
 		<xsl:param name="indent" select="1"/>
 
-		<xsl:variable name="hit.count" select="sum($nodes/@xtf:hitCount)"/>		
+		<xsl:variable name="hit.count" select="sum($nodes/@xtf:hitCount)"/>
 
 		<xsl:if test="@id = $chunk.id">
 			<a name="X"/>
