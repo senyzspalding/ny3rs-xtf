@@ -175,8 +175,12 @@ that are used generically throughout the stylesheet.-->
 				</xsl:choose>
 				<xsl:for-each select="unitdate">
 					<xsl:apply-templates/>
-					<xsl:if test="following-sibling::unitdate"><xsl:text>,</xsl:text></xsl:if>
-					<xsl:text>&#x20;</xsl:text>
+					<xsl:if test="following-sibling::unitdate">
+						<xsl:choose>
+							<xsl:when test="ends-with(unitdate, ',')"><xsl:text>&#x20;</xsl:text></xsl:when>
+							<xsl:otherwise><xsl:text>,&#x20;</xsl:text></xsl:otherwise>
+						</xsl:choose>
+					</xsl:if>
 				</xsl:for-each>
 			</xsl:when>
 
