@@ -142,12 +142,60 @@
 			<xsl:when test="$doc.view='citation'">
 				<xsl:call-template name="citation"/>
 			</xsl:when>
+			
+			<!-- JB 4/1/2014 add to generate popup box with repository address -->
+         <xsl:when test="$doc.view='repository_contact'">
+            <xsl:call-template name="repository_contact"/>
+         </xsl:when>
+         
 			<!-- Creates the basic frameset.-->
 			<xsl:otherwise>
 				<xsl:call-template name="frameset"/>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
+
+<!-- JB 4/1/2014 added - conditioned on presence of an address, thinking if it is in repository they can see it there -->
+<!-- ====================================================================== -->
+	<!-- Repository Contact Template                                                      -->
+	<!-- ====================================================================== -->
+
+	<xsl:template name="repository_contact">         
+         
+		<html xml:lang="en" lang="en">
+			<head>
+				<title>
+					<xsl:value-of select="$doc.title"/>
+				</title>
+				<link rel="stylesheet" type="text/css" href="{$css.path}bbar.css"/>
+				<link rel="shortcut icon" href="icons/default/favicon.ico"/>
+
+			</head>
+			<body>
+				<xsl:copy-of select="$brand.header"/>
+				<div class="container">
+					<h2>Repository Contact Information</h2>
+					
+<h3>						
+<xsl:value-of select="eadheader/filedesc/publicationstmt/publisher"/>
+</h3>
+            <xsl:for-each select="eadheader/filedesc/publicationstmt/address/addressline">
+              <p> <xsl:value-of select="."/></p>
+            </xsl:for-each>
+<div>
+					<p>	<a>
+							<xsl:attribute name="href">javascript://</xsl:attribute>
+							<xsl:attribute name="onClick">
+								<xsl:text>javascript:window.close('popup')</xsl:text>
+							</xsl:attribute>
+							<span class="down1">Close this Window</span>
+						</a></p>
+					</div>
+				</div>
+			</body>
+		</html>
+
+</xsl:template>
 
 	<!-- ====================================================================== -->
 	<!-- Frameset Template                                                      -->
