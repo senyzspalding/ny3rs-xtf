@@ -163,17 +163,27 @@ that are used generically throughout the stylesheet.-->
 		<xsl:choose>
 			<!--This code processes the elements when unitdate is a child
 			of unittitle.-->
-			<xsl:when test="unittitle">
-				<xsl:for-each select="unittitle">
+			<xsl:when test="unitdate">
+				<xsl:apply-templates select="unittitle"/>
+				<xsl:choose>
+					<xsl:when test="ends-with(unittitle, ',')">
+						<xsl:text>&#160;</xsl:text>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:text>,&#160;</xsl:text>
+					</xsl:otherwise>
+				</xsl:choose>
+				<xsl:for-each select="unitdate">
 					<xsl:apply-templates/>
+					<xsl:if test="following-sibling::unitdate"><xsl:text>,</xsl:text></xsl:if>
+					<xsl:text>&#x20;</xsl:text>
 				</xsl:for-each>
 			</xsl:when>
 
 			<!--This code process the elements when unitdate is not a
 					child of untititle-->
 			<xsl:otherwise>
-				<xsl:apply-templates select="unittitle"/>
-				<xsl:for-each select="unitdate">
+				<xsl:for-each select="unittitle">
 					<xsl:apply-templates/>
 				</xsl:for-each>
 			</xsl:otherwise>
