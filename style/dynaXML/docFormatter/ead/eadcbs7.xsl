@@ -376,6 +376,23 @@
 					<xsl:value-of select="filedesc/titlestmt/subtitle"/>
 				</h3>
 			</xsl:if>
+			
+			4/1/2014 add to generate repository contact information box IF there is an address in publicationstmt -->
+                    <xsl:if test="filedesc/publicationstmt/address">
+                       <p><a>
+                           <xsl:attribute name="href">javascript://</xsl:attribute>
+                           <xsl:attribute name="onclick">
+                              <xsl:text>javascript:window.open('</xsl:text>
+                              <xsl:value-of select="$xtfURL"/>
+                              <xsl:value-of select="$dynaxmlPath"/>
+                              <xsl:text>?docId=</xsl:text>
+                              <xsl:value-of select="$docId"/>
+                              <xsl:text>;doc.view=repository_contact</xsl:text>
+                              <xsl:text>','popup','width=800,height=400,resizable=yes,scrollbars=no')</xsl:text>
+                           </xsl:attribute>
+                           <xsl:text>Repository Contact Information</xsl:text>
+                        </a></p>
+                   </xsl:if>
 			<xsl:if test="filedesc/titlestmt/author">
 				<p class="text-muted">
 					<xsl:value-of select="filedesc/titlestmt/author"/>
