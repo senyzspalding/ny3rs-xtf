@@ -39,6 +39,7 @@
 		<xsl:apply-templates select="archdesc/controlaccess"/>
 		<xsl:call-template name="archdesc-relatedmaterial"/>
 		<xsl:call-template name="archdesc-admininfo"/>
+		<xsl:apply-templates select="archdesc/odd"/>
 		<xsl:apply-templates select="descendant::dsc"/>
 		
 
