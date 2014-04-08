@@ -173,7 +173,7 @@ that are used generically throughout the stylesheet.-->
 			<xsl:when test="unitdate">
 				<xsl:apply-templates select="unittitle"/>
 				<xsl:choose>
-					<xsl:when test="ends-with(unittitle, ',')">
+					<xsl:when test="ends-with(normalize-space(unittitle), ',')">
 						<xsl:text>&#160;</xsl:text>
 					</xsl:when>
 					<xsl:otherwise>
@@ -184,7 +184,7 @@ that are used generically throughout the stylesheet.-->
 					<xsl:apply-templates/>
 					<xsl:if test="following-sibling::unitdate">
 						<xsl:choose>
-							<xsl:when test="ends-with(unitdate, ',')"><xsl:text>&#x20;</xsl:text></xsl:when>
+							<xsl:when test="ends-with(normalize-space(unitdate), ',')"><xsl:text>&#x20;</xsl:text></xsl:when>
 							<xsl:otherwise><xsl:text>,&#x20;</xsl:text></xsl:otherwise>
 						</xsl:choose>
 					</xsl:if>
