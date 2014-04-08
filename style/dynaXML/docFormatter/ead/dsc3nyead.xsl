@@ -22,7 +22,14 @@
 	<xsl:template match="lb">
 		<br/>
 	</xsl:template>
-
+	
+	<!-- blockquote template -->
+	
+	<xsl:template match="blockquote">
+		<p style="margin-left:1em">
+			<xsl:apply-templates/>
+		</p>
+	</xsl:template>
 
 	<!--This section of the stylesheet formats dsc and
 any introductory paragraphs.-->
@@ -398,14 +405,15 @@ for each level.-->
 			userestrict | accessrestrict | processinfo |
 			acqinfo | custodhist | controlaccess/controlaccess | odd | note | descgrp/*">
 				<div class="col-md-10 col-md-offset-2 text-muted">
-					<xsl:for-each select="head">
+					<xsl:apply-templates/>
+					<!--<xsl:for-each select="head">
 						<h5>
 							<xsl:apply-templates/>
 						</h5>
 					</xsl:for-each>
 					<xsl:for-each select="*[not(self::head)]">
 						<xsl:apply-templates/>
-					</xsl:for-each>
+					</xsl:for-each>-->
 				</div>
 			</xsl:for-each>
 		</div>
