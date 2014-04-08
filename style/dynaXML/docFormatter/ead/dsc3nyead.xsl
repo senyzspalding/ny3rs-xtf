@@ -176,8 +176,8 @@ that are used generically throughout the stylesheet.-->
 		<xsl:choose>
 			<!--This code processes the elements when unitdate is a child
 			of unittitle.-->
-			<xsl:when test="unitdate">
-				<xsl:apply-templates select="unittitle"/>
+			<xsl:when test="normalize-space(unitdate)">
+				<xsl:apply-templates/>
 				<xsl:choose>
 					<xsl:when test="ends-with(normalize-space(unittitle), ',')">
 						<xsl:text>&#160;</xsl:text>
