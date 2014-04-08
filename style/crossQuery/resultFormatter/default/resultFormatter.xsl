@@ -601,13 +601,13 @@ Item number <xsl:value-of select="$num"/>:
                      </xsl:otherwise>
                   </xsl:choose>
                </div>
-               <div class="col-md-1">
+               <div class="col-md-2">
                   <xsl:if test="$sort = 'title'">
                      <a name="{$anchor}"/>
                   </xsl:if>
-                  <b>Title:&#160;&#160;</b>
+                  <b>Title:</b>
                </div>
-               <div class="col-md-10">
+               <div class="col-md-9">
                   <a>
                      <xsl:attribute name="href">
                         <xsl:choose>
@@ -699,13 +699,13 @@ Item number <xsl:value-of select="$num"/>:
             </div>
             <xsl:if test="meta/creator != ''">
             <div class="row">
-               <div class="col-md-1 col-md-offset-1">
+               <div class="col-md-2 col-md-offset-1">
                   <xsl:if test="$sort = 'creator'">
                      <a name="{$anchor}"/>
                   </xsl:if>
                   <b>Creator:&#160;&#160;</b>
                </div>
-               <div class="col-md-10">
+               <div class="col-md-9">
                   <xsl:choose>
                      <xsl:when test="meta/creator">
                         <xsl:apply-templates select="meta/creator[1]"/>
@@ -717,43 +717,43 @@ Item number <xsl:value-of select="$num"/>:
             </xsl:if>
             <xsl:if test="meta/date != ''">
             <div class="row">
-               <div class="col-md-1 col-md-offset-1">
+               <div class="col-md-2 col-md-offset-1">
                   <b>Dates:&#160;&#160;</b>
                </div>
-               <div class="col-md-10">
+               <div class="col-md-9">
                   <xsl:apply-templates select="meta/date"/>
                </div>
             </div>
             </xsl:if>
          <xsl:if test="meta/publisher">
             <div class="row">
-               <div class="col-md-1 col-md-offset-1">
+               <div class="col-md-2 col-md-offset-1">
                   <b>Repository:&#160;&#160;</b>
                </div>
-               <div class="col-md-10">
+               <div class="col-md-9">
                   <xsl:apply-templates select="meta/publisher[1]"/>
                </div>
             </div>
          </xsl:if>
             <xsl:if test="meta/subject">
                <div class="row">
-                  <div class="col-md-1 col-md-offset-1">
+                  <div class="col-md-2 col-md-offset-1">
                      <b>Subjects:&#160;&#160;</b>
                   </div>
-                  <div class="col-md-10">
+                  <div class="col-md-9">
                      <xsl:apply-templates select="meta/subject"/>
                   </div>
                </div>
             </xsl:if>
             <xsl:if test="snippet">
                <div class="row">
-                  <div class="col-md-1 col-md-offset-1">
+                  <div class="col-md-2 col-md-offset-1">
                      <b>Matches:&#160;&#160;</b>
                      <br/>
                      <xsl:value-of select="@totalHits"/> 
                      <xsl:value-of select="if (@totalHits = 1) then ' hit' else ' hits'"/>&#160;&#160;&#160;&#160;
                   </div>
-                  <div class="col-md-10">
+                  <div class="col-md-9">
                      <xsl:apply-templates select="snippet" mode="text"/>
                   </div>
                </div>
