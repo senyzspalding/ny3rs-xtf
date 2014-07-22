@@ -448,14 +448,17 @@
    <xsl:template name="publisher-list">
       <xsl:variable name="agencycode">
          <xsl:variable name="lowercase">
-            <xsl:value-of select="replace(lower-case(($dtdVersion)/ead/eadheader/eadid/@mainagencycode), '-', '')"/>
+            <xsl:value-of select="lower-case(($dtdVersion)/ead/eadheader/eadid/@mainagencycode)"/>
          </xsl:variable>
          <xsl:choose>
             <xsl:when test="contains($lowercase, 'us-')">
-               <xsl:value-of select="substring-after($lowercase, 'us-')"/>
+               <xsl:variable name="substring">
+                  <xsl:value-of select="substring-after($lowercase, 'us-')"/>
+               </xsl:variable> 
+               <xsl:value-of select="replace($substring, '-', '')"/>
             </xsl:when>
             <xsl:otherwise>
-               <xsl:value-of select="$lowercase"/>
+               <xsl:value-of select="replace($lowercase, '-', '')"/>
             </xsl:otherwise>
          </xsl:choose>
       </xsl:variable>
@@ -467,7 +470,7 @@
             <xsl:text>Adelphi University</xsl:text>
          </xsl:when>
          <xsl:when test="$agencycode = 'nnan'">
-            <xsl:text>American Numismatic Society Archives</xsl:text>
+            <xsl:text>American Numismatic Soci  ety Archives</xsl:text>
          </xsl:when>
          <xsl:when test="$agencycode = 'nyblhs'">
                <xsl:text>Brooklyn Historical Society</xsl:text>
