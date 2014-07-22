@@ -448,7 +448,7 @@
    <xsl:template name="publisher-list">
       <xsl:variable name="agencycode">
          <xsl:variable name="lowercase">
-            <xsl:value-of select="lower-case(($dtdVersion)/ead/eadheader/eadid/@mainagencycode)"/>
+            <xsl:value-of select="replace(lower-case(($dtdVersion)/ead/eadheader/eadid/@mainagencycode), '-', '')"/>
          </xsl:variable>
          <xsl:choose>
             <xsl:when test="contains($lowercase, 'us-')">
@@ -475,13 +475,13 @@
          <xsl:when test="$agencycode = 'nynycjh'">
                <xsl:text>Center for Jewish History</xsl:text>
          </xsl:when>
-         <xsl:when test="$agencycode = 'nnc-a'">
+         <xsl:when test="$agencycode = 'nnca'">
                <xsl:text>Avery Architecture and Fine Arts Library. Department of Drawings and Archives.</xsl:text>
          </xsl:when>
-         <xsl:when test="$agencycode = 'nnc-rb'">
+         <xsl:when test="$agencycode = 'nncrb'">
                <xsl:text>Rare Book and Manuscript Library. Columbia University Libraries</xsl:text>
          </xsl:when>
-         <xsl:when test="$agencycode = 'nnc-ua'">
+         <xsl:when test="$agencycode = 'nncua'">
             <xsl:text>Rare Book and Manuscript Library. Columbia University Libraries</xsl:text>
          </xsl:when>
          <xsl:when test="$agencycode = 'nic'">
@@ -505,19 +505,22 @@
          <xsl:when test="$agencycode = 'nnttr'">
                <xsl:text>Rockefeller Archive Center</xsl:text>
          </xsl:when>
-         <xsl:when test="$agencycode = 'nbuu-ar'">
+         <xsl:when test="$agencycode = 'nbuuar'">
                <xsl:text>State University of New York at Buffalo. University Archives</xsl:text>
          </xsl:when>
          <xsl:when test="$agencycode = 'nsyohi'">
                <xsl:text>The Onondaga Historical Association</xsl:text>
          </xsl:when>
-         <xsl:when test="$agencycode = 'nbuu-l'">
+         <xsl:when test="$agencycode = 'nngu'">
+            <xsl:text>Solomon R. Guggenheim Museum Archives</xsl:text>
+         </xsl:when>
+         <xsl:when test="$agencycode = 'nbuul'">
                <xsl:text>State University of New York at Buffalo. Charles B. Sears Law Library</xsl:text>
          </xsl:when>
-         <xsl:when test="$agencycode = 'nbuu-mu'">
+         <xsl:when test="$agencycode = 'nbuumu'">
                <xsl:text>State University of New York at Buffalo. Music Library</xsl:text>
          </xsl:when>
-         <xsl:when test="$agencycode = 'nbuu-po'">
+         <xsl:when test="$agencycode = 'nbuupo'">
                <xsl:text>State University of New York at Buffalo. Poetry Collection</xsl:text>
          </xsl:when>
          <xsl:when test="$agencycode = 'nsyu'">
