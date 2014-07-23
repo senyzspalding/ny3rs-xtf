@@ -447,51 +447,64 @@
    <!-- publisher list -->
    <xsl:template name="publisher-list">
       <xsl:variable name="agencycode">
+         <!-- Change agencycode to lowercase and strip out all dashes -->
          <xsl:variable name="lowercase">
-            <xsl:value-of select="lower-case(($dtdVersion)/ead/eadheader/eadid/@mainagencycode)"/>
+            <xsl:value-of select="replace(lower-case(($dtdVersion)/ead/eadheader/eadid/@mainagencycode), '-', '')"/>
          </xsl:variable>
          <xsl:choose>
-            <xsl:when test="contains($lowercase, 'us-')">
-               <xsl:variable name="substring">
-                  <xsl:value-of select="substring-after($lowercase, 'us-')"/>
-               </xsl:variable> 
-               <xsl:value-of select="replace($substring, '-', '')"/>
+            <!-- Remove country code from agencycode if it exists -->
+            <xsl:when test="starts-with($lowercase, 'us')">
+                  <xsl:value-of select="substring-after($lowercase, 'us')"/>
             </xsl:when>
+            <!-- if there's no country code, then just use the main agency code in lowercase with all dashes removed -->
             <xsl:otherwise>
-               <xsl:value-of select="replace($lowercase, '-', '')"/>
+               <xsl:value-of select="$lowercase"/>
             </xsl:otherwise>
          </xsl:choose>
       </xsl:variable>
       <xsl:choose>
+         <!-- List of agency codes with corresponding text values -->
          <xsl:when test="$agencycode = 'nalsu'">
-            <xsl:text>M. E. Grenander Department of Special Collections and Archives</xsl:text>
+            <xsl:text>University at Albany M. E. Grenander Department of Special Collections and Archives</xsl:text>
+         </xsl:when>
+         <xsl:when test="$agencycode = 'nbuuar'">
+               <xsl:text>State University of New York at Buffalo. University Archives</xsl:text>
+         </xsl:when>
+         <xsl:when test="$agencycode = 'nbuul'">
+               <xsl:text>State University of New York at Buffalo Charles B. Sears Law Library</xsl:text>
+         </xsl:when>
+         <xsl:when test="$agencycode = 'nbuumu'">
+               <xsl:text>State University of New York at Buffalo Music Library</xsl:text>
+         </xsl:when>
+         <xsl:when test="$agencycode = 'nbuupo'">
+               <xsl:text>State University of New York at Buffalo Poetry Collection</xsl:text>
          </xsl:when>
          <xsl:when test="$agencycode = 'ngca'">
             <xsl:text>Adelphi University</xsl:text>
          </xsl:when>
-         <xsl:when test="$agencycode = 'nnan'">
-            <xsl:text>American Numismatic Soci  ety Archives</xsl:text>
-         </xsl:when>
-         <xsl:when test="$agencycode = 'nyblhs'">
-               <xsl:text>Brooklyn Historical Society</xsl:text>
-         </xsl:when>
-         <xsl:when test="$agencycode = 'nynycjh'">
-               <xsl:text>Center for Jewish History</xsl:text>
-         </xsl:when>
-         <xsl:when test="$agencycode = 'nnca'">
-               <xsl:text>Avery Architecture and Fine Arts Library. Department of Drawings and Archives.</xsl:text>
-         </xsl:when>
-         <xsl:when test="$agencycode = 'nncrb'">
-               <xsl:text>Rare Book and Manuscript Library. Columbia University Libraries</xsl:text>
-         </xsl:when>
-         <xsl:when test="$agencycode = 'nncua'">
-            <xsl:text>Rare Book and Manuscript Library. Columbia University Libraries</xsl:text>
+         <xsl:when test="$agencycode = 'nhyf'">
+               <xsl:text>Franklin D. Roosevelt Presidential Library and Museum</xsl:text>            
          </xsl:when>
          <xsl:when test="$agencycode = 'nic'">
                <xsl:text>Cornell University</xsl:text>
          </xsl:when>
-         <xsl:when test="$agencycode = 'nhyf'">
-               <xsl:text>Franklin D. Roosevelt Presidential Library and Museum</xsl:text>            
+         <xsl:when test="$agencycode = 'nn'">
+               <xsl:text>The New York Public Library</xsl:text>
+         </xsl:when>
+         <xsl:when test="$agencycode = 'nnan'">
+            <xsl:text>American Numismatic Society Archives</xsl:text>
+         </xsl:when>
+         <xsl:when test="$agencycode = 'nnca'">
+               <xsl:text>Columbia University Avery Architecture and Fine Arts Library</xsl:text>
+         </xsl:when>
+         <xsl:when test="$agencycode = 'nncrb'">
+               <xsl:text>Columbia University Rare Book and Manuscript Library</xsl:text>
+         </xsl:when>
+         <xsl:when test="$agencycode = 'nncua'">
+            <xsl:text>Columbia University Archives</xsl:text>
+         </xsl:when>
+         <xsl:when test="$agencycode = 'nngu'">
+            <xsl:text>Solomon R. Guggenheim Museum Archives</xsl:text>
          </xsl:when>
          <xsl:when test="$agencycode = 'nnmoma'">
                <xsl:text>The Museum of Modern Art Archives</xsl:text>
@@ -499,38 +512,26 @@
          <xsl:when test="$agencycode = 'nnns'">
                <xsl:text>Kellen Design Archives</xsl:text>
          </xsl:when>
-         <xsl:when test="$agencycode = 'nn'">
-               <xsl:text>The New York Public Library</xsl:text>
+         <xsl:when test="$agencycode = 'nnttr'">
+               <xsl:text>Rockefeller Archive Center</xsl:text>
          </xsl:when>
          <xsl:when test="$agencycode = 'nsy'">
                <xsl:text>Onondaga County Public Library</xsl:text>
          </xsl:when>
-         <xsl:when test="$agencycode = 'nnttr'">
-               <xsl:text>Rockefeller Archive Center</xsl:text>
-         </xsl:when>
-         <xsl:when test="$agencycode = 'nbuuar'">
-               <xsl:text>State University of New York at Buffalo. University Archives</xsl:text>
-         </xsl:when>
          <xsl:when test="$agencycode = 'nsyohi'">
-               <xsl:text>The Onondaga Historical Association</xsl:text>
-         </xsl:when>
-         <xsl:when test="$agencycode = 'nngu'">
-            <xsl:text>Solomon R. Guggenheim Museum Archives</xsl:text>
-         </xsl:when>
-         <xsl:when test="$agencycode = 'nbuul'">
-               <xsl:text>State University of New York at Buffalo. Charles B. Sears Law Library</xsl:text>
-         </xsl:when>
-         <xsl:when test="$agencycode = 'nbuumu'">
-               <xsl:text>State University of New York at Buffalo. Music Library</xsl:text>
-         </xsl:when>
-         <xsl:when test="$agencycode = 'nbuupo'">
-               <xsl:text>State University of New York at Buffalo. Poetry Collection</xsl:text>
+               <xsl:text>Onondaga Historical Association</xsl:text>
          </xsl:when>
          <xsl:when test="$agencycode = 'nsyu'">
                <xsl:text>Syracuse University</xsl:text>
          </xsl:when>
+         <xsl:when test="$agencycode = 'nyblhs'">
+               <xsl:text>Brooklyn Historical Society</xsl:text>
+         </xsl:when>
+         <xsl:when test="$agencycode = 'nynycjh'">
+               <xsl:text>Center for Jewish History</xsl:text>
+         </xsl:when>
          <xsl:when test="$agencycode = 'vxw'">
-               <xsl:text>Archives and Special Collections Library, Vassar College Libraries</xsl:text>
+               <xsl:text>Vassar College Archives and Special Collections Library</xsl:text>
          </xsl:when>
          <xsl:otherwise>
             <xsl:value-of select="$agencycode"/>
