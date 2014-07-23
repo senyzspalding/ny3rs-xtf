@@ -177,9 +177,9 @@ that are used generically throughout the stylesheet.-->
 			<!--This code processes the elements when unitdate is a child
 			of unittitle.-->
 			<xsl:when test="unitdate">
-				<xsl:apply-templates select="normalize-space(unittitle)"/>
+				<xsl:apply-templates select="normalize-space'unittitle')"/>
 				<xsl:choose>
-					<xsl:when test="ends-with(normalize-space(unittitle), ',')">
+					<xsl:when test="ends-with(normalize-space('unittitle'), ',')">
 						<xsl:text>&#160;</xsl:text>
 					</xsl:when>
 					<xsl:otherwise>
@@ -187,10 +187,10 @@ that are used generically throughout the stylesheet.-->
 					</xsl:otherwise>
 				</xsl:choose>
 				<xsl:for-each select="unitdate">
-					<xsl:apply-templates select="normalize-space(unitdate)"/>
+					<xsl:apply-templates select="normalize-space('unitdate')"/>
 					<xsl:if test="following-sibling::unitdate">
 						<xsl:choose>
-							<xsl:when test="ends-with(normalize-space(unitdate), ',')"><xsl:text>&#x20;</xsl:text></xsl:when>
+							<xsl:when test="ends-with(normalize-space('unitdate'), ',')"><xsl:text>&#x20;</xsl:text></xsl:when>
 							<xsl:otherwise><xsl:text>,&#x20;</xsl:text></xsl:otherwise>
 						</xsl:choose>
 					</xsl:if>
